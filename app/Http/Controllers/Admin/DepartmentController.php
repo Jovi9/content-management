@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\UserType;
-use Illuminate\Support\Str;
+use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
-use App\Http\Requests\Admin\UserTypeCreateRequest;
-use App\Http\Requests\Admin\UserTypeUpdateRequest;
+use App\Http\Requests\Admin\DepartmentCreateRequest;
+use App\Http\Requests\Admin\DepartmentUpdateRequest;
 
-class UserTypeController extends Controller
+class DepartmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,8 +18,8 @@ class UserTypeController extends Controller
      */
     public function index()
     {
-        $userTypes = UserType::get();
-        return view('admin.users.type.user_types', compact('userTypes'));
+        $departments = Department::get();
+        return view('admin.users.department.departments', compact('departments'));
     }
 
     /**
@@ -30,7 +29,7 @@ class UserTypeController extends Controller
      */
     public function create()
     {
-        return view('admin.users.type.user_type_create');
+        return view('admin.users.department.departments_create');
     }
 
     /**
@@ -39,14 +38,14 @@ class UserTypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserTypeCreateRequest $request)
+    public function store(DepartmentCreateRequest $request)
     {
-        $query = UserType::create([
-            'userTypeName' => Str::lower($request->userTypeName)
+        $query = Department::create([
+            'departmentName' => $request->departmentName
         ]);
 
         if ($query) {
-            return Redirect::route('admin.user_types.index')->with('status', 'user-type-created');
+            return Redirect::route('admin.departments.index')->with('status', 'department-created');
         } else {
             return back();
         }
@@ -71,15 +70,8 @@ class UserTypeController extends Controller
      */
     public function edit($id)
     {
-        $count = UserType::count();
-        if ($count == 1) {
-            return back();
-        } else {
-            $userType = UserType::where('id', $id)->first();
-            return view('admin.users.type.user_type_edit', [
-                'userType' => $userType
-            ]);
-        }
+        $department = Department::where('id', $id)->first();
+        return view('admin.users.department.departments_edit', compact('department'));
     }
 
     /**
@@ -89,15 +81,15 @@ class UserTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserTypeUpdateRequest $request, $id)
+    public function update(DepartmentUpdateRequest $request, $id)
     {
-        $query = UserType::where('id', $id)
+        $query = Department::where('id', $id)
             ->update([
-                'userTypeName' => Str::lower($request->userTypeName)
+                'departmentName' => $request->departmentName
             ]);
 
         if ($query) {
-            return Redirect::route('admin.user_types.index')->with('status', 'user-type-updated');
+            return Redirect::route('admin.departments.index')->with('status', 'department-updated');
         } else {
             return back();
         }

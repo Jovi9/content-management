@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Admin\UserCreateRequest;
+use App\Http\Requests\Admin\UserUpdateRequest;
 use App\Models\Department;
 use Illuminate\Support\Facades\Hash;
 
@@ -20,9 +21,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $userTypes = UserType::get();
         $users = User::whereNot('user_type_id', 1)->get();
-        return view('admin.users.users', compact('userTypes', 'users'));
+        $departments = Department::get();
+        return view('admin.users.users', compact('users', 'departments'));
     }
 
     /**
@@ -95,9 +96,23 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request, $id)
     {
-        //
+        $query = User::where('id', $id)
+            ->update([
+                'employeeID' => $request->employeeID,
+                'firstName' => $request->firstName,
+                'middleInitial' => $request->middleInitial,
+                'lastName' => $request->lastName,
+                'department_id' => $request->department_id,
+                'user_type_id' => $request->user_type,
+            ]);
+
+        if ($query) {
+            return Redirect::route('admin.users.index')->with('status', 'user-updated');
+        } else {
+            return back();
+        }
     }
 
     /**

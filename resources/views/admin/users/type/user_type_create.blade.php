@@ -25,7 +25,7 @@
                         </div>
 
                         <div class="mt-6 flex justify-end">
-                            <a href="{{ route('admin.users.index') }}">
+                            <a href="{{ route('admin.user_types.index') }}">
                                 <x-secondary-button>
                                     {{ __('Cancel') }}
                                 </x-secondary-button>

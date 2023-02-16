@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CompanyProfileController;
+use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\UserTypeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +40,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('/company_profile', CompanyProfileController::class);
         Route::resource('/users', UserController::class);
         Route::resource('/user_types', UserTypeController::class);
+        Route::resource('/departments', DepartmentController::class);
     });
 });
 
