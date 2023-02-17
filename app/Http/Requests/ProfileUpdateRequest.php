@@ -19,11 +19,11 @@ class ProfileUpdateRequest extends FormRequest
         return [
             'employeeID' => ['required', 'string', 'max:255'],
             'firstName' => ['required', 'string', 'max:255'],
-            'middleInitial' => ['max:100'],
+            'middleInitial' => ['string', 'nullable', 'max:100'],
             'lastName' => ['required', 'string', 'max:255'],
             'department_id' => ['required', 'string', 'max:255'],
             'email' => ['email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
-            'password' => ['required', Password::defaults(), 'confirmed']
+            // 'password' => ['required', Password::defaults(), 'confirmed']
         ];
     }
 }

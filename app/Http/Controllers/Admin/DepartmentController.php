@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\UserLogActivityController;
 use App\Http\Requests\Admin\DepartmentCreateRequest;
 use App\Http\Requests\Admin\DepartmentUpdateRequest;
 
@@ -44,7 +46,13 @@ class DepartmentController extends Controller
             'departmentName' => $request->departmentName
         ]);
 
+        $log = [];
+        $log['action'] = "Created Department";
+        $log['content'] = "Department Name: " . $request->departmentName;
+        $log['changes'] = '';
+
         if ($query) {
+            UserLogActivityController::store($log);
             return Redirect::route('admin.departments.index')->with('status', 'department-created');
         } else {
             return back();
@@ -83,12 +91,19 @@ class DepartmentController extends Controller
      */
     public function update(DepartmentUpdateRequest $request, $id)
     {
+        $department = Department::where('id', $id)->first();
         $query = Department::where('id', $id)
             ->update([
                 'departmentName' => $request->departmentName
             ]);
 
+        $log = [];
+        $log['action'] = "Updated Department";
+        $log['content'] = "Department Name: " . $department->departmentName;
+        $log['changes'] = "Department Name: " . $request->departmentName;
+
         if ($query) {
+            UserLogActivityController::store($log);
             return Redirect::route('admin.departments.index')->with('status', 'department-updated');
         } else {
             return back();

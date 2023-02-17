@@ -49,6 +49,10 @@
                             </x-dropdown-link>
                         @endrole
 
+                        <x-dropdown-link :href="route('activity_log')">
+                            {{ __('Activity Logs') }}
+                        </x-dropdown-link>
+
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('My Profile') }}
                         </x-dropdown-link>

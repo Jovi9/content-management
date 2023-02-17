@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('user_id');
             $table->string('action');;
             $table->string('content');
-            $table->string('changes');
+            $table->string('changes')->nullable();
             $table->timestamps();
         });
     }

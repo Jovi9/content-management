@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Admin\UserTypeCreateRequest;
 use App\Http\Requests\Admin\UserTypeUpdateRequest;
+use App\Http\Controllers\UserLogActivityController;
+use Illuminate\Support\Facades\Auth;
 
 class UserTypeController extends Controller
 {
@@ -45,7 +47,12 @@ class UserTypeController extends Controller
             'userTypeName' => Str::lower($request->userTypeName)
         ]);
 
+        $log = [];
+        $log['action'] = "Created User Type";
+        $log['content'] = "User Type Name: " . Str::ucfirst($request->userTypeName);
+        $log['changes'] = '';
         if ($query) {
+            UserLogActivityController::store($log);
             return Redirect::route('admin.user_types.index')->with('status', 'user-type-created');
         } else {
             return back();
@@ -91,12 +98,19 @@ class UserTypeController extends Controller
      */
     public function update(UserTypeUpdateRequest $request, $id)
     {
+        $type = UserType::where('id', $id)->first();
+
         $query = UserType::where('id', $id)
             ->update([
                 'userTypeName' => Str::lower($request->userTypeName)
             ]);
 
+        $log = [];
+        $log['action'] = "Updated User Type";
+        $log['content'] = "User Type Name: " . Str::ucfirst($type->userTypeName);
+        $log['changes'] = "User Type Name: " . Str::ucfirst($request->userTypeName);
         if ($query) {
+            UserLogActivityController::store($log);
             return Redirect::route('admin.user_types.index')->with('status', 'user-type-updated');
         } else {
             return back();

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CompanyProfileController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\UserTypeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserLogActivityController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/activity_logs', [UserLogActivityController::class, 'index'])->name('activity_log');
 
     // administrator page
     Route::group([
