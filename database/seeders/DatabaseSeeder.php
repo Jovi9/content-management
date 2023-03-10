@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Department;
+use Database\Seeders\Menu\MainMenuSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,13 +23,14 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         Department::create([
-            'departmentName' => 'CICT'
+            'departmentName' => 'administration'
         ]);
 
         $this->call([
             RoleSeeder::class,
             UserTypeSeeder::class,
-            AdminSeeder::class
+            AdminSeeder::class,
+            MainMenuSeeder::class
         ]);
     }
 }

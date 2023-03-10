@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CompanyProfileController;
 use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\UserTypeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserLogActivityController;
@@ -43,6 +44,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('/users', UserController::class);
         Route::resource('/user_types', UserTypeController::class);
         Route::resource('/departments', DepartmentController::class);
+        Route::resource('/menus', MenuController::class);
     });
 });
 
