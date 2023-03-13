@@ -112,7 +112,7 @@
     </x-modal-v1>
 
     {{-- edit modal --}}
-    <x-modal-v1 name="edit-menu" focusable maxWidth="md">
+    <x-modal-v1 name="edit-menu" focusable maxWidth="lg">
         <form action="javascript:void(0);" wire:submit.prevent="update" novalidate>
             @csrf
             {{-- title --}}
@@ -151,5 +151,11 @@
                 </div>
             </div>
         </form>
+
+        <div class=" mt-2 p-4">
+            @if ($menuID)
+                @livewire('menu.sub-menu', ['mainMenuID' => $menuID])
+            @endif
+        </div>
     </x-modal-v1>
 </div>

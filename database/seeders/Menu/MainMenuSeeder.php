@@ -34,7 +34,8 @@ class MainMenuSeeder extends Seeder
         SubMenu::create([
             'main_menu_id' => 1,
             'sub_menu' => 'None',
-            'sub_location' => '1/'
+            'sub_location' => '1/',
+            'sub_status' => 'disabled'
         ]);
     }
 }

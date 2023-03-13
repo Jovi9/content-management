@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Menu;
 
+use App\Http\Controllers\UserLogActivityController;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Http\Livewire\Modal\ModalWire;
@@ -50,6 +51,11 @@ class MainMenu extends ModalWire
         $this->resetValidation();
     }
 
+    protected function getMenu_ByID($id)
+    {
+        return MenuMainMenu::where('id', $id)->first();
+    }
+
     public function store()
     {
         $this->validate();
@@ -77,11 +83,18 @@ class MainMenu extends ModalWire
                 ]);
         });
 
+        $log = [];
+        $log['action'] = "Added New Menu";
+        $log['content'] = "Menu Name: " . ucwords($this->mainMenu);
+        $log['changes'] = '';
+
+        UserLogActivityController::store($log);
+
         $this->resetForm();
 
         $this->fetchMenus();
 
-        $this->dispatchBrowserEvent('close-modal');
+        $this->dispatchBrowserEvent('close-modal', 'add-menu');
         $this->dispatchBrowserEvent('swal-modal', [
             'title' => 'saved',
             'message' => 'New Menu Successfully Added.'
@@ -90,24 +103,38 @@ class MainMenu extends ModalWire
 
     public function switchStatus($id)
     {
-        $menu = MenuMainMenu::where('id', $id)->first();
+        $menu = $this->getMenu_ByID($id);
 
         if ($menu->status == "enabled") {
             MenuMainMenu::where('id', $id)
                 ->update([
                     'status' => 'disabled'
                 ]);
+
+            $log = [];
+            $log['action'] = "Changed Menu Status";
+            $log['content'] = "Menu Name: " . $menu->main_menu . ", Menu Status: " . ucfirst($menu->status);
+            $log['changes'] = "Menu Status: Disabled";
+
+            UserLogActivityController::store($log);
         } else {
             MenuMainMenu::where('id', $id)
                 ->update([
                     'status' => 'enabled'
                 ]);
+
+            $log = [];
+            $log['action'] = "Changed Menu Status";
+            $log['content'] = "Menu Name: " . $menu->main_menu . ", Menu Status: " . ucfirst($menu->status);
+            $log['changes'] = "Menu Status: Enabled";
+
+            UserLogActivityController::store($log);
         }
     }
 
     public function editMenu($id)
     {
-        $menu = MenuMainMenu::where('id', $id)->first();
+        $menu = $this->getMenu_ByID($id);
         $this->menuID = $menu->id;
         $this->mainMenu = $menu->main_menu;
     }
@@ -120,17 +147,26 @@ class MainMenu extends ModalWire
             ]
         );
 
+        $menu = $this->getMenu_ByID($this->menuID);
+
         $query = MenuMainMenu::where('id', $this->menuID)
             ->update([
                 'main_menu' => ucwords($this->mainMenu)
             ]);
 
+        $log = [];
+        $log['action'] = "Updated Menu";
+        $log['content'] = "Menu Name: " . $menu->main_menu;
+        $log['changes'] = "Menu Name: " . $this->mainMenu;
+
         if ($query) {
+            UserLogActivityController::store($log);
+
             $this->resetForm();
 
             $this->fetchMenus();
 
-            $this->dispatchBrowserEvent('close-modal');
+            $this->dispatchBrowserEvent('close-modal', 'edit-menu');
             $this->dispatchBrowserEvent('swal-modal', [
                 'title' => 'updated',
                 'message' => 'Menu Successfully Updated.'

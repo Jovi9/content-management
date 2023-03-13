@@ -14,9 +14,9 @@
                         <div class=" p-6 bg-white rounded">
                             @livewire('menu.main-menu')
                         </div>
-                        <div class=" p-6 bg-white rounded">
+                        {{-- <div class=" p-6 bg-white rounded">
                             @livewire('menu.sub-menu')
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

@@ -91,11 +91,12 @@
 
             {{-- body --}}
             <div class="bg-white p-5">
-                <div>
+                {{-- <div>
                     <label class="block font-medium text-sm text-gray-700">
                         Main Menu
                     </label>
-                    <select wire:model="mainMenuID">
+                    <select wire:model="mainMenuID"
+                        class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full">
                         <option value="">Choose main menu</option>
                         @foreach ($mainMenus as $mainMenu)
                             <option value="{{ $mainMenu->id }}">
@@ -106,9 +107,9 @@
                     @error('mainMenuID')
                         <span class="error text-red-600">{{ __('Please select main menu.') }}</span>
                     @enderror
-                </div>
+                </div> --}}
 
-                <div class="mt-4">
+                <div class="">
                     <label class="block font-medium text-sm text-gray-700">
                         Sub Menu Name
                     </label>
@@ -151,11 +152,12 @@
 
             {{-- body --}}
             <div class="bg-white p-5">
-                <div>
+                {{-- <div>
                     <label class="block font-medium text-sm text-gray-700">
                         Main Menu
                     </label>
-                    <select wire:model="mainMenuID">
+                    <select wire:model="mainMenuID"
+                        class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full">
                         <option value="">Choose main menu</option>
                         @foreach ($mainMenus as $mainMenu)
                             <option value="{{ $mainMenu->id }}" @if ($mainMenu->id == $mainMenuID) selected @endif>
@@ -166,9 +168,9 @@
                     @error('mainMenuID')
                         <span class="error text-red-600">{{ __('Please select main menu.') }}</span>
                     @enderror
-                </div>
+                </div> --}}
 
-                <div class="mt-4">
+                <div class="">
                     <label class="block font-medium text-sm text-gray-700">
                         Sub Menu Name
                     </label>
