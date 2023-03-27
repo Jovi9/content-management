@@ -12,7 +12,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <form method="post"
-                        action="{{ route('admin.company_profile.update', ['company_profile' => $profile->id]) }}"
+                        action="{{ route('admin.company_profile.update', ['company_profile' => Crypt::encrypt($profile->id)]) }}"
                         class="p-6">
                         @csrf
                         @method('put')

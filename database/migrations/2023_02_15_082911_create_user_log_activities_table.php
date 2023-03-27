@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->string('action');;
-            $table->string('content');
-            $table->string('changes')->nullable();
+            $table->longText('content');
+            $table->longText('changes')->nullable();
             $table->timestamps();
         });
     }

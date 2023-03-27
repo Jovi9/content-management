@@ -18,8 +18,9 @@ return new class extends Migration
             $table->foreignId('main_menu_id')->constrained('main_menus')->restrictOnDelete()->cascadeOnUpdate();
             $table->foreignId('sub_menu_id')->constrained('sub_menus')->restrictOnDelete()->cascadeOnUpdate();
             $table->string('title');
-            $table->string('content');
-            $table->string('attachment');
+            $table->longText('content');
+            $table->string('attachment')->nullable();
+            $table->string('status')->default('denied');
             $table->timestamps();
         });
     }

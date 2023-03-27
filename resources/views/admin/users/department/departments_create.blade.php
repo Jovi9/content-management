@@ -40,4 +40,15 @@
             </div>
         </div>
     </div>
+
+    @if ($errors->get('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to process request.',
+                text: 'Something went wrong, please try again.',
+                allowOutsideClick: false
+            });
+        </script>
+    @endif
 </x-app-layout>

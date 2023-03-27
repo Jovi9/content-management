@@ -41,7 +41,7 @@
                                     <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                         <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
                                         <a
-                                            href="{{ route('admin.departments.edit', ['department' => $department->id]) }}">
+                                            href="{{ route('admin.departments.edit', ['department' => Crypt::encrypt($department->id)]) }}">
                                             <button
                                                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 border border-blue-500 rounded">Edit</button></a>
                                         {{-- <button
@@ -56,4 +56,36 @@
             </div>
         </div>
     </div>
+
+    @if (Session::has('saved'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'New Department Saved Successfully.',
+                confirmButtonText: 'Ok',
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+        </script>
+    @endif
+
+    @if (Session::has('updated'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Department Updated Successfully.',
+                confirmButtonText: 'Ok',
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+        </script>
+    @endif
 </x-app-layout>

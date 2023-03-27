@@ -11,7 +11,8 @@
         <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <form method="post" action="{{ route('admin.users.update', ['user' => $user->id]) }}" class="p-6">
+                    <form method="post" action="{{ route('admin.users.update', ['user' => Crypt::encrypt($user->id)]) }}"
+                        class="p-6">
                         @csrf
                         @method('put')
 
@@ -98,4 +99,15 @@
             </div>
         </div>
     </div>
+
+    @if ($errors->get('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to process request.',
+                text: 'Something went wrong, please try again.',
+                allowOutsideClick: false
+            });
+        </script>
+    @endif
 </x-app-layout>

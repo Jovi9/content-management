@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="{{ asset('sweetalert2/sweetalert2.min.css') }}">
     <script src="{{ asset('sweetalert2/sweetalert2.min.js') }}"></script>
 
-    @livewireStyles
+    @yield('styles')
 </head>
 
 <body class="font-sans antialiased">
@@ -50,17 +50,23 @@
             </div>
             <nav :class="{ 'block': open, 'hidden': !open }"
                 class="flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">
-                <x-sidebar-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                    {{ __('Dashboard') }}
-                </x-sidebar-link>
-                <x-sidebar-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
-                    {{ __('Users') }}
-                </x-sidebar-link>
-                <x-sidebar-link :href="route('admin.company_profile.index')" :active="request()->routeIs('admin.company_profile.index')">
-                    {{ __('Company Profile') }}
-                </x-sidebar-link>
-                <x-sidebar-link :href="route('admin.menus.index')" :active="request()->routeIs('admin.menus.index')">
-                    {{ __('Menus') }}
+                @role('administrator')
+                    <x-sidebar-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        {{ __('Dashboard') }}
+                    </x-sidebar-link>
+                    <x-sidebar-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
+                        {{ __('Users') }}
+                    </x-sidebar-link>
+                    <x-sidebar-link :href="route('admin.company_profile.index')" :active="request()->routeIs('admin.company_profile.index')">
+                        {{ __('Company Profile') }}
+                    </x-sidebar-link>
+                    <x-sidebar-link :href="route('admin.menus-index')" :active="request()->routeIs('admin.menus-index')">
+                        {{ __('Menus') }}
+                    </x-sidebar-link>
+                @endrole
+
+                <x-sidebar-link :href="route('user.contents-index')" :active="request()->routeIs('user.contents-index')">
+                    {{ __('Contents') }}
                 </x-sidebar-link>
 
                 <div @click.away="open = false" class="relative" x-data="{ open: false }">
@@ -122,8 +128,7 @@
     </div>
 
     {{-- scripts --}}
-    {{-- flowbite --}}
-    @livewireScripts
+    @yield('scripts')
 </body>
 
 </html>

@@ -6,11 +6,12 @@ use App\Models\UserType;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Admin\UserTypeCreateRequest;
 use App\Http\Requests\Admin\UserTypeUpdateRequest;
 use App\Http\Controllers\UserLogActivityController;
-use Illuminate\Support\Facades\Auth;
 
 class UserTypeController extends Controller
 {
@@ -53,9 +54,9 @@ class UserTypeController extends Controller
         $log['changes'] = '';
         if ($query) {
             UserLogActivityController::store($log);
-            return Redirect::route('admin.user_types.index')->with('status', 'user-type-created');
+            return Redirect::route('admin.user_types.index')->with('saved', 'user-type-created');
         } else {
-            return back();
+            return back()->withErrors(['error' => 'Failed to process request.']);
         }
     }
 
@@ -78,6 +79,11 @@ class UserTypeController extends Controller
      */
     public function edit($id)
     {
+        try {
+            $id = Crypt::decrypt($id);
+        } catch (\Throwable $th) {
+            return back();
+        }
         $count = UserType::count();
         if ($count == 1) {
             return back();
@@ -98,6 +104,12 @@ class UserTypeController extends Controller
      */
     public function update(UserTypeUpdateRequest $request, $id)
     {
+        try {
+            $id = Crypt::decrypt($id);
+        } catch (\Throwable $th) {
+            return back();
+        }
+
         $type = UserType::where('id', $id)->first();
 
         $query = UserType::where('id', $id)
@@ -111,9 +123,9 @@ class UserTypeController extends Controller
         $log['changes'] = "User Type Name: " . Str::ucfirst($request->userTypeName);
         if ($query) {
             UserLogActivityController::store($log);
-            return Redirect::route('admin.user_types.index')->with('status', 'user-type-updated');
+            return Redirect::route('admin.user_types.index')->with('updated', 'user-type-updated');
         } else {
-            return back();
+            return back()->withErrors(['error' => 'Failed to process request.']);
         }
     }
 

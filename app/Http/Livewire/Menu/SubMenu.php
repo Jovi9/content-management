@@ -102,8 +102,8 @@ class SubMenu extends Component
                 ->first();
 
             // create storage directory
-            $directory = $this->mainMenuID . '/' . $menu->id . '/';
-            Storage::makeDirectory($directory);
+            $directory = $this->mainMenuID . '/' . $menu->id;
+            // Storage::makeDirectory($directory);
 
             // update menu storage location
             MenuSubMenu::where('id', $menu->id)
@@ -136,7 +136,16 @@ class SubMenu extends Component
     {
         $menu = $this->getSubMenu_ByID($id);
 
+        $subMenuCount = MenuSubMenu::where('sub_status', 'enabled')
+            ->where('main_menu_id', $menu->main_menu_id)
+            ->count();
+
         if ($menu->sub_status == "enabled") {
+            if ($subMenuCount == 1) {
+                $this->fetchSubMenus();
+                return;
+            }
+
             MenuSubMenu::where('id', $id)
                 ->update([
                     'sub_status' => 'disabled'

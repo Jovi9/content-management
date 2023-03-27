@@ -1,5 +1,9 @@
 <x-app-layout>
     @section('title', 'Menus')
+    @section('styles')
+        @livewireStyles
+    @endsection
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Menu') }}
@@ -23,41 +27,44 @@
         </div>
     </div>
 
-    <script>
-        window.addEventListener('swal-modal', event => {
-            if (event.detail.title == "error") {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Failed to process request.',
-                    text: 'Something went wrong, please try again.',
-                    allowOutsideClick: false
-                });
-            } else if (event.detail.title == "saved") {
-                Swal.fire({
-                    icon: 'success',
-                    title: event.detail.message,
-                    confirmButtonText: 'Ok',
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                });
-            } else if (event.detail.title == "updated") {
-                Swal.fire({
-                    icon: 'success',
-                    title: event.detail.message,
-                    confirmButtonText: 'Ok',
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                });
-            }
-        });
-    </script>
+    @section('scripts')
+        @livewireScripts
+        <script>
+            window.addEventListener('swal-modal', event => {
+                if (event.detail.title == "error") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Failed to process request.',
+                        text: 'Something went wrong, please try again.',
+                        allowOutsideClick: false
+                    });
+                } else if (event.detail.title == "saved") {
+                    Swal.fire({
+                        icon: 'success',
+                        title: event.detail.message,
+                        confirmButtonText: 'Ok',
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    });
+                } else if (event.detail.title == "updated") {
+                    Swal.fire({
+                        icon: 'success',
+                        title: event.detail.message,
+                        confirmButtonText: 'Ok',
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    });
+                }
+            });
+        </script>
+    @endsection
 
 </x-app-layout>

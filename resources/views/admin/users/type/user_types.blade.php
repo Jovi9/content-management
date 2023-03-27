@@ -42,7 +42,7 @@
                                         <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
                                         @if (!($userType->userTypeName == 'administrator'))
                                             <a
-                                                href="{{ route('admin.user_types.edit', ['user_type' => $userType->id]) }}">
+                                                href="{{ route('admin.user_types.edit', ['user_type' => Crypt::encrypt($userType->id)]) }}">
                                                 <button
                                                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 border border-blue-500 rounded">Edit</button></a>
                                         @endif
@@ -58,4 +58,36 @@
             </div>
         </div>
     </div>
+
+    @if (Session::has('saved'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'New User Type Saved Successfully.',
+                confirmButtonText: 'Ok',
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+        </script>
+    @endif
+
+    @if (Session::has('updated'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'User Type Updated Successfully.',
+                confirmButtonText: 'Ok',
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+        </script>
+    @endif
 </x-app-layout>

@@ -73,8 +73,8 @@ class MainMenu extends ModalWire
                 ->first();
 
             // create storage directory
-            $directory = $menu->id . '/';
-            Storage::makeDirectory($directory);
+            $directory = $menu->id;
+            // Storage::makeDirectory($directory);
 
             // update menu storage location
             MenuMainMenu::where('id', $menu->id)

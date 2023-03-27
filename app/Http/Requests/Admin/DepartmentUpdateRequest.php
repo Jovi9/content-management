@@ -5,6 +5,7 @@ namespace App\Http\Requests\Admin;
 use App\Models\Department;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Crypt;
 
 class DepartmentUpdateRequest extends FormRequest
 {
@@ -26,7 +27,7 @@ class DepartmentUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'departmentName' => ['required', 'string', 'max:255', Rule::unique(Department::class)->ignore($this->department)]
+            'departmentName' => ['required', 'string', 'max:255', Rule::unique(Department::class)->ignore(Crypt::decrypt($this->department))]
         ];
     }
 }

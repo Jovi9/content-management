@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\CompanyProfile;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\CompanyProfileRequest;
 use App\Http\Controllers\UserLogActivityController;
@@ -107,6 +108,11 @@ class CompanyProfileController extends Controller
      */
     public function update(CompanyProfileRequest $request, $id)
     {
+        try {
+            $id = Crypt::decrypt($id);
+        } catch (\Throwable $th) {
+            return back();
+        }
         $companyProfile = CompanyProfile::where('id', $id)->first();
         // dd($request);
         $query = CompanyProfile::where('id', $id)

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Admin\UserCreateRequest;
 use App\Http\Requests\Admin\UserUpdateRequest;
 use App\Http\Controllers\UserLogActivityController;
+use Illuminate\Support\Facades\Crypt;
 
 class UserController extends Controller
 {
@@ -53,9 +54,9 @@ class UserController extends Controller
 
         $query = User::create([
             'employeeID' => $request->employeeID,
-            'firstName' => $request->firstName,
-            'middleInitial' => $request->middleInitial,
-            'lastName' => $request->lastName,
+            'firstName' => ucwords($request->firstName),
+            'middleInitial' => ucwords($request->middleInitial),
+            'lastName' => ucwords($request->lastName),
             'department_id' => $request->department_id,
             'user_type_id' => $request->user_type,
             'email' => $request->email,
@@ -64,14 +65,14 @@ class UserController extends Controller
 
         $log = [];
         $log['action'] = "Created User";
-        $log['content'] = "Employee ID: " . $request->employeeID . ", First Name: " . $request->firstName . " Middle Initial: " . $request->middleInitial . ", Last Name: " . $request->lastName . ", Department: " . $department->departmentName . ", User Type: " . $userType->userTypeName . ", Email: " . $request->email;
+        $log['content'] = "Employee ID: " . ucwords($request->employeeID) . ", First Name: " . ucwords($request->firstName) . " Middle Initial: " . ucwords($request->middleInitial) . ", Last Name: " . ucwords($request->lastName) . ", Department: " . ucwords($department->departmentName) . ", User Type: " . ucwords($userType->userTypeName) . ", Email: " . $request->email;
         $log['changes'] = '';
 
         if ($query) {
             UserLogActivityController::store($log);
-            return Redirect::route('admin.users.create')->with('status', 'user-created');
+            return Redirect::route('admin.users.index')->with('saved', 'user-created');
         } else {
-            return back();
+            return back()->withErrors(['error' => 'Failed to process request.']);
         }
     }
 
@@ -94,6 +95,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        try {
+            $id = Crypt::decrypt($id);
+        } catch (\Throwable $th) {
+            return back();
+        }
         $types = UserType::whereNot('userTypeName', "administrator")->get();
         $user = User::where('id', $id)->first();
         $departments = Department::get();
@@ -109,6 +115,11 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, $id)
     {
+        try {
+            $id = Crypt::decrypt($id);
+        } catch (\Throwable $th) {
+            return back();
+        }
         $user = User::where('id', $id)->first();
         $department = Department::where('id', $user->department_id)->first();
         $userType = UserType::where('id', $user->user_type)->first();
@@ -119,23 +130,23 @@ class UserController extends Controller
         $query = User::where('id', $id)
             ->update([
                 'employeeID' => $request->employeeID,
-                'firstName' => $request->firstName,
-                'middleInitial' => $request->middleInitial,
-                'lastName' => $request->lastName,
+                'firstName' => ucwords($request->firstName),
+                'middleInitial' => ucwords($request->middleInitial),
+                'lastName' => ucwords($request->lastName),
                 'department_id' => $request->department_id,
                 'user_type_id' => $request->user_type,
             ]);
 
         $log = [];
         $log['action'] = "Updated User";
-        $log['content'] = "Employee ID: " . $user->employeeID . ", First Name: " . $user->firstName . " Middle Initial: " . $user->middleInitial . ", Last Name: " . $user->lastName . ", Department: " . $department->departmentName . ", User Type: " . $userType->userTypeName;
-        $log['changes'] = "Employee ID: " . $request->employeeID . ", First Name: " . $request->firstName . " Middle Initial: " . $request->middleInitial . ", Last Name: " . $request->lastName . ", Department: " . $newDepartment->departmentName . ", User Type: " . $newUserType->userTypeName;
+        $log['content'] = "Employee ID: " . $user->employeeID . ", First Name: " . ucwords($user->firstName) . " Middle Initial: " . ucwords($user->middleInitial) . ", Last Name: " . ucwords($user->lastName) . ", Department: " . ucwords($department->departmentName) . ", User Type: " . ucwords($department->userTypeName);
+        $log['changes'] = "Employee ID: " . $request->employeeID . ", First Name: " . ucwords($request->firstName) . " Middle Initial: " . ucwords($request->middleInitial) . ", Last Name: " . ucwords($request->lastName) . ", Department: " . ucwords($newDepartment->departmentName) . ", User Type: " . ucwords($newUserType->userTypeName);
 
         if ($query) {
             UserLogActivityController::store($log);
-            return Redirect::route('admin.users.index')->with('status', 'user-updated');
+            return Redirect::route('admin.users.index')->with('updated', 'user-updated');
         } else {
-            return back();
+            return back()->withErrors(['error' => 'Failed to process request.']);
         }
     }
 

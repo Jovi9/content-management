@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Admin\Menu;
 
-use App\Models\UserType;
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Crypt;
 
-class UserTypeUpdateRequest extends FormRequest
+class ContentUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +24,8 @@ class UserTypeUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'userTypeName' => ['required', 'string', 'max:255', Rule::unique(UserType::class)->ignore(Crypt::decrypt($this->user_type))]
+            'title' => ['required', 'string', 'max:255'],
+            'content' => ['required']
         ];
     }
 }
