@@ -56,11 +56,30 @@
 
                                 <th
                                     class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
+                                    Created By</th>
+
+                                <th
+                                    class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
+                                    Modified By</th>
+
+                                <th
+                                    class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
                                     Action</th>
                             </tr>
                         </thead>
                         <tbody class="block md:table-row-group">
                             @foreach ($contents as $content)
+                                @php
+                                    foreach ($users as $user) {
+                                        if ($user->id == $content->user_id) {
+                                            $creator = $user->firstName . ' ' . $user->lastName;
+                                        }
+                                        if ($user->id == $content->mod_user_id) {
+                                            $modified = $user->firstName . ' ' . $user->lastName;
+                                        }
+                                    }
+                                @endphp
+
                                 <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
                                     <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                         <span class="inline-block w-1/3 md:hidden font-bold">Sub Menu
@@ -82,10 +101,18 @@
                                         {{ ucwords($content->status) }}
                                     </td>
                                     <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                        <span class="inline-block w-1/3 md:hidden font-bold">Created By</span>
+                                        {{ ucwords($creator) }}
+                                    </td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                        <span class="inline-block w-1/3 md:hidden font-bold">Modified By</span>
+                                        {{ ucwords($modified) }}
+                                    </td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                         <span class="inline-block w-1/3 md:hidden font-bold">Action</span>
                                         @if (isset($is_SubMenu))
                                             <a
-                                                href="{{ route('user.edit-sub-content', ['menu' => $menu->main_menu, 'sub_menu' => $is_SubMenu, 'id' => Crypt::encrypt($content->id)]) }}">
+                                                href="{{ route('user.edit-content', ['menu' => $menu->main_menu, 'sub_menu' => $is_SubMenu, 'id' => Crypt::encrypt($content->id)]) }}">
                                                 <button
                                                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 border border-blue-500 rounded">
                                                     <i class="fa fa-edit"></i>
@@ -93,7 +120,7 @@
                                             </a>
                                         @else
                                             <a
-                                                href="{{ route('user.edit-content', ['menu' => $menu->main_menu, 'id' => Crypt::encrypt($content->id)]) }}">
+                                                href="{{ route('user.edit-content', ['menu' => $menu->main_menu, 'sub_menu' => 'none', 'id' => Crypt::encrypt($content->id)]) }}">
                                                 <button
                                                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 border border-blue-500 rounded">
                                                     <i class="fa fa-edit"></i>

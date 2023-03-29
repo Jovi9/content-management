@@ -56,15 +56,29 @@
                                 {{ __('Save') }}
                             </button>
                             @if ($subMenu != 'none')
-                                <a class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
-                                    href="{{ route('user.show-content-sub', ['menu' => $menu, 'sub_menu' => $subMenu]) }}">
-                                    {{ __('Cancel') }}
-                                </a>
+                                @if ($fromContent == true)
+                                    <a class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
+                                        href="{{ route('user.contents-index') }}">
+                                        {{ __('Cancel') }}
+                                    </a>
+                                @else
+                                    <a class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
+                                        href="{{ route('user.show-content-sub', ['menu' => $menu, 'sub_menu' => $subMenu]) }}">
+                                        {{ __('Cancel') }}
+                                    </a>
+                                @endif
                             @else
-                                <a class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
-                                    href="{{ route('user.show-content-main', ['menu' => $menu]) }}">
-                                    {{ __('Cancel') }}
-                                </a>
+                                @if ($fromContent == true)
+                                    <a class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
+                                        href="{{ route('user.contents-index') }}">
+                                        {{ __('Cancel') }}
+                                    </a>
+                                @else
+                                    <a class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
+                                        href="{{ route('user.show-content-main', ['menu' => $menu]) }}">
+                                        {{ __('Cancel') }}
+                                    </a>
+                                @endif
                             @endif
                         </div>
                     </form>
@@ -143,7 +157,7 @@
         tinymce.init({
             selector: 'textarea#content',
             plugins: 'autolink charmap emoticons image link lists searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter linkchecker permanentpen advtable editimage tableofcontents footnotes autocorrect typography inlinecss',
-            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image table | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
             removed_menuitems: 'newdocument',
             menubar: false,
             branding: false,

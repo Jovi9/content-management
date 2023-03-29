@@ -15,6 +15,9 @@ class Content extends Model
         'title',
         'content',
         'attachment',
-        'status'
+        'status',
+        'user_id',
+        'mod_user_id',
+        'isVisible'
     ];
 }

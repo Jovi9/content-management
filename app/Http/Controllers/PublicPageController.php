@@ -102,6 +102,10 @@ class PublicPageController extends Controller
                 // if no submenu return view/data
 
                 $contents = Content::where('main_menu_id', $menu->id)
+                    ->whereNot(function ($query) {
+                        $query->where('status', 'pending')
+                            ->orWhere('isVisible', 0);
+                    })
                     ->orderBy('created_at', 'desc')
                     ->get();
 
@@ -127,6 +131,10 @@ class PublicPageController extends Controller
 
         $contents = Content::where('main_menu_id', $mainMenu->id)
             ->where('sub_menu_id', $subMenu->id)
+            ->whereNot(function ($query) {
+                $query->where('status', 'pending')
+                    ->orWhere('isVisible', 0);
+            })
             ->orderBy('created_at', 'desc')
             ->get();
 

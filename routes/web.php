@@ -63,20 +63,18 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::post('/contents', [ContentController::class, 'store'])->name('contents-store');
         // update content
         Route::put('/contents/{id}', [ContentController::class, 'update'])->name('contents-update');
+        // edit contents
+        Route::get('/contents/{id}/edit', [ContentController::class, 'edit'])->name('edit-content');
         // store img file
         Route::post('/contents/upload', [ContentController::class, 'imageUpload'])->name('img-upload');
         // show content of main menu
         Route::get('/contents/{menu}', [ContentController::class, 'show'])->name('show-content-main');
         // create content of main menu
         Route::get('/contents/{menu}/create', [ContentController::class, 'create'])->name('create-content');
-        // edit main content
-        Route::get('/contents/{menu}/{id}/edit', [ContentController::class, 'edit'])->name('edit-content');
         // show sub menu content
         Route::get('/contents/{menu}/{sub_menu}', [ContentController::class, 'showSubContent'])->name('show-content-sub');
         // create sub menu content
         Route::get('/contents/{menu}/{sub_menu}/create', [ContentController::class, 'createSubContent'])->name('create-sub-content');
-        // edit sub content
-        Route::get('/contents/{menu}/{sub_menu}/{id}/edit', [ContentController::class, 'editSubContent'])->name('edit-sub-content');
     });
 });
 

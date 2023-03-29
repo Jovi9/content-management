@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\UserLogActivityController;
 use App\Http\Requests\Admin\Menu\ContentCreateRequest;
 use App\Http\Requests\Admin\Menu\ContentUpdateRequest;
+use App\Models\User;
 
 class ContentController extends Controller
 {
@@ -80,8 +81,10 @@ class ContentController extends Controller
         $status = '';
         if (Auth::user()->user_type_id == 1) {
             $status = 'approved';
+            $visible = true;
         } else {
             $status = 'pending';
+            $visible = false;
         }
 
         $contents = [
@@ -89,7 +92,10 @@ class ContentController extends Controller
             'sub_menu_id' => $subMenuID,
             'title' => $request->title,
             'content' => $request->content,
-            'status' => $status
+            'status' => $status,
+            'user_id' => Auth::id(),
+            'mod_user_id' => Auth::id(),
+            'isVisible' => $visible
         ];
 
         $query = Content::create($contents);
@@ -149,10 +155,13 @@ class ContentController extends Controller
 
         $contents = Content::where('main_menu_id', $menu->id)->get();
 
+        $users = User::get();
+
         return view('admin.menu.contents.show', [
             'menu' => $menu,
             'subMenu' => 'none',
-            'contents' => $contents
+            'contents' => $contents,
+            'users' => $users
         ]);
     }
 
@@ -166,6 +175,8 @@ class ContentController extends Controller
         $menu = MainMenu::where('main_menu', $menu)->first();
         $subMenu = SubMenu::where('sub_menu', $sub_menu)->first();
 
+        $users = User::get();
+
         $contents = Content::where('main_menu_id', $menu->id)
             ->where('sub_menu_id', $subMenu->id)
             ->get();
@@ -174,7 +185,8 @@ class ContentController extends Controller
             'is_SubMenu' => $subMenu->sub_menu,
             'menu' => $menu,
             'subMenu' => $subMenu->id,
-            'contents' => $contents
+            'contents' => $contents,
+            'users' => $users
         ]);
     }
 
@@ -184,45 +196,58 @@ class ContentController extends Controller
      * @param  string  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($menu, $id)
+    public function edit(Request $request, $id)
     {
         try {
             $id = Crypt::decrypt($id);
         } catch (\Throwable $th) {
             return back();
         }
-        if (ucwords($menu) == "Home" || ucwords($menu) == "About" || ucwords($menu) == "Contact Us") {
+        if (ucwords($request->menu) == "Home" || ucwords($request->menu) == "About" || ucwords($request->menu) == "Contact Us") {
             return Redirect::back();
         }
 
         $content = Content::where('id', $id)->first();
 
+        if ($request->sub_menu == 'none') {
+            $subMenu = 'none';
+        } else {
+            $subMenu = $request->sub_menu;
+        }
+
+        if (isset($request->fromContent)) {
+            $fromContent = true;
+        } else {
+            $fromContent = false;
+        }
+
         return view('admin.menu.contents.edit', [
-            'menu' => $menu,
-            'subMenu' => 'none',
-            'content' => $content
+            'menu' => $request->menu,
+            'subMenu' => $subMenu,
+            'content' => $content,
+            'fromContent' => $fromContent
         ]);
     }
 
-    public function editSubContent($menu, $sub_menu, $id)
-    {
-        try {
-            $id = Crypt::decrypt($id);
-        } catch (\Throwable $th) {
-            return back();
-        }
-        if (ucwords($menu) == "Home" || ucwords($menu) == "About" || ucwords($menu) == "Contact Us") {
-            return Redirect::back();
-        }
+    // public function editSubContent($menu, $sub_menu, $id)
+    // {
+    //     try {
+    //         $id = Crypt::decrypt($id);
+    //     } catch (\Throwable $th) {
+    //         return back();
+    //     }
+    //     if (ucwords($menu) == "Home" || ucwords($menu) == "About" || ucwords($menu) == "Contact Us") {
+    //         return Redirect::back();
+    //     }
 
-        $content = Content::where('id', $id)->first();
+    //     $content = Content::where('id', $id)->first();
 
-        return view('admin.menu.contents.edit', [
-            'menu' => $menu,
-            'subMenu' => $sub_menu,
-            'content' => $content
-        ]);
-    }
+    //     return view('admin.menu.contents.edit', [
+    //         'menu' => $menu,
+    //         'subMenu' => $sub_menu,
+    //         'content' => $content
+    //     ]);
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -251,14 +276,18 @@ class ContentController extends Controller
         $status = '';
         if (Auth::user()->user_type_id == 1) {
             $status = 'approved';
+            $visible = true;
         } else {
             $status = 'pending';
+            $visible = false;
         }
 
         $contents = [
             'title' => $request->title,
             'content' => $request->content,
-            'status' => $status
+            'status' => $status,
+            'mod_user_id' => Auth::id(),
+            'isVisible' => $visible
         ];
 
         $query = Content::where('id', $id)

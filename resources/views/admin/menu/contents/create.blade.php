@@ -42,11 +42,9 @@
                             <x-input-label for="content" :value="__('Content')" />
                             <textarea name="content" id="content" rows="15"
                                 class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full">
-                            {{ old('content') }}
-                            </textarea>
+                                {{ old('content') }}</textarea>
                             <x-input-error :messages="$errors->get('content')" class="mt-2" />
                         </div>
-
                         <div class="mt-4 flex gap-2">
                             <button type="button" id="btnSubmit"
                                 class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
@@ -138,9 +136,9 @@
         });
 
         tinymce.init({
-            selector: 'textarea#content',
+            selector: '#content',
             plugins: 'autolink charmap emoticons image link lists searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter linkchecker permanentpen advtable editimage tableofcontents footnotes autocorrect typography inlinecss',
-            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image table | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
             removed_menuitems: 'newdocument',
             menubar: false,
             branding: false,
@@ -151,7 +149,7 @@
         });
     </script>
 
-    @if ($errors->any())
+    @if ($errors->get('error'))
         <script>
             Swal.fire({
                 icon: 'error',

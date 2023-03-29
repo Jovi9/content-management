@@ -18,15 +18,54 @@
                             @livewire('content.content-menu')
                         </div>
                         {{-- <div class=" p-6 bg-white rounded">
-                            @livewire('menu.sub-menu')
+
                         </div> --}}
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
 
+    @role('administrator')
+        <div class=" pb-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class=" overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class=" text-gray-900">
+                        <div class=" p-6 bg-white rounded">
+                            @livewire('content.manage-content')
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endrole
+
     @section('scripts')
         @livewireScripts
+        <script>
+            window.addEventListener('swal-modal', event => {
+                if (event.detail.title == "error") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Failed to process request.',
+                        text: 'Something went wrong, please try again.',
+                        allowOutsideClick: false
+                    });
+                } else if (event.detail.title == "saved") {
+                    Swal.fire({
+                        icon: 'success',
+                        title: event.detail.message,
+                        confirmButtonText: 'Ok',
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    });
+                }
+            });
+        </script>
     @endsection
 </x-app-layout>

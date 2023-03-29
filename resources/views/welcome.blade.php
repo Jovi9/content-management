@@ -1,5 +1,12 @@
 <x-guest-layout>
     @section('title', ucwords($menuName))
+    @section('styles')
+        {{-- <style>
+            ul {
+                list-style-type: disc;
+            }
+        </style> --}}
+    @endsection
     @include('layouts.guest_navigation')
 
     {{-- header --}}
@@ -27,5 +34,12 @@
     @endforeach
 
 
-
+    {{-- @section('scripts')
+        <script>
+            $(document).ready(function() {
+                $('ul').addClass('list-disc');
+                $('ol').addClass('list-decimal');
+            });
+        </script>
+    @endsection --}}
 </x-guest-layout>

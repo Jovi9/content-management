@@ -21,6 +21,9 @@ return new class extends Migration
             $table->longText('content');
             $table->string('attachment')->nullable();
             $table->string('status')->default('denied');
+            $table->foreignId('user_id')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
+            $table->foreignId('mod_user_id')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
+            $table->boolean('isVisible');
             $table->timestamps();
         });
     }

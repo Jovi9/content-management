@@ -15,13 +15,8 @@
     {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" /> --}}
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @yield('styles')
 </head>
-
-{{-- <body class="font-sans text-gray-900 antialiased">
-    <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-        {{ $slot }}
-    </div>
-</body> --}}
 
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100">
@@ -36,6 +31,8 @@
     </div>
 
     {{-- <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script> --}}
+    <script src="{{ asset('jquery/jquery-3.6.3.min.js') }}"></script>
+    @yield('scripts')
 </body>
 
 </html>
