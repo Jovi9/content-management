@@ -1,133 +1,241 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title')</title>
 
     <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     {{-- fontawesome --}}
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" />
+    <link rel="stylesheet" href="{{ asset('assets/fontawesome-6-4-0/css/all.css') }}">
+
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="{{ asset('assets/adminlte/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('assets/adminlte/admin/css/adminlte.min.css') }}">
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    {{-- sweetalert2 --}}
-    <link rel="stylesheet" href="{{ asset('sweetalert2/sweetalert2.min.css') }}">
-    <script src="{{ asset('sweetalert2/sweetalert2.min.js') }}"></script>
-
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    {{-- <link rel="stylesheet" href="{{ asset('assets/bootstrap-5.2.0-dist/css/bootstrap.min.css') }}">
+    <script src="{{ asset('assets/bootstrap-5.2.0-dist/js/bootstrap.min.js') }}" defer></script> --}}
     @yield('styles')
 </head>
 
-<body class="font-sans antialiased">
-    <!-- component -->
-    {{-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script> --}}
-    <div class="md:flex flex-col md:flex-row md:min-h-screen w-full">
-        <div @click.away="open = false"
-            class="flex flex-col w-full md:w-64 text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-800 flex-shrink-0"
-            x-data="{ open: false }">
-            <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
-                <a href="{{ route('dashboard') }}"
-                    class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">
-                    LOGO UI
-                </a>
-                <button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" @click="open = !open">
-                    <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
-                        <path x-show="!open" fill-rule="evenodd"
-                            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z"
-                            clip-rule="evenodd"></path>
-                        <path x-show="open" fill-rule="evenodd"
-                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                </button>
-            </div>
-            <nav :class="{ 'block': open, 'hidden': !open }"
-                class="flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">
-                @role('administrator')
-                    <x-sidebar-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-sidebar-link>
-                    <x-sidebar-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
-                        {{ __('Users') }}
-                    </x-sidebar-link>
-                    <x-sidebar-link :href="route('admin.company_profile.index')" :active="request()->routeIs('admin.company_profile.index')">
-                        {{ __('Company Profile') }}
-                    </x-sidebar-link>
-                    <x-sidebar-link :href="route('admin.menus-index')" :active="request()->routeIs('admin.menus-index')">
-                        {{ __('Menus') }}
-                    </x-sidebar-link>
-                @endrole
+<body class="hold-transition sidebar-mini layout-fixed">
 
-                <x-sidebar-link :href="route('user.contents-index')" :active="request()->routeIs('user.contents-index')">
-                    {{ __('Contents') }}
-                </x-sidebar-link>
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
+                            class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="{{ route('dashboard') }}" class="nav-link">CONTENT MANAGEMENT</a>
+                </li>
+            </ul>
 
-                <div @click.away="open = false" class="relative" x-data="{ open: false }">
-                    <button @click="open = !open"
-                        class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
-                        <span>{{ Auth::user()->firstName }}</span>
-                        <svg fill="currentColor" viewBox="0 0 20 20" :class="{ 'rotate-180': open, 'rotate-0': !open }"
-                            class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1">
-                            <path fill-rule="evenodd"
-                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
-                    <div x-show="open" x-transition:enter="transition ease-out duration-100"
-                        x-transition:enter-start="transform opacity-0 scale-95"
-                        x-transition:enter-end="transform opacity-100 scale-100"
-                        x-transition:leave="transition ease-in duration-75"
-                        x-transition:leave-start="transform opacity-100 scale-100"
-                        x-transition:leave-end="transform opacity-0 scale-95"
-                        class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg">
-                        <div class="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800">
-                            <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                                href="{{ route('profile.edit') }}">Profile</a>
-                            <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                                href="{{ route('activity_log') }}">Activity Log</a>
-
-                            <!-- Authentication -->
-                            <form method="POST" action="{{ route('logout') }}">
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                {{-- user drop --}}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fas fa-user"></i>
+                        @if (Auth::user())
+                            {{ Auth::user()->firstName }}
+                        @endif
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+                        @role('administrator')
+                            <a href="{{ route('admin.options-index') }}" class="dropdown-item">
+                                <i class="fas fa-gears mr-2"></i> Options
+                            </a>
+                            <div class="dropdown-divider"></div>
+                        @endrole
+                        <a href="{{ route('user-profile') }}" class="dropdown-item">
+                            <i class="fas fa-user mr-2"></i> My Profile
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="{{ route('user-activities') }}" class="dropdown-item">
+                            <i class="fas fa-clock-rotate-left mr-2"></i> Activity Log
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="{{ route('logout') }}" class="dropdown-item"
+                            onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                            <i class="fas fa-right-from-bracket mr-2"></i> Logout
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
-
-                                <x-dropdown-link :href="route('logout')"
-                                    class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                    {{ __('Log Out') }}
-                                </x-dropdown-link>
                             </form>
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="{{ route('dashboard') }}" class="brand-link text-center">
+                {{-- <img src="{{ url('storage/logo/sys_logo.png') }}" alt="LOGO" class="brand-image img-circle elevation-3"
+                    style="opacity: .8"> --}}
+                <img src="{{ asset('storage/logo/sys_logo.png') }}" alt="LOGO" class="img-fluid" width="25%">
+                {{-- <span class="brand-text font-weight-light">Content Management System</span> --}}
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard') }}"
+                                class="nav-link @if (Route::is('dashboard')) active @endif">
+                                <i class="nav-icon fas fa-gauge-high"></i>
+                                <p>
+                                    Dashboard
+                                </p>
+                            </a>
+                        </li>
+                        @role('administrator')
+                            <li class="nav-item">
+                                <a href="{{ route('admin.users-index') }}"
+                                    class="nav-link @if (Route::is('admin.users-index')) active @endif">
+                                    <i class="nav-icon fas fa-users"></i>
+                                    <p>
+                                        Users
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.company-profile-index') }}"
+                                    class="nav-link @if (Route::is('admin.company-profile-index')) active @endif">
+                                    <i class="nav-icon fas fa-building"></i>
+                                    <p>
+                                        Company Profile
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.navigations-index') }}"
+                                    class="nav-link @if (Route::is('admin.navigations-index')) active @endif">
+                                    <i class="nav-icon fas fa-bars"></i>
+                                    <p>
+                                        Web Navigations
+                                    </p>
+                                </a>
+                            </li>
+                        @endrole
+                        <li class="nav-item  @if (Route::is('admin.contents-index') || Route::is('admin.contents-manage')) menu-open @endif"">
+                            <a href="#" class="nav-link @if (Route::is('admin.contents-index') || Route::is('admin.contents-manage')) active @endif">
+                                <i class="nav-icon fas fa-list"></i>
+                                <p>
+                                    Manage Contents
+                                    <i class="right fas fa-angle-left"></i>
+                                    {{-- <span class="badge badge-info right">6</span> --}}
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.contents-index') }}"
+                                        class="nav-link @if (Route::is('admin.contents-index')) active @endif">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Add Page Content</p>
+                                    </a>
+                                </li>
+                                @role('administrator')
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.contents-manage') }}"
+                                            class="nav-link @if (Route::is('admin.contents-manage')) active @endif">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>
+                                                Manage Contents
+                                            </p>
+                                        </a>
+                                    </li>
+                                @endrole
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('public-home') }}" class="nav-link">
+                                <i class="nav-icon far fa-eye"></i>
+                                <p>
+                                    Guest View
+                                </p>
+                            </a>
+                        </li>
+                        {{-- <li class="nav-header">PAGE CONTENTS</li> --}}
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>@yield('page-header')</h1>
                         </div>
+                        {{-- <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item"><a href="#">Layout</a></li>
+                                <li class="breadcrumb-item active">Fixed Layout</li>
+                            </ol>
+                        </div> --}}
                     </div>
-                </div>
-            </nav>
-        </div>
+                </div><!-- /.container-fluid -->
+            </section>
 
-        <div class="w-full bg-slate-200">
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white ">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
+            <main class="content">
+                @yield('content')
             </main>
+            <!-- /.content -->
         </div>
-    </div>
+        <!-- /.content-wrapper -->
 
-    {{-- scripts --}}
+        <footer class="main-footer">
+            <div class="float-right d-none d-sm-block">
+                <b>Version</b> 3.2.0
+            </div>
+            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
+            reserved.
+        </footer>
+
+    </div>
+    <!-- ./wrapper -->
+
+    {{-- jquery --}}
+    <script src="{{ asset('assets/jquery/jquery-3.6.3.min.js') }}"></script>
+    {{-- bootstrap 4 --}}
+    <script src="{{ asset('assets/adminlte/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- overlayScrollbars -->
+    <script src="{{ asset('assets/adminlte/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+    <!-- AdminLTE App -->
+    <script src="{{ asset('assets/adminlte/admin/js/adminlte.min.js') }}"></script>
     @yield('scripts')
 </body>
 

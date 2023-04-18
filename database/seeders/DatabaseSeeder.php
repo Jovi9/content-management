@@ -4,17 +4,17 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Department;
-use Database\Seeders\Menu\MainMenuSeeder;
 use Illuminate\Database\Seeder;
+use Database\Seeders\RoleSeeder;
+use Database\Seeders\AdminSeeder;
+use Database\Seeders\Menu\MainMenuSeeder;
 
 class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         // \App\Models\User::factory(10)->create();
 
@@ -28,7 +28,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             RoleSeeder::class,
-            UserTypeSeeder::class,
             AdminSeeder::class,
             MainMenuSeeder::class
         ]);

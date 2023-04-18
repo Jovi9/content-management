@@ -11,10 +11,8 @@ class RoleSeeder extends Seeder
     use WithoutModelEvents;
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         Role::create(['name' => 'administrator']);
         Role::create(['name' => 'staff']);

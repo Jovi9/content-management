@@ -1,15 +1,15 @@
 <?php
 
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\CompanyProfileController;
-use App\Http\Controllers\Admin\ContentController;
-use App\Http\Controllers\Admin\DepartmentController;
-use App\Http\Controllers\Admin\MenuController;
-use App\Http\Controllers\Admin\UserTypeController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\PublicPageController;
-use App\Http\Controllers\UserLogActivityController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PublicPageController;
+use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\UserActivityController;
+use App\Http\Controllers\Admin\CompanyProfileController;
+use App\Http\Controllers\Admin\Menu\ContentController;
+use App\Http\Controllers\Admin\Menu\MenuController;
+use App\Http\Controllers\Admin\OptionController;
+use App\Http\Controllers\Admin\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,25 +17,24 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
 |
 */
+// public pages
+Route::get('/', [PublicPageController::class, 'index'])->name('public-home');
+Route::get('/about', [PublicPageController::class, 'showAbout'])->name('public-about');
+Route::get('/contact', [PublicPageController::class, 'showContact'])->name('public-contact');
 
-require __DIR__ . '/auth.php';
+// authentication
+Auth::routes();
 
-// Route::resource('/', PublicPageController::class);
-
+// authenticated
 Route::middleware('auth', 'verified')->group(function () {
-
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/activity_logs', [UserLogActivityController::class, 'index'])->name('activity_log');
+    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('user-profile');
+    Route::get('/user-activities', [UserActivityController::class, 'index'])->name('user-activities');
+    Route::post('/user-activites', [UserActivityController::class, 'getActivity_ByID'])->name('user-activity-get');
 
     // administrator page
     Route::group([
@@ -43,41 +42,37 @@ Route::middleware('auth', 'verified')->group(function () {
         'as' => 'admin.',
         'middleware' => ['role:administrator'],
     ], function () {
-        Route::resource('/company_profile', CompanyProfileController::class);
-        Route::resource('/users', UserController::class);
-        Route::resource('/user_types', UserTypeController::class);
-        Route::resource('/departments', DepartmentController::class);
-        Route::get('/menus', [MenuController::class, 'index'])->name('menus-index');
+        Route::get('/options', [OptionController::class, 'index'])->name('options-index');
+        Route::get('/company-profile', [CompanyProfileController::class, 'index'])->name('company-profile-index');
+        Route::get('/users', [UserController::class, 'index'])->name('users-index');
+        Route::get('/web-navigations', [MenuController::class, 'index'])->name('navigations-index');
+
+        Route::get('/manage-contents', [ContentController::class, 'manageContents'])->name('contents-manage');
     });
 
-    // administrator and staff page
-    // content creation
     Route::group([
-        'prefix' => 'user',
-        'as' => 'user.',
-        'middleware' => ['role:administrator|staff'],
+        'as' => 'admin.',
     ], function () {
-        // index page
+        // contents
         Route::get('/contents', [ContentController::class, 'index'])->name('contents-index');
-        // store content
         Route::post('/contents', [ContentController::class, 'store'])->name('contents-store');
-        // update content
-        Route::put('/contents/{id}', [ContentController::class, 'update'])->name('contents-update');
-        // edit contents
-        Route::get('/contents/{id}/edit', [ContentController::class, 'edit'])->name('edit-content');
-        // store img file
-        Route::post('/contents/upload', [ContentController::class, 'imageUpload'])->name('img-upload');
-        // show content of main menu
-        Route::get('/contents/{menu}', [ContentController::class, 'show'])->name('show-content-main');
-        // create content of main menu
-        Route::get('/contents/{menu}/create', [ContentController::class, 'create'])->name('create-content');
-        // show sub menu content
-        Route::get('/contents/{menu}/{sub_menu}', [ContentController::class, 'showSubContent'])->name('show-content-sub');
-        // create sub menu content
-        Route::get('/contents/{menu}/{sub_menu}/create', [ContentController::class, 'createSubContent'])->name('create-sub-content');
+        Route::put('/contents', [ContentController::class, 'update'])->name('contents-store');
+
+        // image upload handler
+        Route::post('/contents/upload-image', [ContentController::class, 'uploadImage'])->name('contents-image-upload');
+
+        // create content
+        Route::get('/contents/{main}/{sub}/create', [ContentController::class, 'create'])->name('contents-create');
+        Route::get('/contents/{main}/create', [ContentController::class, 'create'])->name('contents-create');
+
+        // edit content
+        Route::get('/contents/{id}/edit', [ContentController::class, 'edit'])->name('contents-edit');
+
+        // show content
+        Route::get('/contents/{main}/{sub}', [ContentController::class, 'show'])->name('contents-show');
+        Route::get('/contents/{main}', [ContentController::class, 'show'])->name('contents-show');
     });
 });
 
-Route::get('/', [PublicPageController::class, 'index'])->name('public-index');
-Route::get('/{menu}', [PublicPageController::class, 'show'])->name('public-main_con-show');
-Route::get('/{menu}/{sub_menu}', [PublicPageController::class, 'show_s'])->name('public-sub_con-show');
+Route::get('/{main}/{sub}', [PublicPageController::class, 'show'])->name('public-show')->where('main', '[a-z0-9-]+')->where('sub', '[a-z0-9-]+');
+Route::get('/{main}', [PublicPageController::class, 'show'])->name('public-show')->where('main', '[a-z0-9-]+');

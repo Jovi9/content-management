@@ -9,9 +9,10 @@ class MainMenu extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'main_menu',
-        'location',
-        'status'
+    protected $fillable=[
+        'mainMenu',
+        'mainURI',
+        'mainLocation',
+        'isEnabled'
     ];
 }

@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Content extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'main_menu_id',
         'sub_menu_id',

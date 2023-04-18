@@ -11,8 +11,9 @@ class SubMenu extends Model
 
     protected $fillable = [
         'main_menu_id',
-        'sub_menu',
-        'sub_location',
-        'sub_status'
+        'subMenu',
+        'subURI',
+        'subLocation',
+        'isEnabled',
     ];
 }

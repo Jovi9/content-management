@@ -10,171 +10,171 @@ use Illuminate\Support\Facades\Redirect;
 
 class PublicPageController extends Controller
 {
-    private function fetchMainMenus()
+    private function getMainMenus()
+    {
+        return MainMenu::whereNot('isEnabled', false)
+            ->whereNot('id', 1)
+            ->get();
+    }
+
+    private function getSubMenuCount($mainMenuID)
+    {
+        return SubMenu::where('main_menu_id', $mainMenuID)
+            ->whereNot('id', 1)
+            ->whereNot('isEnabled', false)
+            ->count();
+    }
+
+    private function getSubMenu_ByMainID($mainMenuID)
+    {
+        return SubMenu::where('main_menu_id', $mainMenuID)
+            ->whereNot('isEnabled', false)
+            ->get();
+    }
+
+    private function getMenus()
     {
         $links = array();
 
-        $menus = MainMenu::whereNot('status', 'disabled')->get();
+        $mainMenus = $this->getMainMenus();
 
-        foreach ($menus as $menu) {
-            if (
-                SubMenu::where('main_menu_id', $menu->id)
-                ->whereNot('sub_menu', 'none')
-                ->whereNot('sub_status', 'disabled')
-                ->count() > 0
-            ) {
-                $subMenu = SubMenu::where('main_menu_id', $menu->id)
-                    ->whereNot('sub_status', 'disabled')
-                    ->get();
+        foreach ($mainMenus as $mainMenu) {
+            if ($this->getSubMenuCount($mainMenu->id) > 0) {
+                $subMenu = $this->getSubMenu_ByMainID($mainMenu->id);
                 array_push($links, [
-                    'main_menu' => $menu->main_menu,
-                    'sub_menu' => $subMenu
+                    'mainMenu' => $mainMenu->mainMenu,
+                    'mainURI' => $mainMenu->mainURI,
+                    'subMenu' => $subMenu,
                 ]);
             } else {
                 array_push($links, [
-                    'main_menu' => $menu->main_menu,
-                    'sub_menu' => 'none'
+                    'mainMenu' => $mainMenu->mainMenu,
+                    'mainURI' => $mainMenu->mainURI,
+                    'subMenu' => 'none',
                 ]);
             }
         }
-
         return $links;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private function getMainMenu_ByURI($uri)
+    {
+        return MainMenu::where('mainURI', $uri)
+            ->whereNot('id', 1)
+            ->whereNot('isEnabled', false)
+            ->first();
+    }
+
+    private function getSubMenu_ByURI($uri)
+    {
+        return SubMenu::where('subURI', $uri)
+            ->whereNot('id', 1)
+            ->whereNot('isEnabled', false)
+            ->first();
+    }
+
     public function index()
     {
-        $contents = Content::where('main_menu_id', 1)->get();
-
-        return view('welcome', [
-            'mainMenus' => $this->fetchMainMenus(),
+        return view('public.home', [
+            'mainMenus' => $this->getMenus(),
             'menuName' => 'Home',
-            'contents' => $contents
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function showAbout()
     {
-        //
+        return view('public.about', [
+            'mainMenus' => $this->getMenus(),
+            'menuName' => 'Home',
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function showContact()
     {
-        //
+        return view('public.contact', [
+            'mainMenus' => $this->getMenus(),
+            'menuName' => 'Home',
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  string  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($menuName)
+    private function validateURIRequest(array $request)
     {
-        // get menu dateils
-        $menu = MainMenu::where('main_menu', $menuName)->first();
-
-        if ($menu == true) {
-            // get menu count in sub menu table
-            if (
-                SubMenu::where('main_menu_id', $menu->id)
-                ->whereNot('sub_menu', 'none')
-                ->whereNot('sub_status', 'disabled')
-                ->count() > 0
-            ) {
-                return back();
-            } else {
-                // if no submenu return view/data
-
-                $contents = Content::where('main_menu_id', $menu->id)
-                    ->whereNot(function ($query) {
-                        $query->where('status', 'pending')
-                            ->orWhere('isVisible', 0);
-                    })
-                    ->orderBy('created_at', 'desc')
-                    ->get();
-
-                return view('welcome', [
-                    'mainMenus' => $this->fetchMainMenus(),
-                    'menuName' => $menuName,
-                    'contents' => $contents
-                ]);
-            }
+        $menu = array();
+        $mainMenu = $this->getMainMenu_ByURI($request['mainMenu']);
+        if (!($mainMenu)) {
+            return false;
         } else {
-            return back();
+            if ($this->getSubMenuCount($mainMenu->id) > 0) {
+                $subMenu = $this->getSubMenu_ByURI($request['subMenu']);
+                if (!($subMenu)) {
+                    return false;
+                }
+                array_push($menu, [
+                    'mainMenu' => $mainMenu,
+                    'subMenu' => $subMenu,
+                ]);
+            } else {
+                if ($request['subMenu'] == null) {
+                    array_push($menu, [
+                        'mainMenu' => $mainMenu,
+                        'subMenu' => 'none',
+                    ]);
+                }
+            }
         }
+        return $menu;
     }
 
-    public function show_s($menu, $sub_menu)
+    private function getContents($mainMenuID, $subMenuID)
     {
-        $mainMenu = MainMenu::where('main_menu', $menu)->first();
-        $subMenu = SubMenu::where('sub_menu', $sub_menu)->first();
-
-        if ($mainMenu->status == "disabled" || $subMenu->sub_status == "disabled") {
-            return Redirect::back();
-        }
-
-        $contents = Content::where('main_menu_id', $mainMenu->id)
-            ->where('sub_menu_id', $subMenu->id)
+        return Content::where('main_menu_id', $mainMenuID)
+            ->where('sub_menu_id', $subMenuID)
             ->whereNot(function ($query) {
                 $query->where('status', 'pending')
                     ->orWhere('isVisible', 0);
             })
             ->orderBy('created_at', 'desc')
             ->get();
+    }
 
-        return view('welcome', [
-            'mainMenus' => $this->fetchMainMenus(),
-            'menuName' => $sub_menu,
-            'contents' => $contents
+    // main menu
+    public function show(Request $request)
+    {
+        $menu = $this->validateURIRequest([
+            'mainMenu' => $request->main,
+            'subMenu' => $request->sub,
         ]);
-    }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        if ($menu == false) {
+            return Redirect::route('public-home');
+        } else {
+            $mainMenu = $this->getMainMenu_ByURI($request->main);
+            if ($mainMenu) {
+                if ($request->sub == '') {
+                    //
+                    $contents = $this->getContents($mainMenu->id, 1);
+                    return view('public.custom-page', [
+                        'mainMenus' => $this->getMenus(),
+                        'menuName' => $mainMenu->mainMenu,
+                        'contents' => $contents,
+                    ]);
+                } else {
+                    //
+                    $subMenu = $this->getSubMenu_ByURI($request->sub);
+                    if ($subMenu) {
+                        $contents = $this->getContents($mainMenu->id, $subMenu->id);
+                        return view('public.custom-page', [
+                            'mainMenus' => $this->getMenus(),
+                            'menuName' => $subMenu->subMenu,
+                            'contents' => $contents,
+                        ]);
+                    } else {
+                        return Redirect::route('public-home');
+                    }
+                }
+            } else {
+                return Redirect::route('public-home');
+            }
+        }
     }
 }

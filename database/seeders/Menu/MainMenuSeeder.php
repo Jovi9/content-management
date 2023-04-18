@@ -9,33 +9,34 @@ use Illuminate\Database\Seeder;
 
 class MainMenuSeeder extends Seeder
 {
+    use WithoutModelEvents;
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         MainMenu::create([
-            'main_menu' => 'Home',
-            'location' => '1'
-        ]);
-
-        MainMenu::create([
-            'main_menu' => 'About',
-            'location' => '2'
-        ]);
-
-        MainMenu::create([
-            'main_menu' => 'Contact Us',
-            'location' => '3',
+            'mainMenu' => 'none',
+            'mainURI'=>'none',
         ]);
 
         SubMenu::create([
             'main_menu_id' => 1,
-            'sub_menu' => 'None',
-            'sub_location' => '1',
-            'sub_status' => 'disabled'
+            'subMenu' => 'none',
+            'subURI'=>'none',
         ]);
+
+        // MainMenu::create([
+        //     'mainMenu' => 'Test 1',
+        // ]);
+
+        // MainMenu::create([
+        //     'mainMenu' => 'Test 2 w/ Sub',
+        // ]);
+
+        // SubMenu::create([
+        //     'main_menu_id' => 3,
+        //     'subMenu' => 'Sub Test 1',
+        // ]);
     }
 }
