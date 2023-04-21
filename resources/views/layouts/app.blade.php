@@ -158,7 +158,7 @@
                                     <a href="{{ route('admin.contents-index') }}"
                                         class="nav-link @if (Route::is('admin.contents-index')) active @endif">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Add Page Content</p>
+                                        <p>Page Contents</p>
                                     </a>
                                 </li>
                                 @role('administrator')

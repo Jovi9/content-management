@@ -160,6 +160,7 @@ class ContentController extends Controller
 
     public function uploadImage(Request $request)
     {
+        // dd($request);
         try {
             if ($request->mainMenu) {
                 $mainMenuID = Crypt::decrypt($request->mainMenu);
@@ -225,7 +226,7 @@ class ContentController extends Controller
 
         $log = [];
         $log['action'] = "Uploaded Content to " . $actionLog;
-        $log['content'] = "Title: " . $contents['title'];
+        $log['content'] = "Title: " . $contents['title'] . ", Contents: " . $contents['content'];
         $log['changes'] = "";
 
         $que = Content::create($contents);
@@ -334,13 +335,13 @@ class ContentController extends Controller
         $subMenu = $this->getSubMenu_ByID($content->sub_menu_id);
 
         $mainURI = $mainMenu->mainURI;
-        $mainMenuID = $mainMenu->id;
+        $mainMenuID = Crypt::encrypt($mainMenu->id);;
 
         if ($subMenu->id === 1) {
             $subURI = 'none';
-            $subMenuID = 1;
+            $subMenuID = Crypt::encrypt(1);;
         } else {
-            $subMenuID = $subMenu->id;
+            $subMenuID = Crypt::encrypt($subMenu->id);;
             $subURI = $subMenu->subURI;
         }
 
@@ -400,8 +401,8 @@ class ContentController extends Controller
 
         $log = [];
         $log['action'] = "Updated Content of " . $actionLog;
-        $log['content'] = "Title: " . $content->title;
-        $log['changes'] = "Title: " . $contents['title'];
+        $log['content'] = "Title: " . $content->title . ', Content: ' . $content->content;
+        $log['changes'] = "Title: " . $contents['title'] . ', Content: ' . $contents['content'];
 
         $que = Content::where('id', $contentID)
             ->update($contents);
