@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('companyHeadTitle');
             $table->string('companyType');
             $table->string('companyDescription');
+            $table->string('email')->unique();
             $table->integer('last_user_id')->default(1);
             $table->timestamps();
         });

@@ -6,13 +6,14 @@ use App\Http\Controllers\UserActivityController;
 use App\Http\Livewire\LiveForm;
 use App\Models\CompanyProfile as ModelsCompanyProfile;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class CompanyProfile extends LiveForm
 {
     protected $profile;
     public $count = '';
-    public $companyName, $companyAddress, $companyHead, $companyHeadTitle, $companyType, $companyDescription;
+    public $companyName, $companyAddress, $companyHead, $companyHeadTitle, $companyType, $companyDescription, $companyEmail;
 
     protected function rules()
     {
@@ -23,6 +24,7 @@ class CompanyProfile extends LiveForm
             'companyHeadTitle' => ['required', 'string', 'max:255'],
             'companyType' => ['required', 'string', 'max:255'],
             'companyDescription' => ['required', 'string'],
+            'companyEmail' => ['required', 'email', 'max:255', Rule::unique(ModelsCompanyProfile::class, 'email')],
         ];
     }
 
@@ -58,11 +60,12 @@ class CompanyProfile extends LiveForm
             'companyHeadTitle' => ucwords($this->companyHeadTitle),
             'companyType' => ucwords($this->companyType),
             'companyDescription' => ucwords($this->companyDescription),
+            'email' => $this->companyEmail,
         ];
 
         $log = [];
         $log['action'] = "Created Company Profile";
-        $log['content'] = "Company Name: " . $this->companyName . ", Company Address: " . $this->companyAddress . ", Company Head: "  . $this->companyHead . ", Company Head Title: "  . $this->companyHeadTitle . ", Company Type: " . $this->companyType . ", Company Description: " . $this->companyDescription;
+        $log['content'] = "Company Name: " . $this->companyName . ", Company Address: " . $this->companyAddress . ", Company Head: "  . $this->companyHead . ", Company Head Title: "  . $this->companyHeadTitle . ", Company Type: " . $this->companyType . ", Company Description: " . $this->companyDescription . ", Email: " . $this->companyEmail;
         $log['changes'] = '';
 
         $query = ModelsCompanyProfile::create($profile);
@@ -91,11 +94,20 @@ class CompanyProfile extends LiveForm
         $this->companyHeadTitle = $comProfile->companyHeadTitle;
         $this->companyType = $comProfile->companyType;
         $this->companyDescription = $comProfile->companyDescription;
+        $this->companyEmail = $comProfile->email;
     }
 
     public function update()
     {
-        $this->validate();
+        $this->validate([
+            'companyName' => ['required', 'string', 'max:255'],
+            'companyAddress' => ['required', 'string'],
+            'companyHead' => ['required', 'string', 'max:255'],
+            'companyHeadTitle' => ['required', 'string', 'max:255'],
+            'companyType' => ['required', 'string', 'max:255'],
+            'companyDescription' => ['required', 'string'],
+            'companyEmail' => ['required', 'email', 'max:255', Rule::unique(ModelsCompanyProfile::class, 'email')->ignore(1)],
+        ]);
 
         $profile = [
             'companyName' => ucwords($this->companyName),
@@ -104,14 +116,15 @@ class CompanyProfile extends LiveForm
             'companyHeadTitle' => ucwords($this->companyHeadTitle),
             'companyType' => ucwords($this->companyType),
             'companyDescription' => ucwords($this->companyDescription),
+            'email' => $this->companyEmail,
         ];
 
         $comProfile = ModelsCompanyProfile::get()->first();
 
         $log = [];
         $log['action'] = "Updated Company Profile";
-        $log['content'] = "Company Name: " . $comProfile->companyName . ", Company Address: " . $comProfile->companyAddress . ", Company Head: "  . $comProfile->companyHead . ", Company Head Title: "  . $comProfile->companyHeadTitle . ", Company Type: " . $comProfile->companyType . ", Company Description: " . $comProfile->companyDescription;
-        $log['changes'] = "Company Name: " . $this->companyName . ", Company Address: " . $this->companyAddress . ", Company Head: "  . $this->companyHead . ", Company Head Title: "  . $this->companyHeadTitle . ", Company Type: " . $this->companyType . ", Company Description: " . $this->companyDescription;
+        $log['content'] = "Company Name: " . $comProfile->companyName . ", Company Address: " . $comProfile->companyAddress . ", Company Head: "  . $comProfile->companyHead . ", Company Head Title: "  . $comProfile->companyHeadTitle . ", Company Type: " . $comProfile->companyType . ", Company Description: " . $comProfile->companyDescription . ", Email: " . $comProfile->email;
+        $log['changes'] = "Company Name: " . $this->companyName . ", Company Address: " . $this->companyAddress . ", Company Head: "  . $this->companyHead . ", Company Head Title: "  . $this->companyHeadTitle . ", Company Type: " . $this->companyType . ", Company Description: " . $this->companyDescription . ", Email: " . $this->companyEmail;
 
         $query = ModelsCompanyProfile::where('id', 1)
             ->update($profile);

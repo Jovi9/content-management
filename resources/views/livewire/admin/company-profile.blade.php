@@ -11,6 +11,7 @@
         <h3 class="mt-3"><strong>Company Head Title: </strong>{{ $profile->companyHeadTitle }}</h3>
         <h3 class="mt-3"><strong>Company Type: </strong>{{ $profile->companyType }}</h3>
         <h3 class="mt-3"><strong>Company Description: </strong>{{ $profile->companyDescription }}</h3>
+        <h3 class="mt-3"><strong>Company Description: </strong>{{ $profile->email }}</h3>
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditCompanyProfile"
             wire:click="edit" wire:loading.attr="disabled">Edit</button>
     @endif
@@ -88,6 +89,17 @@
                                 <textarea class="form-control @error('companyDescription') is-invalid @enderror" required
                                     wire:model.lazy="companyDescription" rows="5"></textarea>
                                 @error('companyDescription')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">Company Email *</label>
+                                <input type="email" class="form-control @error('companyEmail') is-invalid @enderror"
+                                    required wire:model.lazy="companyEmail">
+                                @error('companyEmail')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -181,6 +193,17 @@
                                 <textarea class="form-control @error('companyDescription') is-invalid @enderror" required
                                     wire:model.lazy="companyDescription" rows="5"></textarea>
                                 @error('companyDescription')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">Company Email *</label>
+                                <input type="email" class="form-control @error('companyEmail') is-invalid @enderror"
+                                    required wire:model.lazy="companyEmail">
+                                @error('companyEmail')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>

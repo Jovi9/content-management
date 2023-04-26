@@ -16,6 +16,7 @@ class CompanyProfile extends Model
         'companyHeadTitle',
         'companyType',
         'companyDescription',
+        'email',
         'last_user_id'
     ];
 }
