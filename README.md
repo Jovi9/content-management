@@ -48,6 +48,12 @@ Configure the env file database connection and mail host, change the values of t
 php artisan migrate && php artisan db:seed
 ```
 
+Create public storage link.
+
+```bash
+php artisan storage:link
+```
+
 ### Run the project.
 
 ```bash
