@@ -27,7 +27,10 @@ Route::get('/about', [PublicPageController::class, 'showAbout'])->name('public-a
 Route::get('/contact', [PublicPageController::class, 'showContact'])->name('public-contact');
 
 // authentication
-Auth::routes(['register' => false]);
+Auth::routes([
+    'register' => false,
+    'verify' => true,
+]);
 
 // authenticated
 Route::middleware('auth', 'verified')->group(function () {
