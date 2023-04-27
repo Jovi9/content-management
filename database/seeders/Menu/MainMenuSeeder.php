@@ -17,18 +17,19 @@ class MainMenuSeeder extends Seeder
     {
         MainMenu::create([
             'mainMenu' => 'none',
-            'mainURI'=>'none',
+            'mainURI' => 'none',
         ]);
 
         MainMenu::create([
             'mainMenu' => 'About',
-            'mainURI'=>'about',
+            'mainURI' => 'about',
+            'mainLocation' => 'about',
         ]);
 
         SubMenu::create([
             'main_menu_id' => 1,
             'subMenu' => 'none',
-            'subURI'=>'none',
+            'subURI' => 'none',
         ]);
 
         // MainMenu::create([
