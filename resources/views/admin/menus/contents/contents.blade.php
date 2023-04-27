@@ -41,44 +41,6 @@
                                     </td>
                                     <td></td>
                                 </tr>
-                                <tr>
-                                    <td>{{ __('About') }}</td>
-                                    <td>{{ __('None') }}</td>
-                                    <td><a href="{{ route('public-about') }}" target="_blank">
-                                            <div>
-                                                {{ __('/about') }}
-                                            </div>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="" checked disabled>
-                                            <label class="form-check-label" for="}">
-                                                {{ __('Enabled') }}
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>{{ __('Contact Us') }}</td>
-                                    <td>{{ __('None') }}</td>
-                                    <td><a href="{{ route('public-contact') }}" target="_blank">
-                                            <div>
-                                                {{ __('/contact') }}
-                                            </div>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="" checked disabled>
-                                            <label class="form-check-label" for="}">
-                                                {{ __('Enabled') }}
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td></td>
-                                </tr>
                                 @if ($menus)
                                     @foreach ($menus as $menu)
                                         <tr>

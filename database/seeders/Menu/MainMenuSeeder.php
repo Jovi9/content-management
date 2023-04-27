@@ -20,6 +20,11 @@ class MainMenuSeeder extends Seeder
             'mainURI'=>'none',
         ]);
 
+        MainMenu::create([
+            'mainMenu' => 'About',
+            'mainURI'=>'about',
+        ]);
+
         SubMenu::create([
             'main_menu_id' => 1,
             'subMenu' => 'none',

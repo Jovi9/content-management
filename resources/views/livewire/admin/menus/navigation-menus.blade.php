@@ -33,44 +33,6 @@
                 </td>
                 <td></td>
             </tr>
-            <tr>
-                <td>{{ __('About') }}</td>
-                <td><a href="{{ route('public-about') }}" target="_blank">
-                        <div>
-                            {{ __('/about') }}
-                        </div>
-                    </a>
-                </td>
-                <td>{{ __('None') }}</td>
-                <td>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="" checked disabled>
-                        <label class="form-check-label" for="}">
-                            {{ __('Enabled') }}
-                        </label>
-                    </div>
-                </td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>{{ __('Contact Us') }}</td>
-                <td><a href="{{ route('public-contact') }}" target="_blank">
-                        <div>
-                            {{ __('/contact') }}
-                        </div>
-                    </a>
-                </td>
-                <td>{{ __('None') }}</td>
-                <td>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="" checked disabled>
-                        <label class="form-check-label" for="}">
-                            {{ __('Enabled') }}
-                        </label>
-                    </div>
-                </td>
-                <td></td>
-            </tr>
             @if ($mainMenus)
                 @foreach ($mainMenus as $mainMenu)
                     <tr>
@@ -82,34 +44,58 @@
                             </a>
                         </td>
                         <td>
-                            @if ($mainMenu['hasSubMenu'])
-                                <button class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#modalViewSubMenu"
-                                    wire:click="viewSubMenus('{{ $mainMenu['id'] }}')"><i
-                                        class="fa fa-eye"></i> View Sub Menu</button>
+                            @if (strtolower($mainMenu['mainMenu']) === 'about')
+                                {{ __('None') }}
                             @else
-                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddSubMenu"
-                                    wire:click="addSubMenu('{{ $mainMenu['id'] }}')"><i
-                                        class="fa fa-plus"></i> Add Sub Menu</button>
+                                @if ($mainMenu['hasSubMenu'])
+                                    <button class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#modalAddSubMenu"
+                                        wire:click="addSubMenu('{{ $mainMenu['id'] }}')"><i class="fa fa-plus"></i> Add
+                                        Sub
+                                        Menu</button>
+                                    <button class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#modalViewSubMenu"
+                                        wire:click="viewSubMenus('{{ $mainMenu['id'] }}')"><i class="fa fa-eye"></i>
+                                        View
+                                        Sub Menu</button>
+                                @else
+                                    <button class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#modalAddSubMenu"
+                                        wire:click="addSubMenu('{{ $mainMenu['id'] }}')"><i class="fa fa-plus"></i> Add
+                                        Sub
+                                        Menu</button>
+                                @endif
                             @endif
                         </td>
                         <td>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="{{ $mainMenu['mainMenu'] }}"
-                                    @if ($mainMenu['isEnabled']) checked @endif
-                                    wire:click="toggleStatus('{{ $mainMenu['id'] }}')">
-                                <label class="form-check-label" for="{{ $mainMenu['mainMenu'] }}">
-                                    @if ($mainMenu['isEnabled'])
+                            @if (strtolower($mainMenu['mainMenu']) === 'about')
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="" checked disabled>
+                                    <label class="form-check-label" for="}">
                                         {{ __('Enabled') }}
-                                    @else
-                                        {{ __('Disabled') }}
-                                    @endif
-                                </label>
-                            </div>
+                                    </label>
+                                </div>
+                            @else
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="{{ $mainMenu['mainMenu'] }}"
+                                        @if ($mainMenu['isEnabled']) checked @endif
+                                        wire:click="toggleStatus('{{ $mainMenu['id'] }}')">
+                                    <label class="form-check-label" for="{{ $mainMenu['mainMenu'] }}">
+                                        @if ($mainMenu['isEnabled'])
+                                            {{ __('Enabled') }}
+                                        @else
+                                            {{ __('Disabled') }}
+                                        @endif
+                                    </label>
+                                </div>
+                            @endif
                         </td>
                         <td>
                             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditMainMenu"
-                                wire:click="edit('{{ $mainMenu['id'] }}')"><i class="fa fa-edit"></i> Edit</button>
+                                wire:click="edit('{{ $mainMenu['id'] }}')"><i class="fa fa-edit"></i> Edit
+                                Menu</button>
+                            <a href="{{ route('admin.contents-create', ['main' => $mainMenu['URI']]) }}"
+                                class="btn btn-primary"><i class="fa fa-plus"></i> Add Content</a>
                         </td>
                     </tr>
                 @endforeach
@@ -189,7 +175,7 @@
     {{-- submenu --}}
     <div wire:ignore.self class="modal fade" id="modalViewSubMenu" tabindex="-1" role="dialog"
         aria-labelledby="modalViewSubMenu" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title"><strong>Sub Menu of {{ $mainMenuName }}</strong></h5>
@@ -240,7 +226,9 @@
                                             <button class="btn btn-primary" data-bs-toggle="modal"
                                                 data-bs-target="#modalEditSubMenu"
                                                 wire:click="editSubMenu('{{ $subMenu['id'] }}')"><i
-                                                    class="fa fa-edit"></i></button>
+                                                    class="fa fa-edit"></i> Edit Sub Menu</button>
+                                            <a href="{{ route('admin.contents-create', ['main' => $subMenu['mainURI'] . '/' . $subMenu['subURI']]) }}"
+                                                class="btn btn-primary"><i class="fa fa-plus"></i> Add Content</a>
                                         </td>
                                     </tr>
                                 @endforeach

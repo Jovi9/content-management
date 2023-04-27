@@ -24,7 +24,6 @@ use App\Http\Controllers\Admin\UserController;
 // public pages
 Route::get('/', [PublicPageController::class, 'index'])->name('public-home');
 Route::get('/about', [PublicPageController::class, 'showAbout'])->name('public-about');
-Route::get('/contact', [PublicPageController::class, 'showContact'])->name('public-contact');
 
 // authentication
 Auth::routes([

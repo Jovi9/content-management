@@ -14,6 +14,7 @@ class PublicPageController extends Controller
     {
         return MainMenu::whereNot('isEnabled', false)
             ->whereNot('id', 1)
+            ->whereNot('mainMenu', 'about')
             ->get();
     }
 
@@ -83,17 +84,11 @@ class PublicPageController extends Controller
 
     public function showAbout()
     {
+        $contents = $this->getContents(2, 1);
         return view('public.about', [
             'mainMenus' => $this->getMenus(),
-            'menuName' => 'Home',
-        ]);
-    }
-
-    public function showContact()
-    {
-        return view('public.contact', [
-            'mainMenus' => $this->getMenus(),
-            'menuName' => 'Home',
+            'menuName' => 'About',
+            'contents' => $contents,
         ]);
     }
 
@@ -133,7 +128,7 @@ class PublicPageController extends Controller
                 $query->where('status', 'pending')
                     ->orWhere('isVisible', 0);
             })
-            ->orderBy('created_at', 'desc')
+            ->orderBy('updated_at', 'desc')
             ->get();
     }
 

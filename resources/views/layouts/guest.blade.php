@@ -43,15 +43,12 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navMenus">
-                <ul class="navbar-nav gap-lg-2">
+                <ul class="navbar-nav gap-lg-2 fs-5">
                     <li class="nav-item">
                         <a href="{{ route('public-home') }}" class="nav-link">Home</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('public-about') }}" class="nav-link">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('public-contact') }}" class="nav-link">Contact Us</a>
                     </li>
                     @if ($mainMenus)
                         @foreach ($mainMenus as $mainMenu)
@@ -93,9 +90,100 @@
         @yield('content')
     </main>
 
+    <div class="bg-secondary text-white p-4 mt-5">
+        <div class="container">
+            <footer class="py-5">
+                <div class="row">
+                    <div class="col-6 col-md-2 mb-3">
+                        <h5 class="fs-3 text-white">Quick Links</h5>
+                        <ul class="nav flex-column">
+                            <li class="nav-item mb-2"><a href="{{ route('public-home') }}"
+                                    class="nav-link p-0 text-white fs-5">Home</a>
+                            </li>
+                            <li class="nav-item mb-2"><a href="{{ route('public-about') }}"
+                                    class="nav-link p-0 text-white fs-5">About</a></li>
+                            @if ($mainMenus)
+                                @foreach ($mainMenus as $mainMenu)
+                                    @if ($mainMenu['subMenu'] === 'none')
+                                        <li class="nav-item mb-2"><a
+                                                href="{{ route('public-show', ['main' => $mainMenu['mainURI']]) }}"
+                                                class="nav-link p-0 text-white fs-5">{{ $mainMenu['mainMenu'] }}</a>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            @endif
+                        </ul>
+                    </div>
 
+                    @if ($mainMenus)
+                        @foreach ($mainMenus as $mainMenu)
+                            @if (!($mainMenu['subMenu'] === 'none'))
+                                <div class="col-6 col-md-2 mb-3">
+                                    <h5 class="fs-3 text-white">{{ $mainMenu['mainMenu'] }}</h5>
+                                    <ul class="nav flex-column">
+                                        @foreach ($mainMenu['subMenu'] as $subMenu)
+                                            <li class="nav-item mb-2"><a
+                                                    href="{{ route('public-show', ['main' => $mainMenu['mainURI'] . '/' . $subMenu->subURI]) }}"
+                                                    class="nav-link p-0 text-white fs-5">{{ $subMenu->subMenu }}</a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                        @endforeach
+                    @endif
 
+                    {{-- <div class="col-6 col-md-2 mb-3">
+                        <h5 class="fs-3 text-white">Social Media</h5>
+                        <ul class="nav flex-column">
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white fs-5"><i
+                                        class="fas fa-facebook"></i> CatSU CICT</a>
+                            </li>
+                            <li class="nav-item mb-2"><a href="#"
+                                    class="nav-link p-0 text-white fs-5">Features</a></li>
+                            <li class="nav-item mb-2"><a href="#"
+                                    class="nav-link p-0 text-white fs-5">Pricing</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white fs-5">FAQs</a>
+                            </li>
+                            <li class="nav-item mb-2"><a href="#"
+                                    class="nav-link p-0 text-white fs-5">About</a></li>
+                        </ul>
+                    </div> --}}
 
+                    {{-- <div class="col-md-5 offset-md-1 mb-3">
+                        <form>
+                            <h5 class="fs-3 text-white">Subscribe to our newsletter</h5>
+                            <p>Monthly digest of what's new and exciting from us.</p>
+                            <div class="d-flex flex-column flex-sm-row w-100 gap-2">
+                                <label for="newsletter1" class="visually-hidden">Email address</label>
+                                <input id="newsletter1" type="text" class="form-control"
+                                    placeholder="Email address">
+                                <button class="btn btn-primary" type="button">Subscribe</button>
+                            </div>
+                        </form>
+                    </div> --}}
+                </div>
+
+                <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top fs-4">
+                    <p>&copy; 2023 College of Information and Communications Technology. All rights reserved.</p>
+                    {{-- <ul class="list-unstyled d-flex">
+                        <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24"
+                                    height="24">
+                                    <use xlink:href="#twitter" />
+                                </svg></a></li>
+                        <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24"
+                                    height="24">
+                                    <use xlink:href="#instagram" />
+                                </svg></a></li>
+                        <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24"
+                                    height="24">
+                                    <use xlink:href="#facebook" />
+                                </svg></a></li>
+                    </ul> --}}
+                </div>
+            </footer>
+        </div>
+    </div>
 
     {{-- jquery --}}
     <script src="{{ asset('assets/jquery/jquery-3.6.3.min.js') }}"></script>
