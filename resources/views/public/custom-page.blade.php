@@ -40,7 +40,6 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('assets/jquery/jquery-3.6.3.min.js') }}"></script>
     <script>
         $('img').addClass('img-fluid');
     </script>

@@ -16,7 +16,7 @@
                 <div class="card">
                     <div class="card-body">
                         <form
-                            action="{{ route('admin.contents-store', ['id' => $contentID, 'requestFrom' => $requestFrom]) }}"
+                            action="{{ route('admin.contents-update', ['id' => $contentID, 'requestFrom' => $requestFrom]) }}"
                             method="post" id="formContent">
                             @csrf
                             @method('put')

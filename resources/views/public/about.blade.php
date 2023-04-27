@@ -132,6 +132,11 @@
 
 @section('scripts')
     <script src="{{ asset('assets/sweetalert2/sweetalert2.min.js') }}"></script>
+
+    <script>
+        $('img').addClass('img-fluid');
+    </script>
+
     @if ($errors->get('fullname') || $errors->get('email') || $errors->get('subject') || $errors->get('message'))
         <script>
             Swal.fire({

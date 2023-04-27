@@ -60,23 +60,23 @@ Route::middleware('auth', 'verified')->group(function () {
         // contents
         Route::get('/contents', [ContentController::class, 'index'])->name('contents-index');
         Route::post('/contents', [ContentController::class, 'store'])->name('contents-store');
-        Route::put('/contents', [ContentController::class, 'update'])->name('contents-store');
+        Route::put('/contents', [ContentController::class, 'update'])->name('contents-update');
 
         // image upload handler
         Route::post('/contents/upload-image', [ContentController::class, 'uploadImage'])->name('contents-image-upload');
 
         // create content
-        Route::get('/contents/{main}/{sub}/create', [ContentController::class, 'create'])->name('contents-create');
+        Route::get('/contents/{main}/{sub}/create', [ContentController::class, 'create'])->name('contents-create-with-sub');
         Route::get('/contents/{main}/create', [ContentController::class, 'create'])->name('contents-create');
 
         // edit content
         Route::get('/contents/{id}/edit', [ContentController::class, 'edit'])->name('contents-edit');
 
         // show content
-        Route::get('/contents/{main}/{sub}', [ContentController::class, 'show'])->name('contents-show');
+        Route::get('/contents/{main}/{sub}', [ContentController::class, 'show'])->name('contents-show-with-sub');
         Route::get('/contents/{main}', [ContentController::class, 'show'])->name('contents-show');
     });
 });
 
-Route::get('/{main}/{sub}', [PublicPageController::class, 'show'])->name('public-show')->where('main', '[a-z0-9-]+')->where('sub', '[a-z0-9-]+');
+Route::get('/{main}/{sub}', [PublicPageController::class, 'show'])->name('public-show-with-sub')->where('main', '[a-z0-9-]+')->where('sub', '[a-z0-9-]+');
 Route::get('/{main}', [PublicPageController::class, 'show'])->name('public-show')->where('main', '[a-z0-9-]+');
