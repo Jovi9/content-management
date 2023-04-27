@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Menu\ContentController;
 use App\Http\Controllers\Admin\Menu\MenuController;
 use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Public\ContacUsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,7 @@ use App\Http\Controllers\Admin\UserController;
 // public pages
 Route::get('/', [PublicPageController::class, 'index'])->name('public-home');
 Route::get('/about', [PublicPageController::class, 'showAbout'])->name('public-about');
+Route::post('/contact-us', [ContacUsController::class, 'sendEmail'])->name('public-contact-us');
 
 // authentication
 Auth::routes([

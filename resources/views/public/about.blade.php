@@ -3,6 +3,7 @@
 @section('title', 'About')
 
 @section('styles')
+    <link rel="stylesheet" href="{{ asset('assets/sweetalert2/sweetalert2.min.css') }}">
     <style>
         #banner {
             background-position: center;
@@ -54,7 +55,7 @@
         @endforeach
     @endif
 
-    <section class="bg-white py-5">
+    <section class="bg-white py-5" id="contact-us">
         <div class="container px-4 py-5 shadow">
             <h2 class="pb-2 border-bottom border-4">Contact Us</h2>
             <div class="row">
@@ -65,14 +66,15 @@
                         referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
                 <div class="col-md-7 order-md-2 mt-5 mt-lg-3">
-                    <form action="javascript:void(0)" method="post" class="fs-5">
+                    <form action="{{ route('public-contact-us') }}" method="post" class="fs-5" novalidate
+                        enctype="multipart/form-data">
                         @csrf
 
                         <div class="row mb-4">
                             <div class="col-sm-10">
                                 <label for="txtName" class="form-label">Full Name *</label>
                                 <input type="text" class="form-control fs-5 @error('fullname') is-invalid @enderror"
-                                    id="txtName" required>
+                                    id="txtName" required name="fullname">
                                 @error('fullname')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -84,7 +86,7 @@
                             <div class="col-sm-10">
                                 <label for="txtEmail" class="form-label">Email *</label>
                                 <input type="email" class="form-control fs-5 @error('email') is-invalid @enderror"
-                                    id="txtEmail" required>
+                                    id="txtEmail" required name="email">
                                 @error('email')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -96,7 +98,7 @@
                             <div class="col-sm-10">
                                 <label for="txtSubject" class="form-label">Message Subject *</label>
                                 <input type="text" class="form-control fs-5 @error('subject') is-invalid @enderror"
-                                    id="txtSubject" required>
+                                    id="txtSubject" required name="subject">
                                 @error('subject')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -107,8 +109,8 @@
                         <div class="row mb-4">
                             <div class="col-sm-10">
                                 <label for="txtMessage" class="form-label">Your Message *</label>
-                                <textarea id="txtMessage" cols="30" rows="8"
-                                    class="form-control fs-5 @error('message') is-invalid @enderror"></textarea>
+                                <textarea id="txtMessage" cols="30" rows="8" class="form-control fs-5 @error('message') is-invalid @enderror"
+                                    name="message" required></textarea>
                                 @error('message')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -126,4 +128,55 @@
         </div>
     </section>
 
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('assets/sweetalert2/sweetalert2.min.js') }}"></script>
+    @if ($errors->get('fullname') || $errors->get('email') || $errors->get('subject') || $errors->get('message'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to send email.',
+                text: 'Please make sure you have entered all the required details before submitting.',
+                allowOutsideClick: false
+            }).then((result) => {
+                location.href = '#contact-us';
+            });
+        </script>
+    @endif
+    @if (Session::has('no-email'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to send email.',
+                text: 'Service is currently unavailable.',
+                allowOutsideClick: false
+            }).then((result) => {
+                @php
+                    Session::forget('no-email');
+                @endphp
+                location.reload();
+            });
+        </script>
+    @endif
+    @if (Session::has('mail-sent'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Message sent successfully.',
+                confirmButtonText: 'Ok',
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            }).then((result) => {
+                @php
+                    Session::forget('mail-sent');
+                @endphp
+                location.reload();
+            });
+        </script>
+    @endif
 @endsection

@@ -7,6 +7,7 @@ use App\Models\Menu\MainMenu;
 use App\Models\Menu\SubMenu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class PublicPageController extends Controller
 {
