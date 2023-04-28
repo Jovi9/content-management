@@ -17,6 +17,8 @@ class Content extends Model
         'status',
         'user_id',
         'mod_user_id',
-        'isVisible'
+        'isVisible',
+        'isVisibleHome',
+        'arrangement',
     ];
 }

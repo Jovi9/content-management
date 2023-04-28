@@ -22,6 +22,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
             $table->foreignId('mod_user_id')->constrained('users')->restrictOnDelete()->cascadeOnUpdate();
             $table->boolean('isVisible');
+            $table->boolean('isVisibleHome')->default(false);
+            $table->integer('arrangement')->default(1);
             $table->timestamps();
         });
     }

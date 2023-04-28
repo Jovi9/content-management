@@ -221,7 +221,7 @@ class ContentController extends Controller
             'status' => $status,
             'user_id' => Auth::id(),
             'mod_user_id' => Auth::id(),
-            'isVisible' => $visible
+            'isVisible' => $visible,
         ];
 
         $log = [];
@@ -252,6 +252,7 @@ class ContentController extends Controller
 
         $allContents = Content::where('main_menu_id', $mainMenuID)
             ->where('sub_menu_id', $subMenuID)
+            ->orderBy('arrangement')
             ->get();
 
         foreach ($allContents as $content) {
