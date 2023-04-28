@@ -1,8 +1,7 @@
 <div>
     @if (Crypt::decrypt($count) === 0)
         <h2>Please add company profile first.</h2>
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddCompanyProfile"
-            wire:loading.attr="disabled">Add</button>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddCompanyProfile">Add</button>
     @else
         <h1>Profile Information</h1>
         <h3 class="mt-3"><strong>Company Name: </strong>{{ $profile->companyName }}</h3>
@@ -13,7 +12,7 @@
         <h3 class="mt-3"><strong>Company Description: </strong>{{ $profile->companyDescription }}</h3>
         <h3 class="mt-3"><strong>Company Description: </strong>{{ $profile->email }}</h3>
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditCompanyProfile"
-            wire:click="edit" wire:loading.attr="disabled">Edit</button>
+            wire:click="edit">Edit</button>
     @endif
 
     <div wire:ignore.self class="modal fade" id="modalAddCompanyProfile" tabindex="-1" role="dialog"
@@ -110,8 +109,7 @@
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" id="btnClose"
                             wire:click="closeModal('#modalAddCompanyProfile')">Cancel</button>
-                        <button type="submit" class="btn btn-primary" id="btnAddCompanyProfile"
-                            wire:loading.attr="disabled">Save</button>
+                        <button type="submit" class="btn btn-primary" id="btnAddCompanyProfile">Save</button>
                     </div>
                 </form>
             </div>
@@ -201,8 +199,9 @@
 
                             <div class="col-md-12">
                                 <label class="form-label">Company Email *</label>
-                                <input type="email" class="form-control @error('companyEmail') is-invalid @enderror"
-                                    required wire:model.lazy="companyEmail">
+                                <input type="email"
+                                    class="form-control @error('companyEmail') is-invalid @enderror" required
+                                    wire:model.lazy="companyEmail">
                                 @error('companyEmail')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -214,8 +213,7 @@
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" id="btnClose"
                             wire:click="closeModal('#modalEditCompanyProfile')">Cancel</button>
-                        <button type="submit" class="btn btn-primary" id="btnEditCompanyProfile"
-                            wire:loading.attr="disabled">Save</button>
+                        <button type="submit" class="btn btn-primary" id="btnEditCompanyProfile">Save</button>
                     </div>
                 </form>
             </div>

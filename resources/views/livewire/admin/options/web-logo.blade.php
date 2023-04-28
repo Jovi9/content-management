@@ -44,7 +44,7 @@
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button"
                                 wire:click="closeModal('#modalChangeLogo')">Cancel</button>
-                            <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">Save</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </form>
                 </div>

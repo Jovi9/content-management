@@ -1,6 +1,5 @@
 <div>
-    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalAddMainMenu"
-        wire:loading.attr="disabled">
+    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalAddMainMenu">
         Add New Menu</button>
 
     <table class="table table-responsive-sm" id="">
@@ -130,7 +129,7 @@
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button"
                             wire:click="closeModal('#modalAddMainMenu')">Cancel</button>
-                        <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">Update</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>
@@ -165,7 +164,7 @@
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button"
                             wire:click="closeModal('#modalEditMainMenu')">Cancel</button>
-                        <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">Save</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                 </form>
             </div>
@@ -271,7 +270,7 @@
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button"
                             wire:click="closeModal('#modalAddSubMenu')">Cancel</button>
-                        <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">Update</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>
@@ -306,7 +305,7 @@
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button"
                             wire:click="closeModal('#modalEditSubMenu')">Cancel</button>
-                        <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">Save</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                 </form>
             </div>

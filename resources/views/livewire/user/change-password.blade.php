@@ -59,8 +59,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-9">
-                                <button type="submit" class="btn btn-primary" id="btnChangePassword"
-                                    wire:loading.attr="disabled">Change
+                                <button type="submit" class="btn btn-primary" id="btnChangePassword">Change
                                     Password</button>
                             </div>
                         </div>

@@ -158,8 +158,7 @@
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" id="btnClose"
                             wire:click="closeModal('#modalEditProfile')">Cancel</button>
-                        <button type="submit" class="btn btn-primary" id="btnUpdateProfile"
-                            wire:loading.attr="disabled">Update Profile</button>
+                        <button type="submit" class="btn btn-primary" id="btnUpdateProfile">Update Profile</button>
                     </div>
                 </form>
             </div>

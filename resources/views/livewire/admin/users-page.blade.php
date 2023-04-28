@@ -231,7 +231,7 @@
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button"
                             wire:click="closeModal('#modalAddUser')">Cancel</button>
-                        <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">Save</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>
@@ -398,7 +398,7 @@
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button"
                             wire:click="closeModal('#modalEditUser')">Cancel</button>
-                        <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">Update
+                        <button type="submit" class="btn btn-primary">Update
                             User</button>
                     </div>
                 </form>

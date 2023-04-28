@@ -1,6 +1,5 @@
 <div>
-    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalAddDepartment"
-        wire:loading.attr="disabled">Add</button>
+    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalAddDepartment">Add</button>
 
     <table class="table table-responsive-sm" id="">
         <thead>
@@ -63,7 +62,7 @@
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button"
                             wire:click="closeModal('#modalAddDepartment')">Cancel</button>
-                        <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">Save</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>
@@ -108,7 +107,7 @@
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button"
                             wire:click="closeModal('#modalEditDepartment')">Cancel</button>
-                        <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">Update</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                 </form>
             </div>
