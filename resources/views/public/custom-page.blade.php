@@ -7,7 +7,7 @@
     @if (!$contents->isEmpty())
         @if ($contents)
             @foreach ($contents as $content)
-                <div class="container py-4">
+                <div class="container py-3" id="{{ strtolower(str_replace(' ', '-', $content->title)) }}">
                     <div class="row justify-content-center">
                         <div class="card">
                             <div class="card-body">

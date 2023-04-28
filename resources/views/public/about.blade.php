@@ -36,7 +36,7 @@
 
     @if ($contents)
         @foreach ($contents as $content)
-            <div class="container py-4">
+            <div class="container py-3" id="{{ strtolower(str_replace(' ', '-', $content->title)) }}">
                 <div class="row justify-content-center">
                     <div class="card">
                         <div class="card-body">
@@ -65,7 +65,7 @@
                         class="w-100" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
-                <div class="col-md-7 order-md-2 mt-5 mt-lg-3">
+                <div class="col-md-5 order-md-2 mt-5 mt-lg-3 mx-lg-5">
                     <form action="{{ route('public-contact-us') }}" method="post" class="fs-5" novalidate
                         enctype="multipart/form-data">
                         @csrf

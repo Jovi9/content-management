@@ -129,7 +129,7 @@ class PublicPageController extends Controller
                 $query->where('status', 'pending')
                     ->orWhere('isVisible', 0);
             })
-            ->orderBy('updated_at', 'desc')
+            ->orderBy('arrangement')
             ->get();
     }
 

@@ -43,7 +43,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navMenus">
-                <ul class="navbar-nav gap-lg-2 fs-5">
+                <ul class="navbar-nav gap-lg-2 ">
                     <li class="nav-item">
                         <a href="{{ route('public-home') }}" class="nav-link">Home</a>
                     </li>
@@ -95,36 +95,42 @@
             <footer class="py-5">
                 <div class="row">
                     <div class="col-6 col-md-2 mb-3">
-                        <h5 class="fs-3 text-white">Quick Links</h5>
+                        <h5 class=" text-white">Quick Links</h5>
                         <ul class="nav flex-column">
                             <li class="nav-item mb-2"><a href="{{ route('public-home') }}"
-                                    class="nav-link p-0 text-white fs-5">Home</a>
+                                    class="nav-link p-0 text-white ">Home</a>
                             </li>
                             <li class="nav-item mb-2"><a href="{{ route('public-about') }}"
-                                    class="nav-link p-0 text-white fs-5">About</a></li>
-                            @if ($mainMenus)
+                                    class="nav-link p-0 text-white ">About</a></li>
+                        </ul>
+                    </div>
+
+                    @if ($mainMenus)
+                        <div class="col-6 col-md-2 mb-3">
+                            <h5 class=" text-white">Pages</h5>
+                            <ul class="nav flex-column">
                                 @foreach ($mainMenus as $mainMenu)
                                     @if ($mainMenu['subMenu'] === 'none')
                                         <li class="nav-item mb-2"><a
                                                 href="{{ route('public-show', ['main' => $mainMenu['mainURI']]) }}"
-                                                class="nav-link p-0 text-white fs-5">{{ $mainMenu['mainMenu'] }}</a>
+                                                class="nav-link p-0 text-white ">{{ $mainMenu['mainMenu'] }}</a>
                                         </li>
                                     @endif
                                 @endforeach
-                            @endif
-                        </ul>
-                    </div>
+                            </ul>
+                        </div>
+                    @endif
 
                     @if ($mainMenus)
                         @foreach ($mainMenus as $mainMenu)
                             @if (!($mainMenu['subMenu'] === 'none'))
                                 <div class="col-6 col-md-2 mb-3">
-                                    <h5 class="fs-3 text-white">{{ $mainMenu['mainMenu'] }}</h5>
+                                    <h5 class=" text-white">{{ $mainMenu['mainMenu'] }}</h5>
                                     <ul class="nav flex-column">
                                         @foreach ($mainMenu['subMenu'] as $subMenu)
                                             <li class="nav-item mb-2"><a
                                                     href="{{ route('public-show', ['main' => $mainMenu['mainURI'] . '/' . $subMenu->subURI]) }}"
-                                                    class="nav-link p-0 text-white fs-5">{{ $subMenu->subMenu }}</a>
+                                                    class="nav-link p-0 text-white ">{{ $subMenu->subMenu }}</a>
                                             </li>
                                         @endforeach
                                     </ul>
@@ -133,26 +139,9 @@
                         @endforeach
                     @endif
 
-                    {{-- <div class="col-6 col-md-2 mb-3">
-                        <h5 class="fs-3 text-white">Social Media</h5>
-                        <ul class="nav flex-column">
-                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white fs-5"><i
-                                        class="fas fa-facebook"></i> CatSU CICT</a>
-                            </li>
-                            <li class="nav-item mb-2"><a href="#"
-                                    class="nav-link p-0 text-white fs-5">Features</a></li>
-                            <li class="nav-item mb-2"><a href="#"
-                                    class="nav-link p-0 text-white fs-5">Pricing</a></li>
-                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white fs-5">FAQs</a>
-                            </li>
-                            <li class="nav-item mb-2"><a href="#"
-                                    class="nav-link p-0 text-white fs-5">About</a></li>
-                        </ul>
-                    </div> --}}
-
                     {{-- <div class="col-md-5 offset-md-1 mb-3">
                         <form>
-                            <h5 class="fs-3 text-white">Subscribe to our newsletter</h5>
+                            <h5 class=" text-white">Subscribe to our newsletter</h5>
                             <p>Monthly digest of what's new and exciting from us.</p>
                             <div class="d-flex flex-column flex-sm-row w-100 gap-2">
                                 <label for="newsletter1" class="visually-hidden">Email address</label>
@@ -164,8 +153,10 @@
                     </div> --}}
                 </div>
 
-                <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top fs-4">
-                    <p>&copy; 2023 College of Information and Communications Technology. All rights reserved.</p>
+                <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top ">
+                    <p>&copy; 2023 Catanduanes State University - College of Information and Communications Technology.
+                        All Rights Reserved. <br>
+                        Calatagan Virac, Catanduanes</p>
                     {{-- <ul class="list-unstyled d-flex">
                         <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24"
                                     height="24">

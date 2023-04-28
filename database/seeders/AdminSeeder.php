@@ -17,7 +17,7 @@ class AdminSeeder extends Seeder
     {
         User::create([
             'employeeID' => '1234-454720-992',
-            'firstName' => "Administrator",
+            'firstName' => "Website",
             'lastName' => "Administrator",
             'sex' => 'Male',
             'dateOfBirth' => '1995-01-01',

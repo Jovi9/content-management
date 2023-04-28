@@ -4,27 +4,7 @@
 
 @section('styles')
     <style>
-        :root {
-            --primary: #0d6efd;
-            --dark: #21252f;
-            --body: #888;
-            --white: #ffffff;
-            --box-shadow: 0 8px 22px rgba(0, 0, 0, 0.1);
-        }
-
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6,
-        .display-4 {
-            color: var(--dark);
-            font-weight: 700;
-        }
-
-        .hero {
-            /* background-image: url(../img/cover.jpg); */
+        #banner {
             background-position: center;
             background-size: cover;
             background-attachment: fixed;
@@ -32,7 +12,7 @@
             z-index: 2;
         }
 
-        .hero::after {
+        #banner::after {
             content: "";
             width: 100%;
             height: 100%;
@@ -46,20 +26,25 @@
 @endsection
 
 @section('content')
-    <div class="hero vh-100 d-flex align-items-center" id="banner"
+    <div class="bg-dark text-secondary px-4 py-5 text-center mb-5" id="banner"
+        style="background-image: url({{ asset('storage/logo/home_banner.jpg') }})">
+        <div class="py-5">
+            <h1 class="display-5 fw-bold text-white">Catanduanes State University <br> College of Information and <br>
+                Communications Technology</h1>
+        </div>
+    </div>
+    {{-- <div class="hero d-flex align-items-center" id="banner"
         style="background-image: url({{ asset('storage/logo/home_banner.jpg') }})">
         <div class="container">
             <div class="row">
                 <div class="col-lg-7 mx-auto text-center">
                     <img src="{{ asset('storage/logo/sys_logo.png') }}" class="img-fluid mb-3" alt="LOGO" width="100">
                     <h1 class="display-5 text-white">COLLEGE OF INFORMATION AND <br> COMMUNICATIONS TECHNOLOGY</h1>
-                    {{-- <p class="text-white my-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque quia
-                        sequi eius. Quas, totam aliquid. Repudiandae reiciendis vel excepturi ipsa voluptate dicta!</p> --}}
                     <a href="#home" class="btn btn-primary px-5 py-2 fs-4 mt-3">EXPLORE</a>
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <section id="home" class="">
 
