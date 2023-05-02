@@ -95,17 +95,27 @@
             <footer class="py-5">
                 <div class="row">
                     <div class="col-6 col-md-2 mb-3">
-                        <h5 class=" text-white">Quick Links</h5>
+                        <h5 class=" text-white">Pages</h5>
                         <ul class="nav flex-column">
                             <li class="nav-item mb-2"><a href="{{ route('public-home') }}"
                                     class="nav-link p-0 text-white ">Home</a>
                             </li>
                             <li class="nav-item mb-2"><a href="{{ route('public-about') }}"
                                     class="nav-link p-0 text-white ">About</a></li>
+                            @if ($mainMenus)
+                                @foreach ($mainMenus as $mainMenu)
+                                    @if ($mainMenu['subMenu'] === 'none')
+                                        <li class="nav-item mb-2"><a
+                                                href="{{ route('public-show', ['main' => $mainMenu['mainURI']]) }}"
+                                                class="nav-link p-0 text-white ">{{ $mainMenu['mainMenu'] }}</a>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            @endif
                         </ul>
                     </div>
 
-                    @if ($mainMenus)
+                    {{-- @if ($mainMenus)
                         <div class="col-6 col-md-2 mb-3">
                             <h5 class=" text-white">Pages</h5>
                             <ul class="nav flex-column">
@@ -119,7 +129,7 @@
                                 @endforeach
                             </ul>
                         </div>
-                    @endif
+                    @endif --}}
 
                     @if ($mainMenus)
                         @foreach ($mainMenus as $mainMenu)
