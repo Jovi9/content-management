@@ -66,28 +66,30 @@
                 text: 'Something went wrong, please try again.',
                 allowOutsideClick: false
             });
-            // Swal.fire({
-            //     icon: 'success',
-            //     title: 'event.detail.message',
-            //     confirmButtonText: 'Ok',
-            //     timer: 3000,
-            //     timerProgressBar: true,
-            //     didOpen: (toast) => {
-            //         toast.addEventListener('mouseenter', Swal.stopTimer)
-            //         toast.addEventListener('mouseleave', Swal.resumeTimer)
-            //     }
-            // });
         </script>
     @endif
 
     <script>
+        var allowFormSubmit = true;
         document.addEventListener("DOMContentLoaded", function() {
             document.querySelector("#btnSubmit").addEventListener("click", function() {
                 tinymce.activeEditor.uploadImages().then(() => {
-                    document.querySelector('#formContent').submit();
+                    if (allowFormSubmit === true) {
+                        document.querySelector('#formContent').submit();
+                    } else {
+                        allowFormSubmit = true;
+                    }
                 });
             });
         });
+
+        function verifyIfJSON(string) {
+            try {
+                return (JSON.parse(string) && !!string)
+            } catch (error) {
+                return false;
+            }
+        }
 
         const image_upload_handler = (blobInfo, progress) => new Promise((resolve, reject) => {
             const max_size = 104857600; //100MB
@@ -113,6 +115,14 @@
             };
 
             xhr.onload = () => {
+                if (verifyIfJSON(xhr.responseText) === false) {
+                    allowFormSubmit = false;
+                    return reject({
+                        message: 'Please make sure to select valid image.',
+                        remove: true
+                    });
+                }
+
                 if (xhr.status === 403) {
                     reject({
                         message: 'HTTP Error: ' + xhr.status,
@@ -140,9 +150,9 @@
                 reject('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
             };
 
+            allowFormSubmit = true;
             const formData = new FormData();
             formData.append('file', blobInfo.blob(), blobInfo.filename());
-
             xhr.send(formData);
         });
 
