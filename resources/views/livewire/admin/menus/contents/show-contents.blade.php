@@ -1,12 +1,17 @@
 <div>
-    <div class="mb-3">
-        @if ($subURI === 'none')
-            <a href="{{ route('admin.contents-create', ['main' => $mainURI]) }}" class="btn btn-primary"><i
-                    class="fa fa-plus"></i> Add New Content</a>
-        @else
-            <a href="{{ route('admin.contents-create', ['main' => $mainURI . '/' . $subURI]) }}"
-                class="btn btn-primary"><i class="fa fa-plus"></i> Add New Content</a>
-        @endif
+    <div class="row gap-2 mb-3">
+        <div class="col-md-2">
+            @if ($subURI === 'none')
+                <a href="{{ route('admin.contents-create', ['main' => $mainURI]) }}" class="btn btn-primary"><i
+                        class="fa fa-plus"></i> Add New Content</a>
+            @else
+                <a href="{{ route('admin.contents-create', ['main' => $mainURI . '/' . $subURI]) }}"
+                    class="btn btn-primary"><i class="fa fa-plus"></i> Add New Content</a>
+            @endif
+        </div>
+        <div class="col-md-2">
+            @livewire('admin.menus.contents.manage-content-arrangement', ['mainURI' => $mainURI, 'subURI' => $subURI])
+        </div>
     </div>
     <table class="table table-responsive-sm" id="">
         <thead>
@@ -16,6 +21,7 @@
                 <th scope="col">Date</th>
                 <th scope="col">User</th>
                 <th scope="col">Status</th>
+                <th scope="col">Arrangement</th>
                 <th scope="col">Visible To Home</th>
                 <th scope="col">Actions</th>
             </tr>
@@ -52,6 +58,7 @@
                             {{ ucwords($content['updated_by']->firstName . ' ' . $content['updated_by']->lastName) }}
                         </td>
                         <td>{{ ucwords($content['status']) }}</td>
+                        <td>{{ $content['arrangement'] }}</td>
                         <td>
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="{{ $content['id'] }}"

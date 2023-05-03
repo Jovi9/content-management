@@ -42,6 +42,7 @@ class ShowContents extends Component
 
         $allContents = Content::where('main_menu_id', $mainMenuID)
             ->where('sub_menu_id', $subMenuID)
+            // ->orderBy('arrangement')
             ->get();
 
         foreach ($allContents as $content) {

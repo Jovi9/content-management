@@ -30,6 +30,10 @@
             $(event.detail.modal_id).modal('hide');
         });
 
+        window.addEventListener('reload-page', event => {
+            location.reload();
+        });
+
         window.addEventListener('swal-modal', event => {
             if (event.detail.title == "saved") {
                 Swal.fire({
