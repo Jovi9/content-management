@@ -93,8 +93,10 @@
                             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditMainMenu"
                                 wire:click="edit('{{ $mainMenu['id'] }}')"><i class="fa fa-edit"></i> Edit
                                 Menu</button>
-                            <a href="{{ route('admin.contents-create', ['main' => $mainMenu['URI']]) }}"
-                                class="btn btn-primary"><i class="fa fa-plus"></i> Add Content</a>
+                            @if (!$mainMenu['hasSubMenu'])
+                                <a href="{{ route('admin.contents-create', ['main' => $mainMenu['URI']]) }}"
+                                    class="btn btn-primary"><i class="fa fa-plus"></i> Add Content</a>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
