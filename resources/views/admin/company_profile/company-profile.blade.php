@@ -23,6 +23,21 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-lg-6">
+                                <div class="container-fluid">
+                                    <div class="row justify-content-center">
+                                        <div class="">
+                                            <div class="card">
+                                                <div class="card-header">{{ __('Company Logo') }}</div>
+                                                <div class="card-body">
+                                                    @livewire('admin.options.web-logo')
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -52,6 +67,10 @@
                     didOpen: (toast) => {
                         toast.addEventListener('mouseenter', Swal.stopTimer)
                         toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                }).then((result) => {
+                    if (event.detail.reload == true) {
+                        location.reload();
                     }
                 });
             } else if (event.detail.title == "error") {

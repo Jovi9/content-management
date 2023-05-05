@@ -43,21 +43,6 @@
             </div>
         </div>
     </div>
-
-    <div class="col-lg-6">
-        <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="">
-                    <div class="card">
-                        <div class="card-header">{{ __('Web Logo') }}</div>
-                        <div class="card-body">
-                            @livewire('admin.options.web-logo')
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 
 @section('scripts')
