@@ -11,36 +11,27 @@
                     <h5 class="modal-title"><strong>Manage Content Arrangement</strong></h5>
                 </div>
                 <div class="modal-body text-left">
-                    <button class="btn btn-primary mb-3 float-end" wire:click="resetFormCounts">Reset Arrangement</button>
-                    <table class="table table-responsive-sm" id="">
-                        <thead>
-                            <tr>
+                    <table class="table table-responsive-sm table-striped" id="tableSource">
+                        <thead class="thead-dark">
+                            <tr class="">
                                 <th scope="col">Title</th>
-                                <th scope="col"></th>
+                                <th scope="col">Sort</th>
                             </tr>
                         </thead>
                         <tbody>
                             @if ($contents)
                                 @foreach ($contents as $content)
                                     <tr>
-                                        <td hidden>{{ $content['id'] }}</td>
-                                        <td>{{ $content['title'] }}</td>
+                                        <td hidden>
+                                            <input type="text" value="{{ $content['id'] }}"
+                                                name="{{ $content['id'] }}" readonly>
+                                        </td>
+                                        <td class="">
+                                            {{ $content['title'] }}
+                                        </td>
                                         <td>
-                                            <select name="" id="" class="form-select"
-                                                value="{{ $content['arrangement'] }}">
-                                                <option value="{{ $content['arrangement'] }}" selected>
-                                                    {{ $content['arrangement'] }}</option>
-                                                @if ($counts)
-                                                    @foreach ($counts as $count)
-                                                        @if (!($count['count'] == $content['arrangement']))
-                                                            <option value="{{ $count['count'] }}"
-                                                                wire:click="updateArrangement('{{ $count['count'] }}','{{ $content['id'] }}')">
-                                                                {{ $count['count'] }}
-                                                            </option>
-                                                        @endif
-                                                    @endforeach
-                                                @endif
-                                            </select>
+                                            <button class="move-up btn btn-primary"><i class="fas fa-arrow-up"></i></button>
+                                            <button class="move-down btn btn-primary"><i class="fas fa-arrow-down"></i></button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -49,8 +40,8 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button"
-                        wire:click="closeModal">Close</button>
+                    <button id="btnSave" class="btn btn-primary">Save</button>
+                    <button class="btn btn-secondary" type="button" wire:click="closeModal">Close</button>
                 </div>
             </div>
         </div>

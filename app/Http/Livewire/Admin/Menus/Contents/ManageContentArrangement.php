@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Menus\Contents;
 
+use App\Http\Controllers\UserActivityController;
 use App\Models\Menu\Content;
 use App\Models\Menu\MainMenu;
 use App\Models\Menu\SubMenu;
@@ -12,8 +13,8 @@ class ManageContentArrangement extends Component
 
     public $mainURI = '';
     public $subURI = '';
-    public $counts = array();
-    public $updatingArrangement;
+
+    protected $listeners = ['updateArrangement'];
 
     public function mount($mainURI, $subURI)
     {
@@ -56,13 +57,8 @@ class ManageContentArrangement extends Component
     public function render()
     {
         $contents = $this->getContents();
-        if ($this->updatingArrangement == false) {
-            $this->loadCounts(count($contents));
-        }
-        $this->updatingArrangement = false;
         return view('livewire.admin.menus.contents.manage-content-arrangement', [
             'contents' => $contents,
-            'counts' => $this->counts,
         ]);
     }
 
@@ -71,71 +67,66 @@ class ManageContentArrangement extends Component
         $this->dispatchBrowserEvent('reload-page');
     }
 
-    private function resetCounts()
+    // update new arrangement and log action
+    public function updateArrangement(array $id)
     {
-        unset($this->counts);
-        $this->counts = array();
-    }
-
-    public function loadCounts($count)
-    {
-        $this->resetCounts();
-        for ($i = 1; $i <= $count; $i++) {
-            array_push($this->counts, [
-                'count' => $i,
+        if (empty($id)) {
+            $this->dispatchBrowserEvent('swal-modal', [
+                'title' => 'empty',
+                'message' => 'Arrangement is empty, please try again.',
             ]);
+            return;
         }
-    }
 
-    public function resetFormCounts()
-    {
-        $this->updatingArrangement = false;
         $mainMenu = $this->getMainMenu_ByURI($this->mainURI);
         $subMenu = $this->getSubMenu_ByURI($this->subURI);
 
-        if ($subMenu->id == 1) {
-            Content::where('main_menu_id', $mainMenu->id)
-                ->update([
-                    'arrangement' => 1,
-                ]);
+        $log = [];
+
+        if ($subMenu->id === 1) {
+            $previousArrangement = Content::select('title as Title')
+                ->where('main_menu_id', $mainMenu->id)
+                ->orderBy('arrangement')
+                ->get();
+            $log['action'] = "Modified content arrangement of " . $mainMenu->mainMenu;
         } else {
-            Content::where('main_menu_id', $mainMenu->id)
+            $previousArrangement = Content::select('title as Title')
+                ->where('main_menu_id', $mainMenu->id)
                 ->where('sub_menu_id', $subMenu->id)
+                ->orderBy('arrangement')
+                ->get();
+            $log['action'] = "Modified content arrangement of " . $mainMenu->mainMenu . ' > ' . $subMenu->subMenu;
+        }
+        $log['content'] = 'Content: ' . json_encode($previousArrangement);
+
+        foreach ($id as $key => $cid) {
+            Content::where('id', $cid['value'])
                 ->update([
-                    'arrangement' => 1,
+                    'arrangement' => $key,
                 ]);
         }
-    }
 
-    public function updateArrangement($num, $contentID)
-    {
-        $this->updatingArrangement = true;
-        $this->resetCounts();
-
-        Content::where('id', $contentID)
-            ->update([
-                'arrangement' => $num,
-            ]);
-
-        $contents = $this->getContents();
-        $contentArrangement = array();
-        foreach ($contents as $content) {
-            $contentArrangement[] = $content['arrangement'];
+        if ($subMenu->id === 1) {
+            $newArrangement = Content::select('title as Title')
+                ->where('main_menu_id', $mainMenu->id)
+                ->orderBy('arrangement')
+                ->get();
+        } else {
+            $newArrangement = Content::select('title as Title')
+                ->where('main_menu_id', $mainMenu->id)
+                ->where('sub_menu_id', $subMenu->id)
+                ->orderBy('arrangement')
+                ->get();
         }
-        for ($i = 1; $i <= count($contents); $i++) {
-            if (!($i == $num) && !in_array($i, $contentArrangement)) {
-                array_push($this->counts, [
-                    'count' => $i,
-                ]);
-            }
-        }
+        $log['changes'] = 'Changes: ' . json_encode($newArrangement);
 
-        // for ($i = 1; $i <= count($contents); $i++) {
-        //     if (!($i == $num)) {
-        //         array_push($this->counts, [
-        //             'count' => $i,
-        //         ]);
-        //     }
-        // }
+        UserActivityController::store($log);
+
+        $this->dispatchBrowserEvent('swal-modal', [
+            'title' => 'saved',
+            'message' => 'Content arrangement updated successfully.',
+        ]);
+
+        $this->closeModal();
     }
 }

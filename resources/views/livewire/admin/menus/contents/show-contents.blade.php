@@ -21,7 +21,7 @@
                 <th scope="col">Date</th>
                 <th scope="col">User</th>
                 <th scope="col">Status</th>
-                <th scope="col">Arrangement</th>
+                {{-- <th scope="col">Arrangement</th> --}}
                 <th scope="col">Visible To Home</th>
                 <th scope="col">Actions</th>
             </tr>
@@ -58,7 +58,7 @@
                             {{ ucwords($content['updated_by']->firstName . ' ' . $content['updated_by']->lastName) }}
                         </td>
                         <td>{{ ucwords($content['status']) }}</td>
-                        <td>{{ $content['arrangement'] }}</td>
+                        {{-- <td>{{ $content['arrangement'] }}</td> --}}
                         <td>
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="{{ $content['id'] }}"

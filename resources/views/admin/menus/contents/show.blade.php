@@ -54,7 +54,33 @@
                     text: 'Something went wrong, please try again.',
                     allowOutsideClick: false
                 });
+            } else if (event.detail.title == "empty") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed to process request.',
+                    text: event.detail.message,
+                    allowOutsideClick: false
+                });
             }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+
+            $(document).on('click', '.move-up, .move-down', function() {
+                var row = $(this).parents("tr:first");
+                if ($(this).is(".move-up")) {
+                    row.insertBefore(row.prev());
+                } else {
+                    row.insertAfter(row.next());
+                }
+            });
+
+            $(document).on('click', '#btnSave', function() {
+                var tableData = $('#tableSource input[type="text"]').serializeArray();
+                Livewire.emit('updateArrangement', tableData);
+            });
         });
     </script>
 
