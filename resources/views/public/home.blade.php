@@ -2,29 +2,6 @@
 
 @section('title', 'Home')
 
-@section('styles')
-    <style>
-        #banner {
-            background-position: center;
-            background-size: cover;
-            background-attachment: fixed;
-            position: relative;
-            z-index: 2;
-        }
-
-        #banner::after {
-            content: "";
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            background-color: rgba(21, 20, 51, 0.8);
-            z-index: -1;
-        }
-    </style>
-@endsection
-
 @section('content')
     <div class="bg-dark text-secondary px-4 py-5 text-center mb-5" id="banner"
         style="background-image: url({{ asset('storage/logo/home_banner.jpg') }})">

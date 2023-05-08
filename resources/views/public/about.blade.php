@@ -4,26 +4,6 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('assets/sweetalert2/sweetalert2.min.css') }}">
-    <style>
-        #banner {
-            background-position: center;
-            background-size: cover;
-            background-attachment: fixed;
-            position: relative;
-            z-index: 2;
-        }
-
-        #banner::after {
-            content: "";
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            background-color: rgba(21, 20, 51, 0.8);
-            z-index: -1;
-        }
-    </style>
 @endsection
 
 @section('content')
