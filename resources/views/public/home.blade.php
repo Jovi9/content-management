@@ -4,24 +4,12 @@
 
 @section('content')
     <div class="bg-dark text-secondary px-4 py-5 text-center mb-5" id="banner"
-        style="background-image: url({{ asset('storage/logo/home_banner.jpg') }})">
+        style="background-image: url({{ asset('storage/logo/site_banner.png') }})">
         <div class="py-5">
             <h1 class="display-5 fw-bold text-white">Catanduanes State University <br> College of Information and <br>
                 Communications Technology</h1>
         </div>
     </div>
-    {{-- <div class="hero d-flex align-items-center" id="banner"
-        style="background-image: url({{ asset('storage/logo/home_banner.jpg') }})">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-7 mx-auto text-center">
-                    <img src="{{ asset('storage/logo/sys_logo.png') }}" class="img-fluid mb-3" alt="LOGO" width="100">
-                    <h1 class="display-5 text-white">COLLEGE OF INFORMATION AND <br> COMMUNICATIONS TECHNOLOGY</h1>
-                    <a href="#home" class="btn btn-primary px-5 py-2 fs-4 mt-3">EXPLORE</a>
-                </div>
-            </div>
-        </div>
-    </div> --}}
 
     <section id="home" class="">
 

@@ -42,6 +42,23 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="container">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <h4 class="card-title">Site Banner</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        @livewire('admin.options.site-banner')
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>

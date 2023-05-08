@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="bg-dark text-secondary px-4 py-5 text-center mb-5" id="banner"
-        style="background-image: url({{ asset('storage/logo/home_banner.jpg') }})">
+        style="background-image: url({{ asset('storage/logo/site_banner.png') }})">
         <div class="py-5">
             <h1 class="display-5 fw-bold text-white">
                 {{ $menuName }}
