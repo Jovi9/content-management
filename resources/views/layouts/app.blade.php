@@ -59,7 +59,7 @@
                     <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
                         @role('administrator')
                             <a href="{{ route('admin.options-index') }}" class="dropdown-item">
-                                <i class="fas fa-gears mr-2"></i> Options
+                                <i class="fas fa-gears mr-2"></i> Site Maintenance
                             </a>
                             <div class="dropdown-divider"></div>
                         @endrole

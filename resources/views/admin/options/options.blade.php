@@ -1,46 +1,49 @@
 @extends('layouts.app')
-@section('title', 'Options')
+@section('title', 'Site Maintenance')
 
 @section('styles')
     @livewireStyles
     <link rel="stylesheet" href="{{ asset('assets/sweetalert2/sweetalert2.min.css') }}">
 @endsection
 
-@section('page-header', 'Options')
+@section('page-header', 'Site Maintenance')
 @section('content')
     <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="">
-                <div class="card">
-                    <div class="card-body">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="departments-tab" data-bs-toggle="tab"
-                                    data-bs-target="#departments" type="button" role="tab" aria-controls="departments"
-                                    aria-selected="true">Departments</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="userTypes-tab" data-bs-toggle="tab" data-bs-target="#userTypes"
-                                    type="button" role="tab" aria-controls="userTypes" aria-selected="false">User
-                                    Types</button>
-                            </li>
-                        </ul>
-                        <div class="tab-content" id="tabOptions">
-                            <div class="tab-pane fade show active" id="departments" role="tabpanel"
-                                aria-labelledby="departments-tab">
-                                <div class="col-lg-6 p-3">
-                                    @livewire('admin.options.departments-option')
+        <div class="row">
+            <section>
+                <div class="">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <h4 class="card-title">Departments</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        @livewire('admin.options.departments-option')
+                                    </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="userTypes" role="tabpanel" aria-labelledby="userTypes-tab">
-                                <div class="col-lg-6 p-3">
-                                    @livewire('admin.options.user-types-option')
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <h4 class="card-title">User Types</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        @livewire('admin.options.user-types-option')
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
     </div>
 @endsection
