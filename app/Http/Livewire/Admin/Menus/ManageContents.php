@@ -22,6 +22,7 @@ class ManageContents extends Component
             ->get();
 
         foreach ($contentsAll as $content) {
+            $createdBy = User::where('id', $content->user_id)->first();
             $updatedBy = User::where('id', $content->mod_user_id)->first();
             $mainMenu = MainMenu::where('id', $content->main_menu_id)->first();
             $subMenu = SubMenu::where('id', $content->sub_menu_id)->first();
@@ -35,7 +36,8 @@ class ManageContents extends Component
                 'content' => $content->content,
                 'created_at' => date('M-d-Y h:i A', strtotime($content->created_at)),
                 'updated_at' => date('M-d-Y h:i A', strtotime($content->updated_at)),
-                'user' => $updatedBy->firstName . ' ' . $updatedBy->lastName,
+                'createdBy' => $createdBy->firstName . ' ' . $createdBy->lastName,
+                'updatedBy' => $updatedBy->firstName . ' ' . $updatedBy->lastName,
                 'status' => $content->status,
                 'isVisible' => $content->isVisible
             ]);

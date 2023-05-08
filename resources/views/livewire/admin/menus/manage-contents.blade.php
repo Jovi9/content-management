@@ -6,8 +6,8 @@
                 <th scope="col">Sub Menu</th>
                 <th scope="col">URI</th>
                 <th scope="col">Title</th>
-                <th scope="col">Date Created</th>
-                <th scope="col">Date Modified</th>
+                <th scope="col">Date</th>
+                {{-- <th scope="col">Date Modified</th> --}}
                 <th scope="col">User</th>
                 <th scope="col">Status</th>
                 <th scope="col">Visibility</th>
@@ -37,9 +37,14 @@
                             @endif
                         </td>
                         <td>{{ $content['title'] }}</td>
-                        <td>{{ $content['created_at'] }}</td>
-                        <td>{{ $content['updated_at'] }}</td>
-                        <td>{{ $content['user'] }}</td>
+                        <td>
+                            {{ __('Date Created: ') . $content['created_at'] }} <br>
+                            {{ __('Date Updated: ') . $content['updated_at'] }}
+                        </td>
+                        <td>
+                            {{ __('Created By: ') . $content['createdBy'] }} <br>
+                            {{ __('Updated By: ') . $content['updatedBy'] }}
+                        </td>
                         <td>{{ ucwords($content['status']) }}</td>
                         <td>
                             <div class="form-check form-switch">
