@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\Menu\MenuController;
 use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Public\ContacUsController;
+use App\Http\Livewire\Admin\Menus\ShowSubMenus;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,7 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('/company-profile', [CompanyProfileController::class, 'index'])->name('company-profile-index');
         Route::get('/users', [UserController::class, 'index'])->name('users-index');
         Route::get('/web-navigations', [MenuController::class, 'index'])->name('navigations-index');
+        Route::get('/web-navigations/{main_menu}', ShowSubMenus::class)->name('navigations-show');
 
         Route::get('/manage-contents', [ContentController::class, 'manageContents'])->name('contents-manage');
     });
