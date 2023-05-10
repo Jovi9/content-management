@@ -32,6 +32,22 @@
                 });
             }
         });
+
+        window.addEventListener('delete-selected', event => {
+            Swal.fire({
+                title: event.detail.title,
+                text: event.detail.text,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emit('deleteSubMenu');
+                }
+            })
+        });
     </script>
 @endsection
 
@@ -100,6 +116,10 @@
                                                         class="fa fa-edit"></i> Edit Sub Menu</button>
                                                 <a href="{{ route('admin.contents-create', ['main' => $subMenu['mainURI'] . '/' . $subMenu['subURI']]) }}"
                                                     class="btn btn-primary"><i class="fa fa-plus"></i> Add Content</a>
+                                                <button class="btn btn-danger"
+                                                    wire:click="deleteSelected('{{ $subMenu['id'] }}')">
+                                                    <i class="fa fa-trash"></i> Delete Menu
+                                                </button>
                                             </td>
                                         </tr>
                                     @endforeach

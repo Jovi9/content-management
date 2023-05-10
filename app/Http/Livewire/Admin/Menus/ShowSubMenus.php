@@ -37,6 +37,8 @@ class ShowSubMenus extends Component
         ];
     }
 
+    protected $listeners = ['deleteSubMenu'];
+
     private function getMainMenuByURI()
     {
         return MainMenu::where('mainURI', $this->mainURI)->first();
@@ -202,5 +204,34 @@ class ShowSubMenus extends Component
             $log['changes'] = "Sub Menu Status: Enabled";
             UserActivityController::store($log);
         }
+    }
+
+    public function deleteSelected($id)
+    {
+        $this->subMenuID = $id;
+        $this->dispatchBrowserEvent('delete-selected', [
+            'title' => 'Are you sure?',
+            'text' => 'Warning! This action will move its Contents to trash.',
+        ]);
+    }
+
+    public function deleteSubMenu()
+    {
+        $subMenu = $this->getSubMenuByID($this->subMenuID);
+
+        $contents = array();
+        $allContents = $subMenu->contents()->get();
+        foreach ($allContents as $content) {
+            array_push($contents, [
+                'Title' => $content->title,
+            ]);
+        }
+        $subMenu->delete();
+
+        $log = [];
+        $log['action'] = "Deleted Sub Menu";
+        $log['content'] = "Sub Menu: " . $subMenu->subMenu . ", Contents: " . json_encode($contents);
+        $log['changes'] = "";
+        UserActivityController::store($log);
     }
 }

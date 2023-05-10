@@ -13,12 +13,15 @@ use Illuminate\Support\Facades\Crypt;
 class ShowContents extends Component
 {
     public $mainMenuID, $subMenuID;
+    public $contentID;
 
     public function mount($mainMenuID, $subMenuID)
     {
         $this->mainMenuID = Crypt::decrypt($mainMenuID);
         $this->subMenuID = Crypt::decrypt($subMenuID);
     }
+
+    protected $listeners = ['deleteContent'];
 
     private function getMainMenuByID($mainMenuID)
     {
@@ -133,5 +136,37 @@ class ShowContents extends Component
                 'title' => 'error',
             ]);
         }
+    }
+
+    public function deleteSelected($id)
+    {
+        $this->contentID = $id;
+        $this->dispatchBrowserEvent('delete-selected', [
+            'title' => 'Are you sure?',
+            'text' => 'Warning! The selected content will be moved to trash.',
+        ]);
+    }
+
+    public function deleteContent()
+    {
+        try {
+            $contentID = Crypt::decrypt($this->contentID);
+        } catch (\Throwable $th) {
+            $this->dispatchBrowserEvent('swal-modal', [
+                'title' => 'error'
+            ]);
+            return;
+        }
+
+        $content = $this->getContentByID($contentID);
+        $mainMenu = $content->mainMenu()->first();
+        $subMenu = $content->subMenu()->first();
+        $content->delete();
+
+        $log = [];
+        $log['action'] = "Deleted Content";
+        $log['content'] = "Main Menu: " . $mainMenu->mainMenu . ", Sub Menu: " . $subMenu->subMenu . ", Content Title: " . $content->title;
+        $log['changes'] = "";
+        UserActivityController::store($log);
     }
 }

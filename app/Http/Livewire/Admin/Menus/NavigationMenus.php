@@ -29,6 +29,8 @@ class NavigationMenus extends LiveForm
         ];
     }
 
+    protected $listeners = ['deleteMainMenu'];
+
     protected function getMainMenus()
     {
         $mainMenus = MainMenu::whereNot('id', 1)->get();
@@ -211,6 +213,51 @@ class NavigationMenus extends LiveForm
         }
     }
 
+    public function deleteSelected($id)
+    {
+        $this->mainMenuID = $id;
+        $this->dispatchBrowserEvent('delete-selected', [
+            'title' => 'Are you sure?',
+            'text' => 'Warning! This action will move all its Sub Menus and Contents to trash.',
+        ]);
+    }
+
+    public function deleteMainMenu()
+    {
+        try {
+            $mainMenuID = Crypt::decrypt($this->mainMenuID);
+        } catch (\Throwable $th) {
+            $this->dispatchBrowserEvent('swal-modal', [
+                'title' => 'error'
+            ]);
+            return;
+        }
+        $mainMenu = $this->getMainMenu_ByID($mainMenuID);
+
+        $subMenus = array();
+        $allSubMenu = $mainMenu->subMenus()->get();
+        foreach ($allSubMenu as $subMenu) {
+            array_push($subMenus, [
+                'Sub Menu' => $subMenu->subMenu,
+            ]);
+        }
+
+        $contents = array();
+        $allContents = $mainMenu->contents()->get();
+        foreach ($allContents as $content) {
+            array_push($contents, [
+                'Title' => $content->title,
+            ]);
+        }
+
+        $mainMenu->delete();
+
+        $log = [];
+        $log['action'] = "Deleted Main Menu";
+        $log['content'] = "Main Menu: " . $mainMenu->mainMenu . ', ' . json_encode($subMenus) . ", Contents: " . json_encode($contents);
+        $log['changes'] = "";
+        UserActivityController::store($log);
+    }
 
     // sub menu
     public function addSubMenu($id)

@@ -63,6 +63,22 @@
                 });
             }
         });
+
+        window.addEventListener('delete-selected', event => {
+            Swal.fire({
+                title: event.detail.title,
+                text: event.detail.text,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emit('deleteContent');
+                }
+            })
+        });
     </script>
 
     <script>

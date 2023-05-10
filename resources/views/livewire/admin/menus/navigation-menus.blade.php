@@ -53,7 +53,7 @@
                                         Sub
                                         Menu</button>
                                     <a class="btn btn-primary"
-                                    href="{{ route('admin.navigations-show', ['main_menu' => $mainMenu['URI']]) }}">
+                                        href="{{ route('admin.navigations-show', ['main_menu' => $mainMenu['URI']]) }}">
                                         <i class="fa fa-eye"></i> View Sub Menu
                                     </a>
                                 @else
@@ -95,6 +95,11 @@
                             @if (!$mainMenu['hasSubMenu'])
                                 <a href="{{ route('admin.contents-create', ['main' => $mainMenu['URI']]) }}"
                                     class="btn btn-primary"><i class="fa fa-plus"></i> Add Content</a>
+                            @endif
+                            @if (!(strtolower($mainMenu['mainMenu']) === 'about'))
+                                <button class="btn btn-danger" wire:click="deleteSelected('{{ $mainMenu['id'] }}')">
+                                    <i class="fa fa-trash"></i> Delete Menu
+                                </button>
                             @endif
                         </td>
                     </tr>
@@ -173,36 +178,36 @@
     </div>
 
     <div wire:ignore.self class="modal fade" id="modalAddSubMenu" tabindex="-1" role="dialog"
-    aria-labelledby="modalAddSubMenu" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><strong>Add Sub Menu for {{ $mainMenuName }}</strong></h5>
-            </div>
-            <form action="javascript:void(0)" wire:submit.prevent="storeSubMenu" method="post" novalidate>
-                @csrf
+        aria-labelledby="modalAddSubMenu" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><strong>Add Sub Menu for {{ $mainMenuName }}</strong></h5>
+                </div>
+                <form action="javascript:void(0)" wire:submit.prevent="storeSubMenu" method="post" novalidate>
+                    @csrf
 
-                <div class="modal-body text-left">
-                    <div class="row g-3">
-                        <div class="col-md-12">
-                            <label class="form-label">Sub Menu Name *</label>
-                            <input type="text" class="form-control @error('subMenu') is-invalid @enderror"
-                                required wire:model.lazy="subMenu">
-                            @error('subMenu')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
+                    <div class="modal-body text-left">
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <label class="form-label">Sub Menu Name *</label>
+                                <input type="text" class="form-control @error('subMenu') is-invalid @enderror"
+                                    required wire:model.lazy="subMenu">
+                                @error('subMenu')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button"
-                        wire:click="closeModal('#modalAddSubMenu')">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </form>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button"
+                            wire:click="closeModal('#modalAddSubMenu')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 </div>

@@ -76,6 +76,9 @@
                         <td>
                             <a href="{{ route('admin.contents-edit', ['id' => $content['id']]) }}"
                                 class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                            <button class="btn btn-danger" wire:click="deleteSelected('{{ $content['id'] }}')">
+                                <i class="fa fa-trash"></i>
+                            </button>
                         </td>
                     </tr>
                 @endforeach
