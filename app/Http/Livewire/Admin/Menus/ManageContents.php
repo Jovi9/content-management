@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Crypt;
 
 class ManageContents extends Component
 {
+    public $contentID;
+
+    protected $listeners = ['deleteContent'];
+
     protected function getContents()
     {
         $contents = array();
@@ -154,5 +158,37 @@ class ManageContents extends Component
                 'title' => 'error',
             ]);
         }
+    }
+
+    public function deleteSelected($id)
+    {
+        $this->contentID = $id;
+        $this->dispatchBrowserEvent('delete-selected', [
+            'title' => 'Are you sure?',
+            'text' => 'Warning! The selected content will be moved to trash.',
+        ]);
+    }
+
+    public function deleteContent()
+    {
+        try {
+            $contentID = Crypt::decrypt($this->contentID);
+        } catch (\Throwable $th) {
+            $this->dispatchBrowserEvent('swal-modal', [
+                'title' => 'error'
+            ]);
+            return;
+        }
+
+        $content = $this->getContent($contentID);
+        $mainMenu = $content->mainMenu()->first();
+        $subMenu = $content->subMenu()->first();
+        $content->delete();
+
+        $log = [];
+        $log['action'] = "Deleted Content";
+        $log['content'] = "Main Menu: " . $mainMenu->mainMenu . ", Sub Menu: " . $subMenu->subMenu . ", Content Title: " . $content->title;
+        $log['changes'] = "";
+        UserActivityController::store($log);
     }
 }

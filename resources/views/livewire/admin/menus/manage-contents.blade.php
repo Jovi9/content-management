@@ -67,7 +67,9 @@
                             @endif
                             <a href="{{ route('admin.contents-edit', ['id' => $content['id'], 'requestFrom' => 'manage-contents']) }}"
                                 class="btn btn-primary"><i class="fa fa-edit"></i></a>
-                            <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                            <button class="btn btn-danger" wire:click="deleteSelected('{{ $content['id'] }}')">
+                                <i class="fa fa-trash"></i>
+                            </button>
                         </td>
                     </tr>
                 @endforeach
