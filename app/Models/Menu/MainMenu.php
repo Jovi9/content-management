@@ -18,18 +18,18 @@ class MainMenu extends Model
         'isEnabled'
     ];
 
-    protected static function booted()
-    {
-        static::deleting(function (MainMenu $mainMenu) {
-            $mainMenu->subMenus()->delete();
-            $mainMenu->contents()->delete();
-        });
+    // protected static function booted()
+    // {
+    //     static::deleting(function (MainMenu $mainMenu) {
+    //         $mainMenu->subMenus()->delete();
+    //         $mainMenu->contents()->delete();
+    //     });
 
-        static::restoring(function (MainMenu $mainMenu) {
-            $mainMenu->contents()->restore();
-            $mainMenu->subMenus()->restore();
-        });
-    }
+    //     static::restoring(function (MainMenu $mainMenu) {
+    //         $mainMenu->contents()->restore();
+    //         $mainMenu->subMenus()->restore();
+    //     });
+    // }
 
     public function subMenus(): HasMany
     {

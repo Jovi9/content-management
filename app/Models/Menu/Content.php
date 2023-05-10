@@ -25,6 +25,14 @@ class Content extends Model
         'arrangement',
     ];
 
+    // protected static function booted()
+    // {
+    //     static::restoring(function (Content $content) {
+    //         $content->mainMenu()->restore();
+    //         $content->subMenu()->restore();
+    //     });
+    // }
+
     public function mainMenu(): HasOne
     {
         return $this->hasOne(MainMenu::class, 'id', 'main_menu_id');

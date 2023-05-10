@@ -251,6 +251,8 @@ class NavigationMenus extends LiveForm
         }
 
         $mainMenu->delete();
+        $mainMenu->subMenus()->delete();
+        $mainMenu->contents()->delete();
 
         $log = [];
         $log['action'] = "Deleted Main Menu";

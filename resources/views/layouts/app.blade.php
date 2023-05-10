@@ -174,6 +174,16 @@
                                 @endrole
                             </ul>
                         </li>
+                        @role('administrator')
+                        <li class="nav-item">
+                            <a href="{{ route('admin.trash-page') }}" class="nav-link @if (Route::is('admin.trash-page')) active @endif">
+                                <i class="nav-icon fas fa-trash"></i>
+                                <p>
+                                    Trash
+                                </p>
+                            </a>
+                        </li>
+                        @endrole
                         <li class="nav-item">
                             <a href="{{ route('public-home') }}" class="nav-link">
                                 <i class="nav-icon far fa-eye"></i>

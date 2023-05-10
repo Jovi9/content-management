@@ -227,6 +227,7 @@ class ShowSubMenus extends Component
             ]);
         }
         $subMenu->delete();
+        $subMenu->contents()->delete();
 
         $log = [];
         $log['action'] = "Deleted Sub Menu";
