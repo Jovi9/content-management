@@ -116,6 +116,8 @@
                                                         class="fa fa-edit"></i> Edit Sub Menu</button>
                                                 <a href="{{ route('admin.contents-create', ['main' => $subMenu['mainURI'] . '/' . $subMenu['subURI']]) }}"
                                                     class="btn btn-primary"><i class="fa fa-plus"></i> Add Content</a>
+                                                <a href="{{ route('admin.contents-show', ['main' => $subMenu['mainURI'] . '/' . $subMenu['subURI']]) }}"
+                                                    class="btn btn-primary"><i class="fa fa-eye"></i> View Contents</a>
                                                 <button class="btn btn-danger"
                                                     wire:click="deleteSelected('{{ $subMenu['id'] }}')">
                                                     <i class="fa fa-trash"></i> Delete Menu
