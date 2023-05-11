@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Trash;
 
+use App\Http\Controllers\UserActivityController;
 use App\Models\Menu\Content;
 use App\Models\Menu\MainMenu;
 use App\Models\Menu\SubMenu;
@@ -77,6 +78,12 @@ class TrashPage extends Component
     {
         $mainMenu = $this->getMainMenuByID($id);
         $mainMenu->restore();
+
+        $log = [];
+        $log['action'] = "Restored Main Menu";
+        $log['content'] = "Main Menu: " . $mainMenu->mainMenu;
+        $log['changes'] = "";
+        UserActivityController::store($log);
         $this->dispatchBrowserEvent('restore-selected');
     }
 
@@ -89,6 +96,14 @@ class TrashPage extends Component
     {
         $subMenu = $this->getSubMenuByID($id);
         $subMenu->restore();
+
+        $mainMenu = $subMenu->mainMenu()->first();
+
+        $log = [];
+        $log['action'] = "Restored Sub Menu";
+        $log['content'] = "Main Menu: " . $mainMenu->mainMenu . ', Sub Menu: ' . $subMenu->subMenu;
+        $log['changes'] = "";
+        UserActivityController::store($log);
         $this->dispatchBrowserEvent('restore-selected');
     }
 
@@ -98,6 +113,15 @@ class TrashPage extends Component
         $content->restore();
         $content->mainMenu()->restore();
         $content->subMenu()->restore();
+
+        $mainMenu = $content->mainMenu()->first();
+        $subMenu = $content->subMenu()->first();
+
+        $log = [];
+        $log['action'] = "Restored Content";
+        $log['content'] = "Main Menu: " . $mainMenu->mainMenu . ', Sub Menu: ' . $subMenu->subMenu . ', Content Title: ' . $content->title;
+        $log['changes'] = "";
+        UserActivityController::store($log);
         $this->dispatchBrowserEvent('restore-selected');
     }
 }

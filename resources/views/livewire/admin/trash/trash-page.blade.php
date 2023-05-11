@@ -40,7 +40,7 @@
                             Main Menus
                         </button>
                     </h2>
-                    <div id="collapseMainMenu" class="accordion-collapse collapse"
+                    <div id="collapseMainMenu" class="accordion-collapse collapse show"
                         aria-labelledby="headingMainMenu" data-bs-parent="#trashAccordion">
                         <div class="accordion-body">
                             <table class="table">
@@ -77,7 +77,7 @@
                             Sub Menus
                         </button>
                     </h2>
-                    <div id="collapseSubMenu" class="accordion-collapse collapse" aria-labelledby="headingSubMenu"
+                    <div id="collapseSubMenu" class="accordion-collapse collapse show" aria-labelledby="headingSubMenu"
                         data-bs-parent="#trashAccordion">
                         <div class="accordion-body">
                             <table class="table">
@@ -116,7 +116,7 @@
                             Contents
                         </button>
                     </h2>
-                    <div id="collapseContent" class="accordion-collapse collapse" aria-labelledby="headingContent"
+                    <div id="collapseContent" class="accordion-collapse collapse show" aria-labelledby="headingContent"
                         data-bs-parent="#trashAccordion">
                         <div class="accordion-body">
                             <table class="table">
