@@ -6,15 +6,20 @@ use App\Http\Controllers\UserActivityController;
 use App\Models\Menu\Content;
 use App\Models\Menu\MainMenu;
 use App\Models\Menu\SubMenu;
+use Illuminate\Support\Facades\Crypt;
 use Livewire\Component;
 
 class TrashPage extends Component
 {
+    public $selected, $arg;
+
+    protected $listeners = ['permanentDeleteSelected'];
+
     private function getMainMenus()
     {
         $mainMenus = array();
 
-        $trashed = MainMenu::onlyTrashed()->get();
+        $trashed = MainMenu::onlyTrashed()->orderBy('deleted_at', 'desc')->get();
         foreach ($trashed as $trash) {
             array_push($mainMenus, [
                 'id' => $trash->id,
@@ -28,7 +33,7 @@ class TrashPage extends Component
     private function getSubMenus()
     {
         $subMenus = array();
-        $trashed = SubMenu::onlyTrashed()->get();
+        $trashed = SubMenu::onlyTrashed()->orderBy('deleted_at', 'desc')->get();
         foreach ($trashed as $trash) {
             $mainMenu = $this->getMainMenuByID($trash->main_menu_id);
             array_push($subMenus, [
@@ -44,7 +49,7 @@ class TrashPage extends Component
     private function getContents()
     {
         $contents = array();
-        $trashed = Content::onlyTrashed()->get();
+        $trashed = Content::onlyTrashed()->orderBy('deleted_at', 'desc')->get();
         foreach ($trashed as $trash) {
             $mainMenu = $this->getMainMenuByID($trash->main_menu_id);
             $subMenu = $this->getSubMenuByID($trash->sub_menu_id);
@@ -123,5 +128,117 @@ class TrashPage extends Component
         $log['changes'] = "";
         UserActivityController::store($log);
         $this->dispatchBrowserEvent('restore-selected');
+    }
+
+    // delete permanent
+    public function deleteSelectedMainMenu($id)
+    {
+        $this->selected = $id;
+        $this->arg = Crypt::encrypt('main-menu');
+        $this->dispatchBrowserEvent('permanent-delete', [
+            'title' => 'Are You Sure?',
+            'text' => 'Warning! This action is permanent and won\'t be undone. All sub menus and contents related to this menu will be permanently deleted.',
+        ]);
+    }
+
+    public function deleteSelectedSubMenu($id)
+    {
+        $this->selected = $id;
+        $this->arg = Crypt::encrypt('sub-menu');
+        $this->dispatchBrowserEvent('permanent-delete', [
+            'title' => 'Are You Sure?',
+            'text' => 'Warning! This action is permanent and won\'t be undone. All contents related to this menu will be permanently deleted.',
+        ]);
+    }
+
+    public function deleteSelectedContent($id)
+    {
+        $this->selected = $id;
+        $this->arg = Crypt::encrypt('content');
+        $this->dispatchBrowserEvent('permanent-delete', [
+            'title' => 'Are You Sure?',
+            'text' => 'Warning! This action is permanent and won\'t be undone. This content will be permanently deleted.',
+        ]);
+    }
+
+    public function permanentDeleteSelected()
+    {
+        try {
+            $argument = Crypt::decrypt($this->arg);
+        } catch (\Throwable $th) {
+            return;
+        }
+        if (strtolower($argument) === 'main-menu') {
+            $mainMenu = MainMenu::withTrashed()->findOrFail($this->selected);
+
+            $allSubMenus = $mainMenu->subMenus()->withTrashed()->get();
+            $subMenus = array();
+            foreach ($allSubMenus as $subMenu) {
+                array_push($subMenus, [
+                    'Name: ' => $subMenu->subMenu,
+                ]);
+            }
+
+            $allContents = $mainMenu->contents()->withTrashed()->get();
+            $contents = array();
+            foreach ($allContents as $content) {
+                array_push($contents, [
+                    'Title: ' => $content->title,
+                ]);
+            }
+
+            $log = [];
+            $log['action'] = "Permanently Deleted Main Menu";
+            $log['content'] = "Main Menu: " . $mainMenu->mainMenu . ', Sub Menu: ' . json_encode($subMenus) . ', Contents: ' . json_encode($contents);
+            $log['changes'] = "";
+
+            $mainMenu->contents()->forceDelete();
+            $mainMenu->subMenus()->forceDelete();
+            $mainMenu->forceDelete();
+
+            UserActivityController::store($log);
+
+            $this->dispatchBrowserEvent('deleted-permanently');
+        } else if (strtolower($argument) === 'sub-menu') {
+            $subMenu = SubMenu::withTrashed()->findOrFail($this->selected);
+            $mainMenu = $subMenu->mainMenu()->withTrashed()->first();
+
+            $allContents = $subMenu->contents()->withTrashed()->get();
+            $contents = array();
+            foreach ($allContents as $content) {
+                array_push($contents, [
+                    'Title: ' => $content->title,
+                ]);
+            }
+
+            $log = [];
+            $log['action'] = "Permanently Deleted Sub Menu";
+            $log['content'] = "Main Menu: " . $mainMenu->mainMenu . ', Sub Menu: ' . $subMenu->subMenu . ', Contents: ' . json_encode($contents);
+            $log['changes'] = "";
+
+            $subMenu->contents()->forceDelete();
+            $subMenu->forceDelete();
+
+            UserActivityController::store($log);
+
+            $this->dispatchBrowserEvent('deleted-permanently');
+        } else if (strtolower($argument) === 'content') {
+            $content = Content::withTrashed()->findOrFail($this->selected);
+            $mainMenu = $content->mainMenu()->withTrashed()->first();
+            $subMenu = $content->subMenu()->withTrashed()->first();
+
+            $log = [];
+            $log['action'] = "Permanently Deleted Content";
+            $log['content'] = "Main Menu: " . $mainMenu->mainMenu . ', Sub Menu: ' . $subMenu->subMenu . ', Content Title: ' . $content->title;
+            $log['changes'] = "";
+
+            $content->forceDelete();
+
+            UserActivityController::store($log);
+
+            $this->dispatchBrowserEvent('deleted-permanently');
+        } else {
+            abort(400, 'Request Failed, Plase try again.');
+        }
     }
 }

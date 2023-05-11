@@ -24,6 +24,41 @@
                 title: 'Selected item restored successfully.'
             });
         });
+
+        window.addEventListener('permanent-delete', event => {
+            Swal.fire({
+                title: event.detail.title,
+                text: event.detail.text,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emit('permanentDeleteSelected');
+                }
+            })
+        });
+
+        window.addEventListener('deleted-permanently', event => {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+
+            Toast.fire({
+                icon: 'success',
+                title: 'Selected item permanently deleted.'
+            });
+        });
     </script>
 @endsection
 <div>
@@ -60,7 +95,9 @@
                                                 <td>
                                                     <button class="btn btn-primary"
                                                         wire:click="restoreSelectedMainMenu('{{ $mainMenu['id'] }}')">Restore</button>
-                                                    <button class="btn btn-danger">Permanent Delete</button>
+                                                    <button class="btn btn-danger"
+                                                        wire:click="deleteSelectedMainMenu('{{ $mainMenu['id'] }}')">Permanent
+                                                        Delete</button>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -99,7 +136,8 @@
                                                 <td>
                                                     <button class="btn btn-primary"
                                                         wire:click="restoreSelectedSubMenu('{{ $subMenu['id'] }}')">Restore</button>
-                                                    <button class="btn btn-danger">Permanent Delete</button>
+                                                    <button class="btn btn-danger"
+                                                    wire:click="deleteSelectedSubMenu('{{ $subMenu['id'] }}')">Permanent Delete</button>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -140,7 +178,8 @@
                                                 <td>
                                                     <button class="btn btn-primary"
                                                         wire:click="restoreSelectedContent('{{ $content['id'] }}')">Restore</button>
-                                                    <button class="btn btn-danger">Permanent Delete</button>
+                                                    <button class="btn btn-danger"
+                                                    wire:click="deleteSelectedContent('{{ $content['id'] }}')">Permanent Delete</button>
                                                 </td>
                                             </tr>
                                         @endforeach
