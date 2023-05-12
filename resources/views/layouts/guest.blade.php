@@ -22,7 +22,7 @@
     <style>
         body {
             /* min-height: 75rem; */
-            padding-top: 4.5rem;
+
         }
 
         #banner {
@@ -48,62 +48,84 @@
 </head>
 
 <body class="">
+    <div class=" bg-light border-bottom d-none d-md-flex">
+        <div class="container d-flex flex-wrap">
+            <ul class="nav me-auto">
+                <li class="nav-item"><a href="https://catsu.edu.ph/" target="_blank"
+                        class="nav-link link-dark px-2 active" aria-current="page">Catanduanes State University
+                        Calatagan, Virac, Catanduanes</a></li>
+            </ul>
+            <ul class="nav">
+                @auth
+                    <li class="nav-item"><a href="{{ route('dashboard') }}" class="nav-link link-dark px-2"><u>DASHBOARD</u></a>
+                    </li>
+                @else
+                    <li class="nav-item"><a href="{{ route('login') }}" class="nav-link link-dark px-2"><u>LOGIN</u></a></li>
+                @endauth
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow fixed-top">
-        <div class="container">
-            <a href="{{ route('public-home') }}">
-                <div class="navbar-brand">
+            </ul>
+        </div>
+    </div>
+    <div class="sticky-top">
+        <header class="py-4 bg-white border-bottom">
+            <div class="container d-flex flex-wrap justify-content-center">
+                <a href="/" class="d-flex align-items-center me-lg-auto text-dark text-decoration-none">
                     <img src="{{ asset('storage/logo/sys_logo.png') }}" alt="LOGO" class=""
                         style="opacity: .8" width="50px">
+                    <span class="fs-5 mx-4 d-none d-md-flex">College of Information and Communications Technology</span>
+                </a>
+                <a href="#" class="fs-5 mx-4 d-flex ms-auto d-md-none">
+                      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenus"
+                    aria-controls="navMenus" aria-expanded="false" aria-label="Toggle Navigation">
+                    <i class="fas fa-bars fs-1"></i>
+                </button>
+                </a>
+            </div>
+        </header>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow">
+            <div class="container">
+                {{-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenus"
+                    aria-controls="navMenus" aria-expanded="false" aria-label="Toggle Navigation">
+                    <i class="fas fa-bars"></i>
+                </button> --}}
+                <div class="collapse navbar-collapse" id="navMenus">
+                    <ul class="navbar-nav gap-lg-4 ">
+                        <li class="nav-item">
+                            <a href="{{ route('public-home') }}" class="nav-link">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('public-about') }}" class="nav-link">About</a>
+                        </li>
+                        @if ($mainMenus)
+                            @foreach ($mainMenus as $mainMenu)
+                                @if ($mainMenu['subMenu'] === 'none')
+                                    <li class="nav-item">
+                                        <a class="nav-link" aria-current="page"
+                                            href="{{ route('public-show', ['main' => $mainMenu['mainURI']]) }}">{{ $mainMenu['mainMenu'] }}</a>
+                                    </li>
+                                @else
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            {{ $mainMenu['mainMenu'] }}
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                            @foreach ($mainMenu['subMenu'] as $subMenu)
+                                                <li><a class="dropdown-item"
+                                                        href="{{ route('public-show', ['main' => $mainMenu['mainURI'] . '/' . $subMenu->subURI]) }}">{{ $subMenu->subMenu }}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                @endif
+                            @endforeach
+                        @endif
+                    </ul>
                 </div>
-            </a>
-            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navMenus"
-                aria-controls="navMenus" aria-expanded="false" aria-label="Toggle Navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navMenus">
-                <ul class="navbar-nav gap-lg-2 ">
-                    <li class="nav-item">
-                        <a href="{{ route('public-home') }}" class="nav-link">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('public-about') }}" class="nav-link">About</a>
-                    </li>
-                    @if ($mainMenus)
-                        @foreach ($mainMenus as $mainMenu)
-                            @if ($mainMenu['subMenu'] === 'none')
-                                <li class="nav-item">
-                                    <a class="nav-link" aria-current="page"
-                                        href="{{ route('public-show', ['main' => $mainMenu['mainURI']]) }}">{{ $mainMenu['mainMenu'] }}</a>
-                                </li>
-                            @else
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-                                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        {{ $mainMenu['mainMenu'] }}
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        @foreach ($mainMenu['subMenu'] as $subMenu)
-                                            <li><a class="dropdown-item"
-                                                    href="{{ route('public-show', ['main' => $mainMenu['mainURI'] . '/' . $subMenu->subURI]) }}">{{ $subMenu->subMenu }}</a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </li>
-                            @endif
-                        @endforeach
-                    @endif
-                </ul>
             </div>
-            <div class="d-none d-lg-flex">
-                @auth
-                    <a href="{{ route('dashboard') }}" class="btn btn-primary">DASHBOARD</a>
-                @else
-                    <a href="{{ route('login') }}" class="btn btn-primary">LOGIN</a>
-                @endauth
-            </div>
-        </div>
-    </nav>
+        </nav>
+    </div>
 
     <main class="">
         @yield('content')
