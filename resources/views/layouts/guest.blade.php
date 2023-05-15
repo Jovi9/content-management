@@ -19,76 +19,58 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    <style>
-        body {
-            /* min-height: 75rem; */
-
-        }
-
-        #banner {
-            background-position: center;
-            background-size: cover;
-            background-attachment: fixed;
-            position: relative;
-            z-index: 2;
-        }
-
-        #banner::after {
-            content: "";
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            background-color: rgba(21, 20, 51, 0.8);
-            z-index: -1;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('assets/swiper/swiper-bundle.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/guest/guest.css') }}">
     @yield('styles')
 </head>
 
 <body class="">
-    <div class=" bg-light border-bottom d-none d-md-flex">
-        <div class="container d-flex flex-wrap">
-            <ul class="nav me-auto">
-                <li class="nav-item"><a href="https://catsu.edu.ph/" target="_blank"
-                        class="nav-link link-dark px-2 active" aria-current="page">Catanduanes State University
-                        Calatagan, Virac, Catanduanes</a></li>
-            </ul>
-            <ul class="nav">
-                @auth
-                    <li class="nav-item"><a href="{{ route('dashboard') }}" class="nav-link link-dark px-2"><u>DASHBOARD</u></a>
-                    </li>
-                @else
-                    <li class="nav-item"><a href="{{ route('login') }}" class="nav-link link-dark px-2"><u>LOGIN</u></a></li>
-                @endauth
-
-            </ul>
-        </div>
-    </div>
     <div class="sticky-top">
+        <div class="border-bottom d-none d-md-flex darkblue">
+            <div class="container d-flex flex-wrap">
+                <ul class="nav me-auto">
+                    <li class="nav-item"><a href="https://catsu.edu.ph/" target="_blank"
+                            class="nav-link text-white px-2 active" aria-current="page">CATANDUANES STATE UNIVERSITY</a>
+                    </li>
+                </ul>
+                <ul class="nav">
+                    @auth
+                        <li class="nav-item"><a href="{{ route('dashboard') }}"
+                                class="nav-link link-dark px-2"><u>DASHBOARD</u></a>
+                        </li>
+                    @else
+                        <li class="nav-item"><a href="{{ route('login') }}" class="nav-link link-dark px-2"><u>LOGIN</u></a>
+                        </li>
+                    @endauth
+
+                </ul>
+            </div>
+        </div>
+
         <header class="py-4 bg-white border-bottom">
             <div class="container d-flex flex-wrap justify-content-center">
-                <a href="/" class="d-flex align-items-center me-lg-auto text-dark text-decoration-none">
-                    <img src="{{ asset('storage/logo/sys_logo.png') }}" alt="LOGO" class=""
+                <a href="{{ route('public-home') }}"
+                    class="d-flex align-items-center me-lg-auto text-dark text-decoration-none">
+                    <img src="{{ asset('storage/logo/sys_logo.png') }}" alt="LOGO" class="d-none d-md-flex"
                         style="opacity: .8" width="50px">
-                    <span class="fs-5 mx-4 d-none d-md-flex">College of Information and Communications Technology</span>
+                    <span class="fs-5 mx-4 d-none d-lg-flex">College of Information and Communications Technology</span>
+
+                    <img src="{{ asset('storage/logo/sys_logo.png') }}" alt="LOGO" class="d-flex d-md-none"
+                        style="opacity: .8" width="50px">
+                    <span class="fs-5 mx-2 d-flex d-lg-none">CatSU CICT</span>
                 </a>
-                <a href="#" class="fs-5 mx-4 d-flex ms-auto d-md-none">
-                      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenus"
-                    aria-controls="navMenus" aria-expanded="false" aria-label="Toggle Navigation">
-                    <i class="fas fa-bars fs-1"></i>
-                </button>
+                <a href="#" class="fs-5 mx-4 d-flex ms-auto d-lg-none">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenus"
+                        aria-controls="navMenus" aria-expanded="false" aria-label="Toggle Navigation">
+                        <i class="fas fa-bars fs-1"></i>
+                    </button>
                 </a>
             </div>
         </header>
+        <div class="b-divider" style="height:0.1rem;"></div>
 
         <nav class="navbar navbar-expand-lg navbar-light bg-white shadow">
             <div class="container">
-                {{-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenus"
-                    aria-controls="navMenus" aria-expanded="false" aria-label="Toggle Navigation">
-                    <i class="fas fa-bars"></i>
-                </button> --}}
                 <div class="collapse navbar-collapse" id="navMenus">
                     <ul class="navbar-nav gap-lg-4 ">
                         <li class="nav-item">
@@ -131,104 +113,93 @@
         @yield('content')
     </main>
 
-    <div class="bg-secondary text-white p-4 mt-5">
-        <div class="container">
-            <footer class="py-5">
-                <div class="row">
-                    <div class="col-6 col-md-2 mb-3">
-                        <h5 class=" text-white">Pages</h5>
-                        <ul class="nav flex-column">
-                            <li class="nav-item mb-2"><a href="{{ route('public-home') }}"
-                                    class="nav-link p-0 text-white ">Home</a>
-                            </li>
-                            <li class="nav-item mb-2"><a href="{{ route('public-about') }}"
-                                    class="nav-link p-0 text-white ">About</a></li>
-                            @if ($mainMenus)
-                                @foreach ($mainMenus as $mainMenu)
-                                    @if ($mainMenu['subMenu'] === 'none')
-                                        <li class="nav-item mb-2"><a
-                                                href="{{ route('public-show', ['main' => $mainMenu['mainURI']]) }}"
-                                                class="nav-link p-0 text-white ">{{ $mainMenu['mainMenu'] }}</a>
-                                        </li>
-                                    @endif
-                                @endforeach
-                            @endif
-                        </ul>
-                    </div>
+    <div class="b-divider" style="height:0.2rem;"></div>
 
-                    {{-- @if ($mainMenus)
-                        <div class="col-6 col-md-2 mb-3">
-                            <h5 class=" text-white">Pages</h5>
+    <footer class="">
+        <div class="lightblue text-white p-4">
+            <div class="container">
+                <div class="row py-5 my-5 border-top">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h5 class="border-bottom border-2"><strong>Catanduanes State University</strong></h5>
                             <ul class="nav flex-column">
-                                @foreach ($mainMenus as $mainMenu)
-                                    @if ($mainMenu['subMenu'] === 'none')
-                                        <li class="nav-item mb-2"><a
-                                                href="{{ route('public-show', ['main' => $mainMenu['mainURI']]) }}"
-                                                class="nav-link p-0 text-white ">{{ $mainMenu['mainMenu'] }}</a>
-                                        </li>
-                                    @endif
-                                @endforeach
+                                <li class="nav-item mb-2"><b>College of Information and Communications and
+                                        Technology</b>
+                                </li>
+                                <li class="nav-item mb-2">Calatagan, Virac, Catanduanes</li>
+                                <li class="nav-item mb-2">contact-us@catsu-cict.com</li>
                             </ul>
                         </div>
-                    @endif --}}
 
-                    @if ($mainMenus)
-                        @foreach ($mainMenus as $mainMenu)
-                            @if (!($mainMenu['subMenu'] === 'none'))
-                                <div class="col-6 col-md-2 mb-3">
-                                    <h5 class=" text-white">{{ $mainMenu['mainMenu'] }}</h5>
+                        <div class="col-md-1"></div>
+
+                        <div class="col-md-8 mt-5 mt-md-0">
+                            <div class="row">
+                                <div class="col-md-3">
                                     <ul class="nav flex-column">
-                                        @foreach ($mainMenu['subMenu'] as $subMenu)
-                                            <li class="nav-item mb-2"><a
-                                                    href="{{ route('public-show', ['main' => $mainMenu['mainURI'] . '/' . $subMenu->subURI]) }}"
-                                                    class="nav-link p-0 text-white ">{{ $subMenu->subMenu }}</a>
-                                            </li>
-                                        @endforeach
+                                        <li class="nav-item mb-2"><a href="{{ route('public-home') }}"
+                                                class="nav-link p-0 text-white fs-5"><u>Home</u></a>
+                                        </li>
+                                        <li class="nav-item mb-2"><a href="{{ route('public-about') }}"
+                                                class="nav-link p-0 text-white fs-5 "><u>About</u></a></li>
+                                        @if ($mainMenus)
+                                            @foreach ($mainMenus as $mainMenu)
+                                                @if ($mainMenu['subMenu'] === 'none')
+                                                    <li class="nav-item mb-2"><a
+                                                            href="{{ route('public-show', ['main' => $mainMenu['mainURI']]) }}"
+                                                            class="nav-link p-0 text-white fs-5"><u>{{ $mainMenu['mainMenu'] }}</u></a>
+                                                    </li>
+                                                @endif
+                                            @endforeach
+                                        @endif
                                     </ul>
                                 </div>
-                            @endif
-                        @endforeach
-                    @endif
-
-                    {{-- <div class="col-md-5 offset-md-1 mb-3">
-                        <form>
-                            <h5 class=" text-white">Subscribe to our newsletter</h5>
-                            <p>Monthly digest of what's new and exciting from us.</p>
-                            <div class="d-flex flex-column flex-sm-row w-100 gap-2">
-                                <label for="newsletter1" class="visually-hidden">Email address</label>
-                                <input id="newsletter1" type="text" class="form-control"
-                                    placeholder="Email address">
-                                <button class="btn btn-primary" type="button">Subscribe</button>
+                                @if ($mainMenus)
+                                    @foreach ($mainMenus as $mainMenu)
+                                        @if (!($mainMenu['subMenu'] === 'none'))
+                                            <div class="col-md-3 mt-4 mt-md-0">
+                                                <h5 class="border-bottom border-2">{{ $mainMenu['mainMenu'] }}</h5>
+                                                <ul class="nav flex-column">
+                                                    @foreach ($mainMenu['subMenu'] as $subMenu)
+                                                        <li class="nav-item mb-2"><a href=""
+                                                                class="nav-link p-0 text-white "></a>
+                                                        </li>
+                                                        <li class="nav-item mb-2"><a
+                                                                href="{{ route('public-show', ['main' => $mainMenu['mainURI'] . '/' . $subMenu->subURI]) }}"
+                                                                class="nav-link p-0 text-white">{{ $subMenu->subMenu }}</a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                @endif
                             </div>
-                        </form>
-                    </div> --}}
+                        </div>
+                    </div>
                 </div>
-
-                <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top ">
-                    <p>&copy; 2023 Catanduanes State University - College of Information and Communications Technology.
-                        All Rights Reserved. <br>
-                        Calatagan Virac, Catanduanes</p>
-                    {{-- <ul class="list-unstyled d-flex">
-                        <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24"
-                                    height="24">
-                                    <use xlink:href="#twitter" />
-                                </svg></a></li>
-                        <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24"
-                                    height="24">
-                                    <use xlink:href="#instagram" />
-                                </svg></a></li>
-                        <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24"
-                                    height="24">
-                                    <use xlink:href="#facebook" />
-                                </svg></a></li>
-                    </ul> --}}
-                </div>
-            </footer>
+            </div>
         </div>
-    </div>
+        <div class="b-divider" style="height:0.1rem;"></div>
+
+        <div class="darkblue">
+            <div class="container d-flex flex-wrap">
+                <ul class="nav me-auto">
+                    <li class="nav-item"><a href="https://catsu.edu.ph/" target="_blank"
+                            class="nav-link text-white px-2 active fs-6" aria-current="page">
+                            &copy; 2023 <u>Catanduanes State University</u> - College of Information and Communications
+                            Technology.
+                            All Rights Reserved. Calatagan Virac, Catanduanes
+                        </a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
 
     {{-- jquery --}}
     <script src="{{ asset('assets/jquery/jquery-3.6.3.min.js') }}"></script>
+    <script src="{{ asset('assets/swiper/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/guest/guest.js') }}"></script>
     @yield('scripts')
 </body>
 

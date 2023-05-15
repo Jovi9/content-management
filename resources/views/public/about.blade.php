@@ -7,105 +7,153 @@
 @endsection
 
 @section('content')
-    <div class="bg-dark text-secondary px-4 py-5 text-center mb-5" id="banner"
-        style="background-image: url({{ asset('storage/logo/site_banner.png') }})">
-        <div class="py-5">
-            <h1 class="display-5 fw-bold text-white">About College of Information and <br> Communications Technology</h1>
-        </div>
-    </div>
+    <section id="banner" style="background-image: url({{ asset('storage/logo/site_banner.png') }})">
+        <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true"
+                    aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active carousel-item-page">
+                    <img src="{{ asset('storage/images/1.jpg') }}" class="d-block w-100 carousel-img" alt="Image">
 
-    @if ($contents)
-        @foreach ($contents as $content)
-            <div class="container py-3" id="{{ strtolower(str_replace(' ', '-', $content->title)) }}">
-                <div class="row justify-content-center">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="bg-white">
-                                <div class="container px-4 py-4">
-                                    <h2 class="pb-2 border-bottom border-4">{{ $content->title }}</h2>
-                                    <div class="row mt-4">
-                                        {!! $content->content !!}
+                    <div class="container">
+                        <div class="carousel-caption text-start">
+                            <h1>CoEd Spearheads BUROGKOS: a team building activity, enchances gender sensitive powerhouse
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item carousel-item-page">
+                    <img src="{{ asset('storage/images/2.jpg') }}" class="d-block w-100 carousel-img" alt="Image">
+
+                    <div class="container">
+                        <div class="carousel-caption text-start">
+                            <h1>CoEd Spearheads BUROGKOS: a team building activity, enchances gender sensitive powerhouse
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item carousel-item-page">
+                    <img src="{{ asset('storage/images/3.jpg') }}" class="d-block w-100 carousel-img" alt="Image">
+
+                    <div class="container">
+                        <div class="carousel-caption text-start">
+                            <h1>CoEd Spearheads BUROGKOS: a team building activity, enchances gender sensitive powerhouse
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <div class="b-divider"></div>
+        <section class="py-5"></section>
+
+        @if ($contents)
+            @foreach ($contents as $content)
+                <div class="container py-3" id="{{ strtolower(str_replace(' ', '-', $content->title)) }}">
+                    <div class="row justify-content-center">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="bg-white">
+                                    <div class="container px-4 py-4">
+                                        <h2 class="pb-2 border-bottom border-4">{{ $content->title }}</h2>
+                                        <div class="row mt-4">
+                                            {!! $content->content !!}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        @endforeach
-    @endif
+            @endforeach
+        @endif
 
-    <section class="bg-white py-5" id="contact-us">
-        <div class="container px-4 py-5 shadow">
-            <h2 class="pb-2 border-bottom border-4">Contact Us</h2>
-            <div class="row">
-                <div class="col-md-5 order-md-1 mt-3">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3878.191652486972!2d124.2085573719072!3d13.585099950210193!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a016e5733747e7%3A0x686563c9d71ae37e!2sCict%20Building!5e0!3m2!1sen!2sph!4v1682554554130!5m2!1sen!2sph"
-                        class="w-100" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <section class="py-5"></section>
+
+        <section class="bg-white py-5" id="contact-us">
+            <div class="container px-4 py-5 shadow">
+                <h2 class="pb-2 border-bottom border-4">Contact Us</h2>
+                <div class="row">
+                    <div class="col-md-5 order-md-1 mt-3">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3878.191652486972!2d124.2085573719072!3d13.585099950210193!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a016e5733747e7%3A0x686563c9d71ae37e!2sCict%20Building!5e0!3m2!1sen!2sph!4v1682554554130!5m2!1sen!2sph"
+                            class="w-100" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <div class="col-md-5 order-md-2 mt-5 mt-lg-3 mx-lg-5">
+                        <form action="{{ route('public-contact-us') }}" method="post" class="fs-5" novalidate
+                            enctype="multipart/form-data">
+                            @csrf
+
+                            <div class="row mb-4">
+                                <div class="col-sm-10">
+                                    <label for="txtName" class="form-label">Full Name *</label>
+                                    <input type="text" class="form-control fs-5 @error('fullname') is-invalid @enderror"
+                                        id="txtName" required name="fullname">
+                                    @error('fullname')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-sm-10">
+                                    <label for="txtEmail" class="form-label">Email *</label>
+                                    <input type="email" class="form-control fs-5 @error('email') is-invalid @enderror"
+                                        id="txtEmail" required name="email">
+                                    @error('email')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-sm-10">
+                                    <label for="txtSubject" class="form-label">Message Subject *</label>
+                                    <input type="text" class="form-control fs-5 @error('subject') is-invalid @enderror"
+                                        id="txtSubject" required name="subject">
+                                    @error('subject')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-sm-10">
+                                    <label for="txtMessage" class="form-label">Your Message *</label>
+                                    <textarea id="txtMessage" cols="30" rows="8"
+                                        class="form-control fs-5 @error('message') is-invalid @enderror" name="message" required></textarea>
+                                    @error('message')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="row container">
+                                <button type="submit" class="btn btn-primary col-sm-6">Submit</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="col-md-5 order-md-2 mt-5 mt-lg-3 mx-lg-5">
-                    <form action="{{ route('public-contact-us') }}" method="post" class="fs-5" novalidate
-                        enctype="multipart/form-data">
-                        @csrf
-
-                        <div class="row mb-4">
-                            <div class="col-sm-10">
-                                <label for="txtName" class="form-label">Full Name *</label>
-                                <input type="text" class="form-control fs-5 @error('fullname') is-invalid @enderror"
-                                    id="txtName" required name="fullname">
-                                @error('fullname')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row mb-4">
-                            <div class="col-sm-10">
-                                <label for="txtEmail" class="form-label">Email *</label>
-                                <input type="email" class="form-control fs-5 @error('email') is-invalid @enderror"
-                                    id="txtEmail" required name="email">
-                                @error('email')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row mb-4">
-                            <div class="col-sm-10">
-                                <label for="txtSubject" class="form-label">Message Subject *</label>
-                                <input type="text" class="form-control fs-5 @error('subject') is-invalid @enderror"
-                                    id="txtSubject" required name="subject">
-                                @error('subject')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row mb-4">
-                            <div class="col-sm-10">
-                                <label for="txtMessage" class="form-label">Your Message *</label>
-                                <textarea id="txtMessage" cols="30" rows="8" class="form-control fs-5 @error('message') is-invalid @enderror"
-                                    name="message" required></textarea>
-                                @error('message')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row container">
-                            <button type="submit" class="btn btn-primary col-sm-6">Submit</button>
-                        </div>
-                    </form>
-                </div>
             </div>
-        </div>
+        </section>
     </section>
 
 @endsection
