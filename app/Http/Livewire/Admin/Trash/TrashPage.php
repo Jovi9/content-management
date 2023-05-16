@@ -89,7 +89,9 @@ class TrashPage extends Component
         $log['content'] = "Main Menu: " . $mainMenu->mainMenu;
         $log['changes'] = "";
         UserActivityController::store($log);
-        $this->dispatchBrowserEvent('restore-selected');
+        $this->dispatchBrowserEvent('restore-selected', [
+            'title' => 'Selected main menu has been restored.',
+        ]);
     }
 
     private function getSubMenuByID($id)
@@ -109,7 +111,9 @@ class TrashPage extends Component
         $log['content'] = "Main Menu: " . $mainMenu->mainMenu . ', Sub Menu: ' . $subMenu->subMenu;
         $log['changes'] = "";
         UserActivityController::store($log);
-        $this->dispatchBrowserEvent('restore-selected');
+        $this->dispatchBrowserEvent('restore-selected', [
+            'title' => 'Selected sub menu has been restored.',
+        ]);
     }
 
     public function restoreSelectedContent($id)
@@ -127,7 +131,9 @@ class TrashPage extends Component
         $log['content'] = "Main Menu: " . $mainMenu->mainMenu . ', Sub Menu: ' . $subMenu->subMenu . ', Content Title: ' . $content->title;
         $log['changes'] = "";
         UserActivityController::store($log);
-        $this->dispatchBrowserEvent('restore-selected');
+        $this->dispatchBrowserEvent('restore-selected', [
+            'title' => 'Selected content has been restored.',
+        ]);
     }
 
     // delete permanent
@@ -198,7 +204,9 @@ class TrashPage extends Component
 
             UserActivityController::store($log);
 
-            $this->dispatchBrowserEvent('deleted-permanently');
+            $this->dispatchBrowserEvent('deleted-permanently', [
+                'title' => 'Selected main menu has been permanently deleted.',
+            ]);
         } else if (strtolower($argument) === 'sub-menu') {
             $subMenu = SubMenu::withTrashed()->findOrFail($this->selected);
             $mainMenu = $subMenu->mainMenu()->withTrashed()->first();
@@ -221,7 +229,9 @@ class TrashPage extends Component
 
             UserActivityController::store($log);
 
-            $this->dispatchBrowserEvent('deleted-permanently');
+            $this->dispatchBrowserEvent('deleted-permanently', [
+                'title' => 'Selected sub menu has been permanently deleted.',
+            ]);
         } else if (strtolower($argument) === 'content') {
             $content = Content::withTrashed()->findOrFail($this->selected);
             $mainMenu = $content->mainMenu()->withTrashed()->first();
@@ -236,7 +246,9 @@ class TrashPage extends Component
 
             UserActivityController::store($log);
 
-            $this->dispatchBrowserEvent('deleted-permanently');
+            $this->dispatchBrowserEvent('deleted-permanently', [
+                'title' => 'Selected content has been permanently deleted.',
+            ]);
         } else {
             abort(400, 'Request Failed, Plase try again.');
         }
