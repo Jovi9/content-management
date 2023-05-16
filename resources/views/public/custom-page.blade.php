@@ -4,43 +4,31 @@
 
 @section('content')
     <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true"
-                aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
         <div class="carousel-inner">
-            <div class="carousel-item active carousel-item-page">
-                <img src="{{ asset('storage/images/1.jpg') }}" class="d-block w-100 carousel-img" alt="Image">
-
-                <div class="container">
-                    <div class="carousel-caption text-start">
-                        <h1>CoEd Spearheads BUROGKOS: a team building activity, enchances gender sensitive powerhouse
-                        </h1>
+            @if (empty($banners))
+                <div class="carousel-item carousel-item-page active">
+                    <img src="{{ asset('storage/logo/site_banner.jpg') }}" class="d-block w-100 carousel-img" alt="Image">
+                    <div class="container">
+                        <div class="carousel-caption text-start">
+                            <h1></h1>
+                            <p></p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="carousel-item carousel-item-page">
-                <img src="{{ asset('storage/images/2.jpg') }}" class="d-block w-100 carousel-img" alt="Image">
+            @else
+                @foreach ($banners as $key => $banner)
+                    <div class="carousel-item carousel-item-page @if ($key === 0) active @endif">
+                        <img src="{{ Storage::url($banner['image']) }}" class="d-block w-100 carousel-img" alt="Image">
 
-                <div class="container">
-                    <div class="carousel-caption text-start">
-                        <h1>CoEd Spearheads BUROGKOS: a team building activity, enchances gender sensitive powerhouse
-                        </h1>
+                        <div class="container">
+                            <div class="carousel-caption text-start">
+                                <h1>{{ $banner['title'] }}</h1>
+                                <p>{{ $banner['shortDesc'] }}</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="carousel-item carousel-item-page">
-                <img src="{{ asset('storage/images/3.jpg') }}" class="d-block w-100 carousel-img" alt="Image">
-
-                <div class="container">
-                    <div class="carousel-caption text-start">
-                        <h1>CoEd Spearheads BUROGKOS: a team building activity, enchances gender sensitive powerhouse
-                        </h1>
-                    </div>
-                </div>
-            </div>
+                @endforeach
+            @endif
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Menu\Content;
 use App\Models\Menu\MainMenu;
 use App\Models\Menu\SubMenu;
+use App\Models\Options\SiteBanner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -75,11 +76,27 @@ class PublicPageController extends Controller
             ->first();
     }
 
+    private function getBanners()
+    {
+        $banners = array();
+
+        $allBanners = SiteBanner::all();
+        foreach ($allBanners as $banner) {
+            array_push($banners, [
+                'title' => $banner->title,
+                'shortDesc' => $banner->shortDesc,
+                'image' => $banner->image,
+            ]);
+        }
+        return $banners;
+    }
+
     public function index()
     {
         return view('public.home', [
             'mainMenus' => $this->getMenus(),
             'menuName' => 'Home',
+            'banners' => $this->getBanners(),
         ]);
     }
 
@@ -90,6 +107,7 @@ class PublicPageController extends Controller
             'mainMenus' => $this->getMenus(),
             'menuName' => 'About',
             'contents' => $contents,
+            'banners' => $this->getBanners(),
         ]);
     }
 
@@ -153,6 +171,7 @@ class PublicPageController extends Controller
                         'mainMenus' => $this->getMenus(),
                         'menuName' => $mainMenu->mainMenu,
                         'contents' => $contents,
+                        'banners' => $this->getBanners(),
                     ]);
                 } else {
                     //
@@ -163,6 +182,7 @@ class PublicPageController extends Controller
                             'mainMenus' => $this->getMenus(),
                             'menuName' => $subMenu->subMenu,
                             'contents' => $contents,
+                            'banners' => $this->getBanners(),
                         ]);
                     } else {
                         return Redirect::route('public-home');
