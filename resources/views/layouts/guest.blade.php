@@ -145,6 +145,8 @@
                                         </li>
                                         <li class="nav-item mb-2"><a href="{{ route('public-about') }}"
                                                 class="nav-link p-0 text-white fs-5 "><u>About</u></a></li>
+                                        <li class="nav-item mb-2"><a href="{{ route('public-news') }}"
+                                                class="nav-link p-0 text-white fs-5 "><u>News</u></a></li>
                                         @if ($mainMenus)
                                             @foreach ($mainMenus as $mainMenu)
                                                 @if ($mainMenu['subMenu'] === 'none')
