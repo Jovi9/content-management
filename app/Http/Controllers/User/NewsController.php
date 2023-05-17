@@ -77,6 +77,11 @@ class NewsController extends Controller
 
     public function edit($id)
     {
+        try {
+            NewsUpdate::findOrFail($id);
+        } catch (\Throwable $th) {
+            return back();
+        }
         return view('user.news.edit', [
             'news' => $this->getNewsByID($id),
         ]);
