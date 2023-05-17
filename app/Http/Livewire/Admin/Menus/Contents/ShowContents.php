@@ -89,54 +89,53 @@ class ShowContents extends Component
         return Content::where('id', $id)->first();
     }
 
-    public function showToHome($id)
-    {
-        //
-        try {
-            $contentID = Crypt::decrypt($id);
-        } catch (\Throwable $th) {
-            $this->dispatchBrowserEvent('swal-modal', [
-                'title' => 'error'
-            ]);
-            return;
-        };
+    // public function showToHome($id)
+    // {
+    //     try {
+    //         $contentID = Crypt::decrypt($id);
+    //     } catch (\Throwable $th) {
+    //         $this->dispatchBrowserEvent('swal-modal', [
+    //             'title' => 'error'
+    //         ]);
+    //         return;
+    //     };
 
-        $content = $this->getContentByID($contentID);
-        $mainMenu = $this->getMainMenuByID($content->main_menu_id);
-        $subMenu = $this->getSubMenuByID($content->sub_menu_id);
+    //     $content = $this->getContentByID($contentID);
+    //     $mainMenu = $this->getMainMenuByID($content->main_menu_id);
+    //     $subMenu = $this->getSubMenuByID($content->sub_menu_id);
 
-        if ($subMenu->id === 1) {
-            $menu = $mainMenu->mainMenu;
-        } else {
-            $menu = $mainMenu->mainMenu . ' > ' . $subMenu->subMenu;
-        }
+    //     if ($subMenu->id === 1) {
+    //         $menu = $mainMenu->mainMenu;
+    //     } else {
+    //         $menu = $mainMenu->mainMenu . ' > ' . $subMenu->subMenu;
+    //     }
 
-        $log = [];
-        $log['action'] = "Modified Content Visibility to Homepage";
+    //     $log = [];
+    //     $log['action'] = "Modified Content Visibility to Homepage";
 
-        if ($content->isVisibleHome === 0) {
-            $visibility = true;
-            $log['content'] = "Menu: " . $menu . ", Title: " . $content->title . ', Visibility: Hidden from homepage.';
-            $log['changes'] = 'Visibility: Visible to homepage.';
-        } else {
-            $visibility = false;
-            $log['content'] = "Menu: " . $menu . ", Title: " . $content->title . ', Visibility: Visible in homepage.';
-            $log['changes'] = 'Visibility: Removed from homepage.';
-        }
+    //     if ($content->isVisibleHome === 0) {
+    //         $visibility = true;
+    //         $log['content'] = "Menu: " . $menu . ", Title: " . $content->title . ', Visibility: Hidden from homepage.';
+    //         $log['changes'] = 'Visibility: Visible to homepage.';
+    //     } else {
+    //         $visibility = false;
+    //         $log['content'] = "Menu: " . $menu . ", Title: " . $content->title . ', Visibility: Visible in homepage.';
+    //         $log['changes'] = 'Visibility: Removed from homepage.';
+    //     }
 
-        $que = Content::where('id', $contentID)
-            ->update([
-                'isVisibleHome' => $visibility,
-            ]);
+    //     $que = Content::where('id', $contentID)
+    //         ->update([
+    //             'isVisibleHome' => $visibility,
+    //         ]);
 
-        if ($que) {
-            UserActivityController::store($log);
-        } else {
-            $this->dispatchBrowserEvent('swal-modal', [
-                'title' => 'error',
-            ]);
-        }
-    }
+    //     if ($que) {
+    //         UserActivityController::store($log);
+    //     } else {
+    //         $this->dispatchBrowserEvent('swal-modal', [
+    //             'title' => 'error',
+    //         ]);
+    //     }
+    // }
 
     public function deleteSelected($id)
     {
