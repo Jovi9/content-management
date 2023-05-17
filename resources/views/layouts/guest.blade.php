@@ -79,6 +79,9 @@
                         <li class="nav-item">
                             <a href="{{ route('public-about') }}" class="nav-link">About</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('public-news') }}" class="nav-link">News</a>
+                        </li>
                         @if ($mainMenus)
                             @foreach ($mainMenus as $mainMenu)
                                 @if ($mainMenu['subMenu'] === 'none')

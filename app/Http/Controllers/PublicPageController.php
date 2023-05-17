@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\NewsUpdate;
 use App\Models\Menu\Content;
-use App\Models\Menu\MainMenu;
 use App\Models\Menu\SubMenu;
-use App\Models\Options\SiteBanner;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
+use App\Models\Menu\MainMenu;
+use App\Models\Options\SiteBanner;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 
 class PublicPageController extends Controller
 {
@@ -97,6 +98,7 @@ class PublicPageController extends Controller
             'mainMenus' => $this->getMenus(),
             'menuName' => 'Home',
             'banners' => $this->getBanners(),
+            'newsUpdates' => $this->getNews(),
         ]);
     }
 
@@ -108,6 +110,22 @@ class PublicPageController extends Controller
             'menuName' => 'About',
             'contents' => $contents,
             'banners' => $this->getBanners(),
+        ]);
+    }
+
+    private function getNews()
+    {
+        return NewsUpdate::whereNot('status', 'pending')
+            ->orderBy('created_at', 'desc')->get();
+    }
+
+    public function showNews()
+    {
+        return view('public.news', [
+            'mainMenus' => $this->getMenus(),
+            'menuName' => 'Home',
+            'banners' => $this->getBanners(),
+            'newsUpdates' => $this->getNews(),
         ]);
     }
 

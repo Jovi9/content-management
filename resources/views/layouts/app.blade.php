@@ -144,8 +144,10 @@
                                 </a>
                             </li>
                         @endrole
-                        <li class="nav-item  @if (Route::is('admin.contents-index') || Route::is('admin.contents-manage')) menu-open @endif"">
-                            <a href="#" class="nav-link @if (Route::is('admin.contents-index') || Route::is('admin.contents-manage')) active @endif">
+                        <li
+                            class="nav-item
+                        @if (Route::is('admin.contents-index') || Route::is('admin.contents-manage') || Route::is('admin.news-page')) menu-open @endif"">
+                            <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-list"></i>
                                 <p>
                                     Manage Contents
@@ -172,17 +174,25 @@
                                         </a>
                                     </li>
                                 @endrole
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.news-page') }}"
+                                        class="nav-link @if (Route::is('admin.news-page')) active @endif">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>News</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         @role('administrator')
-                        <li class="nav-item">
-                            <a href="{{ route('admin.trash-page') }}" class="nav-link @if (Route::is('admin.trash-page')) active @endif">
-                                <i class="nav-icon fas fa-trash"></i>
-                                <p>
-                                    Trash
-                                </p>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.trash-page') }}"
+                                    class="nav-link @if (Route::is('admin.trash-page')) active @endif">
+                                    <i class="nav-icon fas fa-trash"></i>
+                                    <p>
+                                        Trash
+                                    </p>
+                                </a>
+                            </li>
                         @endrole
                         <li class="nav-item">
                             <a href="{{ route('public-home') }}" class="nav-link">
@@ -226,8 +236,9 @@
                 Calatagan, Virac, Catanduanes
             </div>
             <strong>
-                Copyright &copy; 2023 Catanduanes State University - College of Information and Communications Technology</strong>
-                All rights reserved.
+                Copyright &copy; 2023 Catanduanes State University - College of Information and Communications
+                Technology</strong>
+            All rights reserved.
         </footer>
 
     </div>

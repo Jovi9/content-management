@@ -203,7 +203,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mb-5">
             <div class="col-md-12">
                 <div class="accordion" id="accordionSiteBanner">
                     <div class="accordion-item">
@@ -224,5 +224,27 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="accordion" id="accordionNews">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingNews">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseNews" aria-expanded="true" aria-controls="collapseNews">
+                                News
+                            </button>
+                        </h2>
+                        <div id="collapseNews" class="accordion-collapse collapse show" aria-labelledby="headingNews"
+                            data-bs-parent="#accordionNews">
+                            <div class="accordion-body">
+                                @livewire('admin.trash.news-trash-page')
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

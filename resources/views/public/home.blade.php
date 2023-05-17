@@ -2,6 +2,17 @@
 
 @section('title', 'Home')
 
+@section('styles')
+    <style>
+        .img {
+            float: left;
+            width: 100%;
+            height: 10rem;
+            background-size: cover;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -45,153 +56,40 @@
     <section class="py-5 bg-white">
         <div class="container mb-5 mt-5">
             <h2 class="pb-2 border-bottom border-4 mb-5 mt-5 container"><strong>News and Updates</strong></h2>
-            <div class="slide-container p-4 swiper">
-                <div class="slide-content px-3 overflow-hidden">
-                    <div class="slide-card-contents swiper-wrapper">
-                        <div class="slide-card swiper-slide">
-                            <div class="card mb-5" style="width: 18rem;">
-                                <img src="{{ asset('storage/images/3.jpg') }}" class="card-img-top" alt="Image">
-                                <div class="card-body">
-                                    <h5 class="card-title"><strong>Research Activities</strong></h5>
-                                    <p class="card-text cut-text">Some quick example text to build on the card title and
-                                        make up the
-                                        bulk
-                                        of the card's content. Some quick example text to build on the card title and make
-                                        up the
-                                        bulk
-                                        of the card's content.</p>
-                                    <a href="#" class="btn btn-primary">Read More</a>
+            @if (!$newsUpdates->isEmpty())
+                <div class="slide-container p-4 swiper">
+                    <div class="slide-content px-3 overflow-hidden">
+                        <div class="slide-card-contents swiper-wrapper">
+                            @foreach ($newsUpdates as $news)
+                                <div class="slide-card swiper-slide">
+                                    <div class="card mb-5" style="width: 18rem;">
+                                        <div class="img" style="background-image: url({{ Storage::url($news->image) }})">
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title"><strong>{{ $news->title }}</strong></h5>
+                                            <p class="card-text cut-text">
+                                                {{ substr(strip_tags($news->content), 0, 100) }}
+                                            </p>
+                                            <a href="#" class="btn btn-primary">Read More</a>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="slide-card swiper-slide h-100">
-                            <div class="card" style="width: 18rem;">
-                                <img src="{{ asset('storage/images/3.jpg') }}" class="card-img-top" alt="Image">
-                                <div class="card-body">
-                                    <h5 class="card-title"><strong>Card title</strong></h5>
-                                    <p class="card-text cut-text">Words in the woods are found anywhere in the world. Words
-                                        in the woods are found around the world.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slide-card swiper-slide h-100">
-                            <div class="card" style="width: 18rem;">
-                                <img src="{{ asset('storage/images/3.jpg') }}" class="card-img-top" alt="Image">
-                                <div class="card-body">
-                                    <h5 class="card-title"><strong>Card title</strong></h5>
-                                    <p class="card-text cut-text">Words in the woods are found anywhere in the world. Words
-                                        in the woods are found around the world.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slide-card swiper-slide h-100">
-                            <div class="card" style="width: 18rem;">
-                                <img src="{{ asset('storage/images/3.jpg') }}" class="card-img-top" alt="Image">
-                                <div class="card-body">
-                                    <h5 class="card-title"><strong>Card title</strong></h5>
-                                    <p class="card-text cut-text">Words in the woods are found anywhere in the world. Words
-                                        in the woods are found around the world.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slide-card swiper-slide h-100">
-                            <div class="card" style="width: 18rem;">
-                                <img src="{{ asset('storage/images/3.jpg') }}" class="card-img-top" alt="Image">
-                                <div class="card-body">
-                                    <h5 class="card-title"><strong>Card title</strong></h5>
-                                    <p class="card-text cut-text">Words in the woods are found anywhere in the world. Words
-                                        in the woods are found around the world.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slide-card swiper-slide h-100">
-                            <div class="card" style="width: 18rem;">
-                                <img src="{{ asset('storage/images/3.jpg') }}" class="card-img-top" alt="Image">
-                                <div class="card-body">
-                                    <h5 class="card-title"><strong>Card title</strong></h5>
-                                    <p class="card-text cut-text">Words in the woods are found anywhere in the world. Words
-                                        in the woods are found around the world.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slide-card swiper-slide h-100">
-                            <div class="card" style="width: 18rem;">
-                                <img src="{{ asset('storage/images/3.jpg') }}" class="card-img-top" alt="Image">
-                                <div class="card-body">
-                                    <h5 class="card-title"><strong>Card title</strong></h5>
-                                    <p class="card-text cut-text">Words in the woods are found anywhere in the world. Words
-                                        in the woods are found around the world.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slide-card swiper-slide h-100">
-                            <div class="card" style="width: 18rem;">
-                                <img src="{{ asset('storage/images/3.jpg') }}" class="card-img-top" alt="Image">
-                                <div class="card-body">
-                                    <h5 class="card-title"><strong>Card title</strong></h5>
-                                    <p class="card-text cut-text">Words in the woods are found anywhere in the world. Words
-                                        in the woods are found around the world.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slide-card swiper-slide h-100">
-                            <div class="card" style="width: 18rem;">
-                                <img src="{{ asset('storage/images/3.jpg') }}" class="card-img-top" alt="Image">
-                                <div class="card-body">
-                                    <h5 class="card-title"><strong>Card title</strong></h5>
-                                    <p class="card-text cut-text">Words in the woods are found anywhere in the world. Words
-                                        in the woods are found around the world.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slide-card swiper-slide h-100">
-                            <div class="card" style="width: 18rem;">
-                                <img src="{{ asset('storage/images/3.jpg') }}" class="card-img-top" alt="Image">
-                                <div class="card-body">
-                                    <h5 class="card-title"><strong>Card title</strong></h5>
-                                    <p class="card-text cut-text">Words in the woods are found anywhere in the world. Words
-                                        in the woods are found around the world.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slide-card swiper-slide h-100">
-                            <div class="card" style="width: 18rem;">
-                                <img src="{{ asset('storage/images/3.jpg') }}" class="card-img-top" alt="Image">
-                                <div class="card-body">
-                                    <h5 class="card-title"><strong>Card title</strong></h5>
-                                    <p class="card-text cut-text">Words in the woods are found anywhere in the world. Words
-                                        in the woods are found around the world.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slide-card swiper-slide h-100">
-                            <div class="card" style="width: 18rem;">
-                                <img src="{{ asset('storage/images/3.jpg') }}" class="card-img-top" alt="Image">
-                                <div class="card-body">
-                                    <h5 class="card-title"><strong>Card title</strong></h5>
-                                    <p class="card-text cut-text">Words in the woods are found anywhere in the world. Words
-                                        in the woods are found around the world.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
-                </div>
 
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-pagination"></div>
-            </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            @else
+                <div class="d-flex align-items-center justify-content-center p-5" style="height:50vh;">
+                    <div class="text-center">
+                        {{-- <h1 class="display-1 fw-bold">404</h1> --}}
+                        <p class="fs-3"> <span class="text-danger">Opps!</span> No News Found.</p>
+                    </div>
+                </div>
+            @endif
         </div>
     </section>
 

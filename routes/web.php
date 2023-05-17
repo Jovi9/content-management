@@ -11,8 +11,10 @@ use App\Http\Controllers\Admin\Menu\MenuController;
 use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Public\ContacUsController;
+use App\Http\Controllers\User\NewsController;
 use App\Http\Livewire\Admin\Menus\ShowSubMenus;
 use App\Http\Livewire\Admin\Trash\TrashPage;
+use App\Http\Livewire\User\News\NewsPage;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +30,7 @@ use App\Http\Livewire\Admin\Trash\TrashPage;
 Route::get('/', [PublicPageController::class, 'index'])->name('public-home');
 Route::get('/about', [PublicPageController::class, 'showAbout'])->name('public-about');
 Route::post('/contact-us', [ContacUsController::class, 'sendEmail'])->name('public-contact-us');
+Route::get('/news', [PublicPageController::class, 'showNews'])->name('public-news');
 
 // authentication
 Auth::routes([
@@ -80,6 +83,14 @@ Route::middleware('auth', 'verified')->group(function () {
         // show content
         Route::get('/contents/{main}/{sub}', [ContentController::class, 'show'])->name('contents-show-with-sub');
         Route::get('/contents/{main}', [ContentController::class, 'show'])->name('contents-show');
+
+        // news page
+        Route::get('/news-page', NewsPage::class)->name('news-page');
+        Route::post('/news-page', [NewsController::class, 'store'])->name('news-store');
+        Route::put('/news-page', [NewsController::class, 'update'])->name('news-update');
+        Route::get('/news-page/news/create', [NewsController::class, 'create'])->name('news-create');
+        Route::post('/news-page/image-upload', [NewsController::class, 'imageUpload'])->name('news-image-upload');
+        Route::get('/news-page/{id}/edit', [NewsController::class, 'edit'])->name('news-edit')->whereNumber('id');
     });
 });
 
