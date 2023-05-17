@@ -11,7 +11,7 @@ class NewsTrashPage extends Component
 {
     public $selected, $arg;
 
-    protected $listeners = ['permanentDeleteSelected'];
+    protected $listeners = ['permanentDeleteNews'];
 
     private function getNews()
     {
@@ -60,12 +60,13 @@ class NewsTrashPage extends Component
     {
         $this->selected = $id;
         $this->dispatchBrowserEvent('permanent-delete', [
+            'args'=>'news-trash',
             'title' => 'Are You Sure?',
             'text' => 'Warning! This action is permanent and won\'t be undone. This news will be permanently deleted.',
         ]);
     }
 
-    public function permanentDeleteSelected()
+    public function permanentDeleteNews()
     {
         $news = NewsUpdate::withTrashed()->findOrFail($this->selected);
         $news->forceDelete();

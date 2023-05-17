@@ -11,7 +11,7 @@ class SiteBannerTrash extends Component
 {
     public $selected, $arg;
 
-    protected $listeners = ['permanentDeleteSelected'];
+    protected $listeners = ['permanentDeleteBanner'];
 
     private function getBanners()
     {
@@ -61,12 +61,13 @@ class SiteBannerTrash extends Component
     {
         $this->selected = $id;
         $this->dispatchBrowserEvent('permanent-delete', [
+            'args'=>'site-banner',
             'title' => 'Are You Sure?',
             'text' => 'Warning! This action is permanent and won\'t be undone. This banner will be permanently deleted.',
         ]);
     }
 
-    public function permanentDeleteSelected()
+    public function permanentDeleteBanner()
     {
         $banner = SiteBanner::withTrashed()->findOrFail($this->selected);
         $banner->forceDelete();
