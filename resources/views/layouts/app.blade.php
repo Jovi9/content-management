@@ -146,7 +146,10 @@
                         @endrole
                         <li
                             class="nav-item
-                        @if (Route::is('admin.contents-index') || Route::is('admin.contents-manage') || Route::is('admin.news-page')) menu-open @endif"">
+                        @if (Route::is('admin.contents-index') ||
+                                Route::is('admin.contents-manage') ||
+                                Route::is('admin.news-page') ||
+                                Route::is('admin.featured-page')) menu-open @endif"">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-list"></i>
                                 <p>
@@ -181,6 +184,17 @@
                                         <p>News</p>
                                     </a>
                                 </li>
+                                @role('administrator')
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.featured-page') }}"
+                                            class="nav-link @if (Route::is('admin.featured-page')) active @endif">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>
+                                                Featured
+                                            </p>
+                                        </a>
+                                    </li>
+                                @endrole
                             </ul>
                         </li>
                         @role('administrator')

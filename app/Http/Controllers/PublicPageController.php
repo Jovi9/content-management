@@ -98,6 +98,30 @@ class PublicPageController extends Controller
         return CompanyProfile::first();
     }
 
+    private function getFeatured()
+    {
+        $data = array();
+        $allFeatureds = Content::whereNot(function ($query) {
+            $query->where('status', 'pending')
+                ->orWhere('isVisible', 0);
+        })->where('isVisibleHome', 1)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        foreach ($allFeatureds as $featured) {
+            $mainMenu = $featured->mainMenu()->first();
+            $subMenu = $featured->subMenu()->first();
+            array_push($data, [
+                'title' => $featured->title,
+                'content' => $featured->content,
+                'mainURI' => $mainMenu->mainURI,
+                'subURI' => $subMenu->subURI,
+            ]);
+        }
+
+        return $data;
+    }
+
     public function index()
     {
         return view('public.home', [
@@ -106,6 +130,7 @@ class PublicPageController extends Controller
             'banners' => $this->getBanners(),
             'newsUpdates' => $this->getNews(),
             'companyProfile' => $this->getCompayProfile(),
+            'featureds' => $this->getFeatured(),
         ]);
     }
 

@@ -68,7 +68,7 @@
                                         <div class="card-body">
                                             <h5 class="card-title"><strong>{{ $news->title }}</strong></h5>
                                             <p class="card-text cut-text">
-                                                {{ substr(strip_tags($news->content), 0, 100) }}
+                                                {{ substr(strip_tags($news->content), 0, 200) }}
                                             </p>
                                             <a href="#" class="btn btn-primary">Read More</a>
                                         </div>
@@ -100,70 +100,44 @@
             <div class="container mt-5 mb-5">
                 <h2 class="pb-2 border-bottom border-4 mt-5 mb-5"><strong>Featured</strong></h2>
             </div>
-            <div class="row justify-content-center mb-5">
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 mb-5">
-                    <div class="col d-flex align-items-start">
-                        <div
-                            class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-                            <i class="fas fa-microchip p-3"></i>
-                        </div>
-                        <div>
-                            <h3 class="fs-2">Featured title</h3>
-                            <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another
-                                sentence and
-                                probably just keep going until we run out of words.</p>
-                            <a href="#" class="btn btn-primary">
-                                Primary button
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col d-flex align-items-start">
-                        <div
-                            class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-                            <i class="fas fa-microchip p-3"></i>
-                        </div>
-                        <div>
-                            <h3 class="fs-2">Featured title</h3>
-                            <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another
-                                sentence and
-                                probably just keep going until we run out of words.</p>
-                            <a href="#" class="btn btn-primary">
-                                Primary button
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col d-flex align-items-start">
-                        <div
-                            class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-                            <i class="fas fa-microchip p-3"></i>
-                        </div>
-                        <div>
-                            <h3 class="fs-2">Featured title</h3>
-                            <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another
-                                sentence and
-                                probably just keep going until we run out of words.</p>
-                            <a href="#" class="btn btn-primary">
-                                Primary button
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col d-flex align-items-start">
-                        <div
-                            class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-                            <i class="fas fa-microchip p-3"></i>
-                        </div>
-                        <div>
-                            <h3 class="fs-2">Featured title</h3>
-                            <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another
-                                sentence and
-                                probably just keep going until we run out of words.</p>
-                            <a href="#" class="btn btn-primary">
-                                Primary button
-                            </a>
-                        </div>
+            @if (!empty($featureds))
+                <div class="row justify-content-center mb-5">
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 mb-5">
+                        @foreach ($featureds as $featured)
+                            <div class="col d-flex align-items-start">
+                                <div
+                                    class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                                    <i class="fas fa-microchip p-3"></i>
+                                </div>
+                                <div>
+                                    <h3 class="fs-2">{{ $featured['title'] }}</h3>
+                                    <p class="cut-text">
+                                        {{ substr(strip_tags($featured['content']), 0, 200) }}
+                                    </p>
+                                    @if ($featured['subURI'] === 'none')
+                                        <a href="{{ $featured['mainURI'] }}/#{{ strtolower(str_replace(' ', '-', $featured['title'])) }}"
+                                            class="btn btn-primary">
+                                            Read More
+                                        </a>
+                                    @else
+                                        <a href="{{ $featured['mainURI'] }}/{{ $featured['subURI'] }}/#{{ strtolower(str_replace(' ', '-', $featured['title'])) }}"
+                                            class="btn btn-primary">
+                                            Read More
+                                        </a>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
-            </div>
+            @else
+                <div class="d-flex align-items-center justify-content-center p-5" style="height:50vh;">
+                    <div class="text-center">
+                        {{-- <h1 class="display-1 fw-bold">404</h1> --}}
+                        <p class="fs-3"> <span class="text-danger">Opps!</span> No Featured Found.</p>
+                    </div>
+                </div>
+            @endif
         </div>
     </section>
 

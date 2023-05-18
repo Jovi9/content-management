@@ -83,7 +83,7 @@ body {
     /* fallback */
     /* max-height: 32px; */
     /* fallback */
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 5;
     /* number of lines to show */
     -webkit-box-orient: vertical;
 }

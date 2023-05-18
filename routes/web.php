@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Public\ContacUsController;
 use App\Http\Controllers\User\NewsController;
+use App\Http\Livewire\Admin\FeaturedPage;
 use App\Http\Livewire\Admin\Menus\ShowSubMenus;
 use App\Http\Livewire\Admin\Trash\TrashPage;
 use App\Http\Livewire\User\News\NewsPage;
@@ -60,6 +61,7 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('/manage-contents', [ContentController::class, 'manageContents'])->name('contents-manage');
 
         Route::get('/trash', TrashPage::class)->name('trash-page');
+        Route::get('/featured', FeaturedPage::class)->name('featured-page');
     });
 
     Route::group([
