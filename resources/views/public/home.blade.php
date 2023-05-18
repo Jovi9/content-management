@@ -148,60 +148,26 @@
             <h2 class="pb-2 border-bottom border-4 mt-5 mb-5"><strong>Gallery</strong></h2>
         </div>
         <div class="container">
-            <div class="row justify-content-center mb-5">
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 mb-5">
-                    <div class="col">
-                        <div class="card">
-                            <img src="{{ asset('storage/images/3.jpg') }}" class="" alt="Image">
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <img src="{{ asset('storage/images/3.jpg') }}" class="" alt="Image">
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <img src="{{ asset('storage/images/3.jpg') }}" class="" alt="Image">
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <img src="{{ asset('storage/images/3.jpg') }}" class="" alt="Image">
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <img src="{{ asset('storage/images/3.jpg') }}" class="" alt="Image">
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <img src="{{ asset('storage/images/3.jpg') }}" class="" alt="Image">
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <img src="{{ asset('storage/images/3.jpg') }}" class="" alt="Image">
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <img src="{{ asset('storage/images/3.jpg') }}" class="" alt="Image">
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <img src="{{ asset('storage/images/3.jpg') }}" class="" alt="Image">
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <img src="{{ asset('storage/images/3.jpg') }}" class="" alt="Image">
-                        </div>
+            @if (!empty($images))
+                <div class="row justify-content-center mb-5">
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 mb-5">
+                        @foreach ($images as $key => $imagee)
+                            <div class="col">
+                                <div class="card">
+                                    <img src="{{ Storage::url($imagee) }}" class="" alt="Image">
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
-            </div>
+            @else
+                <div class="d-flex align-items-center justify-content-center p-5" style="height:50vh;">
+                    <div class="text-center">
+                        {{-- <h1 class="display-1 fw-bold">404</h1> --}}
+                        <p class="fs-3"> <span class="text-danger">Opps!</span> No Gallery Images Found.</p>
+                    </div>
+                </div>
+            @endif
         </div>
     </section>
 

@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CompanyProfile;
 use App\Models\NewsUpdate;
 use App\Models\Menu\Content;
 use App\Models\Menu\SubMenu;
 use Illuminate\Http\Request;
 use App\Models\Menu\MainMenu;
+use App\Models\CompanyProfile;
 use App\Models\Options\SiteBanner;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 
 class PublicPageController extends Controller
@@ -122,6 +123,11 @@ class PublicPageController extends Controller
         return $data;
     }
 
+    private function getImages()
+    {
+        return Storage::disk('public')->allFiles('gallery');
+    }
+
     public function index()
     {
         return view('public.home', [
@@ -131,6 +137,7 @@ class PublicPageController extends Controller
             'newsUpdates' => $this->getNews(),
             'companyProfile' => $this->getCompayProfile(),
             'featureds' => $this->getFeatured(),
+            'images' => $this->getImages(),
         ]);
     }
 

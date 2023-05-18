@@ -199,6 +199,15 @@
                         </li>
                         @role('administrator')
                             <li class="nav-item">
+                                <a href="{{ route('admin.gallery-page') }}"
+                                    class="nav-link @if (Route::is('admin.gallery-page')) active @endif">
+                                    <i class="nav-icon fas fa-image"></i>
+                                    <p>
+                                        Gallery
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ route('admin.trash-page') }}"
                                     class="nav-link @if (Route::is('admin.trash-page')) active @endif">
                                     <i class="nav-icon fas fa-trash"></i>
