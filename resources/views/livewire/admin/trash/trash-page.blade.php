@@ -48,8 +48,10 @@
                         Livewire.emit('permanentDeleteBanner');
                     } else if (event.detail.args === 'news-trash') {
                         Livewire.emit('permanentDeleteNews');
+                    } else if (event.detail.args === 'partner-trash') {
+                        Livewire.emit('permanentDeletePartner');
                     } else {
-                        //  
+                        //
                     }
                 }
             })
@@ -108,7 +110,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mb-5">
             <div class="col-md-12">
                 <div class="accordion" id="accordionNews">
                     <div class="accordion-item">
@@ -122,6 +124,28 @@
                             data-bs-parent="#accordionNews">
                             <div class="accordion-body">
                                 @livewire('admin.trash.news-trash-page')
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <div class="accordion" id="accordionPartners">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingPartners">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapsePartners" aria-expanded="false"
+                                aria-controls="collapsePartners">
+                                Partners
+                            </button>
+                        </h2>
+                        <div id="collapsePartners" class="accordion-collapse collapse" aria-labelledby="headingPartners"
+                            data-bs-parent="#accordionPartners">
+                            <div class="accordion-body">
+                                @livewire('admin.trash.partners-trash-page')
                             </div>
                         </div>
                     </div>

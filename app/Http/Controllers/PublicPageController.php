@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Menu\MainMenu;
 use App\Models\CompanyProfile;
 use App\Models\Options\SiteBanner;
+use App\Models\Partner;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
@@ -128,6 +129,11 @@ class PublicPageController extends Controller
         return Storage::disk('public')->allFiles('gallery');
     }
 
+    private function getPartners()
+    {
+        return Partner::all();
+    }
+
     public function index()
     {
         return view('public.home', [
@@ -138,6 +144,7 @@ class PublicPageController extends Controller
             'companyProfile' => $this->getCompayProfile(),
             'featureds' => $this->getFeatured(),
             'images' => $this->getImages(),
+            'partners' => $this->getPartners(),
         ]);
     }
 

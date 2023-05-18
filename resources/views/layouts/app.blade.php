@@ -208,6 +208,15 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{ route('admin.partners-page') }}"
+                                    class="nav-link @if (Route::is('admin.partners-page')) active @endif">
+                                    <i class="nav-icon fas fa-handshake-alt"></i>
+                                    <p>
+                                        Partners
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ route('admin.trash-page') }}"
                                     class="nav-link @if (Route::is('admin.trash-page')) active @endif">
                                     <i class="nav-icon fas fa-trash"></i>

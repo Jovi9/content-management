@@ -176,57 +176,28 @@
     <section class="bg-white">
         <div class="container py-5">
             <div class="container mt-5 mb-5">
-                <h2 class="pb-2 border-bottom border-4 mt-5 mb-5"><strong>Partners</strong></h2>
+                <h2 class="pb-2 border-bottom border-4 mt-5 mb-5"><strong>Our Partners</strong></h2>
             </div>
-            <div class="row justify-content-md-center mb-5">
-                <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 g-4 mb-5">
-                    <div class="col">
-                        <a href="javascript:void(0)">
-                            <img src="{{ asset('storage/logo/sys_logo.png') }}" width="150px" alt="Image">
-                        </a>
-                    </div>
-                    <div class="col">
-                        <a href="javascript:void(0)">
-                            <img src="{{ asset('storage/logo/sys_logo.png') }}" width="150px" alt="Image">
-                        </a>
-                    </div>
-                    <div class="col">
-                        <a href="javascript:void(0)">
-                            <img src="{{ asset('storage/logo/sys_logo.png') }}" width="150px" alt="Image">
-                        </a>
-                    </div>
-                    <div class="col">
-                        <a href="javascript:void(0)">
-                            <img src="{{ asset('storage/logo/sys_logo.png') }}" width="150px" alt="Image">
-                        </a>
-                    </div>
-                    <div class="col">
-                        <a href="javascript:void(0)">
-                            <img src="{{ asset('storage/logo/sys_logo.png') }}" width="150px" alt="Image">
-                        </a>
-                    </div>
-                    <div class="col">
-                        <a href="javascript:void(0)">
-                            <img src="{{ asset('storage/logo/sys_logo.png') }}" width="150px" alt="Image">
-                        </a>
-                    </div>
-                    <div class="col">
-                        <a href="javascript:void(0)">
-                            <img src="{{ asset('storage/logo/sys_logo.png') }}" width="150px" alt="Image">
-                        </a>
-                    </div>
-                    <div class="col">
-                        <a href="javascript:void(0)">
-                            <img src="{{ asset('storage/logo/sys_logo.png') }}" width="150px" alt="Image">
-                        </a>
-                    </div>
-                    <div class="col">
-                        <a href="javascript:void(0)">
-                            <img src="{{ asset('storage/logo/sys_logo.png') }}" width="150px" alt="Image">
-                        </a>
+            @if (!$partners->isEmpty())
+                <div class="row justify-content-md-center mb-5">
+                    <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 g-4 mb-5">
+                        @foreach ($partners as $partner)
+                            <div class="col">
+                                <a href="{{ $partner->URL }}">
+                                    <img src="{{ Storage::url($partner->image) }}" width="150px" alt="Image">
+                                </a>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
-            </div>
+            @else
+                <div class="d-flex align-items-center justify-content-center p-5" style="height:50vh;">
+                    <div class="text-center">
+                        {{-- <h1 class="display-1 fw-bold">404</h1> --}}
+                        <p class="fs-3"> <span class="text-danger">Opps!</span> No Partners Found.</p>
+                    </div>
+                </div>
+            @endif
         </div>
     </section>
 
