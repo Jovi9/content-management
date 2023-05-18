@@ -119,7 +119,7 @@
             <div class="container">
                 <div class="collapse navbar-collapse" id="navMenus">
                     <ul class="navbar-nav gap-lg-4 mx-lg-5">
-                        <li class="nav-item">
+                        <li class="nav-item item-link">
                             <a href="{{ route('public-home') }}" class="nav-link blue-link">Home</a>
                         </li>
                         <li class="nav-item">
@@ -168,7 +168,7 @@
     <footer class="">
         <div class="lightblue text-white p-4">
             <div class="container">
-                <div class="row py-5 my-5 border-top mx-lg-5">
+                <div class="row py-5 my-5 mx-lg-5">
                     <div class="row">
                         <div class="col-md-3">
                             <h5 class="border-bottom border-2 footer-link-head"><strong>Catanduanes State

@@ -42,8 +42,8 @@
     {{-- <div class="b-divider"></div> --}}
     <section class="py-2"></section>
 
-    <div class="container-fluid shadow">
-        <div class="row justify-content-center pt-2">
+    <div class="shadow">
+        <div class="pt-2">
             <h1 class="text-center fs-1">{{ $menuName }}</h1>
         </div>
         <div class="b-divider"></div>
