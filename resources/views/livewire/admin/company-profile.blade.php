@@ -5,12 +5,15 @@
     @else
         <h1>Profile Information</h1>
         <h3 class="mt-3"><strong>Company Name: </strong>{{ $profile->companyName }}</h3>
+        <h3 class="mt-3"><strong>Main URL: </strong><a href="{{ $profile->mainURI }}"
+                target="_blank">{{ $profile->mainURI }}</a></h3>
+        <h3 class="mt-3"><strong>Sub Department: </strong>{{ $profile->companySub }}</h3>
         <h3 class="mt-3"><strong>Company Address: </strong>{{ $profile->companyAddress }}</h3>
         <h3 class="mt-3"><strong>Company Head: </strong>{{ $profile->companyHead }}</h3>
         <h3 class="mt-3"><strong>Company Head Title: </strong>{{ $profile->companyHeadTitle }}</h3>
         <h3 class="mt-3"><strong>Company Type: </strong>{{ $profile->companyType }}</h3>
         <h3 class="mt-3"><strong>Company Description: </strong>{{ $profile->companyDescription }}</h3>
-        <h3 class="mt-3"><strong>Company Description: </strong>{{ $profile->email }}</h3>
+        <h3 class="mt-3"><strong>Company Email: </strong>{{ $profile->email }}</h3>
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditCompanyProfile"
             wire:click="edit">Edit</button>
     @endif
@@ -32,6 +35,28 @@
                                 <input type="text" class="form-control @error('companyName') is-invalid @enderror"
                                     required wire:model.lazy="companyName">
                                 @error('companyName')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">Main URL</label>
+                                <input type="url" class="form-control @error('mainURI') is-invalid @enderror"
+                                    required wire:model.lazy="mainURI">
+                                @error('mainURI')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">Sub Department</label>
+                                <input type="text" class="form-control @error('companySub') is-invalid @enderror"
+                                    required wire:model.lazy="companySub">
+                                @error('companySub')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -117,7 +142,8 @@
     </div>
 
     <div wire:ignore.self class="modal fade" id="modalEditCompanyProfile" tabindex="-1" role="dialog"
-        aria-labelledby="modalEditCompanyProfile" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        aria-labelledby="modalEditCompanyProfile" aria-hidden="true" data-bs-backdrop="static"
+        data-bs-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -134,6 +160,28 @@
                                 <input type="text" class="form-control @error('companyName') is-invalid @enderror"
                                     required wire:model.lazy="companyName">
                                 @error('companyName')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">Main URL</label>
+                                <input type="url" class="form-control @error('mainURI') is-invalid @enderror"
+                                    required wire:model.lazy="mainURI">
+                                @error('mainURI')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">Sub Department</label>
+                                <input type="text" class="form-control @error('companySub') is-invalid @enderror"
+                                    required wire:model.lazy="companySub">
+                                @error('companySub')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>

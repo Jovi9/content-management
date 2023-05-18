@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CompanyProfile;
 use App\Models\NewsUpdate;
 use App\Models\Menu\Content;
 use App\Models\Menu\SubMenu;
@@ -92,6 +93,11 @@ class PublicPageController extends Controller
         return $banners;
     }
 
+    private function getCompayProfile()
+    {
+        return CompanyProfile::first();
+    }
+
     public function index()
     {
         return view('public.home', [
@@ -99,6 +105,7 @@ class PublicPageController extends Controller
             'menuName' => 'Home',
             'banners' => $this->getBanners(),
             'newsUpdates' => $this->getNews(),
+            'companyProfile' => $this->getCompayProfile(),
         ]);
     }
 
@@ -110,6 +117,7 @@ class PublicPageController extends Controller
             'menuName' => 'About',
             'contents' => $contents,
             'banners' => $this->getBanners(),
+            'companyProfile' => $this->getCompayProfile(),
         ]);
     }
 
@@ -126,6 +134,7 @@ class PublicPageController extends Controller
             'menuName' => 'Home',
             'banners' => $this->getBanners(),
             'newsUpdates' => $this->getNews(),
+            'companyProfile' => $this->getCompayProfile(),
         ]);
     }
 
@@ -190,6 +199,7 @@ class PublicPageController extends Controller
                         'menuName' => $mainMenu->mainMenu,
                         'contents' => $contents,
                         'banners' => $this->getBanners(),
+                        'companyProfile' => $this->getCompayProfile(),
                     ]);
                 } else {
                     //
@@ -201,6 +211,7 @@ class PublicPageController extends Controller
                             'menuName' => $subMenu->subMenu,
                             'contents' => $contents,
                             'banners' => $this->getBanners(),
+                            'companyProfile' => $this->getCompayProfile(),
                         ]);
                     } else {
                         return Redirect::route('public-home');

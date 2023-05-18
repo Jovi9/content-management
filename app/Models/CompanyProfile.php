@@ -17,6 +17,8 @@ class CompanyProfile extends Model
         'companyType',
         'companyDescription',
         'email',
-        'last_user_id'
+        'last_user_id',
+        'companySub',
+        'mainURI',
     ];
 }

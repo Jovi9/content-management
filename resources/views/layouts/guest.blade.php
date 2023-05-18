@@ -29,8 +29,21 @@
         <div class="border-bottom d-none d-md-flex darkblue">
             <div class="container d-flex flex-wrap">
                 <ul class="nav me-auto">
-                    <li class="nav-item"><a href="https://catsu.edu.ph/" target="_blank"
-                            class="nav-link text-white px-2 active" aria-current="page">CATANDUANES STATE UNIVERSITY</a>
+                    <li class="nav-item">
+                        @if (!empty($companyProfile))
+                            <a href="@if ($companyProfile->mainURI === '') javascript:void(0) @else {{ $companyProfile->mainURI }} @endif"
+                                class="nav-link text-white px-2 active" aria-current="page">
+                                @if ($companyProfile->companyName === '')
+                                    {{ __('Web Builder') }}
+                                @else
+                                    {{ $companyProfile->companyName }}
+                                @endif
+                            </a>
+                        @else
+                            <a href="javascript:void(0)" class="nav-link text-white px-2 active" aria-current="page">
+                                {{ __('Web Builder') }}
+                            </a>
+                        @endif
                     </li>
                 </ul>
                 <ul class="nav">
@@ -39,10 +52,34 @@
                                 class="nav-link link-dark px-2"><u>DASHBOARD</u></a>
                         </li>
                     @else
-                        <li class="nav-item"><a href="{{ route('login') }}" class="nav-link link-dark px-2"><u>LOGIN</u></a>
+                        <li class="nav-item"><a href="{{ route('login') }}"
+                                class="nav-link link-dark px-2"><u>LOGIN</u></a>
                         </li>
                     @endauth
 
+                </ul>
+            </div>
+        </div>
+
+        <div class="border-bottom d-flex d-md-none darkblue">
+            <div class="container d-flex flex-wrap">
+                <ul class="nav me-auto">
+                    <li class="nav-item">
+                        @if (!empty($companyProfile))
+                            <a href="@if ($companyProfile->mainURI === '') javascript:void(0) @else {{ $companyProfile->mainURI }} @endif"
+                                class="nav-link text-white px-2 active" aria-current="page">
+                                @if ($companyProfile->companySub === '')
+                                    {{ $companyProfile->companyName }}
+                                @else
+                                    {{ $companyProfile->companySub }}
+                                @endif
+                            </a>
+                        @else
+                            <a href="javascript:void(0)" class="nav-link text-white px-2 active" aria-current="page">
+                                {{ __('Web Builder') }}
+                            </a>
+                        @endif
+                    </li>
                 </ul>
             </div>
         </div>
@@ -53,11 +90,20 @@
                     class="d-flex align-items-center me-lg-auto text-dark text-decoration-none">
                     <img src="{{ asset('storage/logo/sys_logo.png') }}" alt="LOGO" class="d-none d-md-flex"
                         style="opacity: .8" width="50px">
-                    <span class="fs-5 mx-4 d-none d-lg-flex">College of Information and Communications Technology</span>
+                    <span class="fs-5 mx-4 d-none d-lg-flex">
+                        @if (!empty($companyProfile))
+                            @if ($companyProfile->companySub === '')
+                                {{ $companyProfile->companyName }}
+                            @else
+                                {{ $companyProfile->companySub }}
+                            @endif
+                        @else
+                            {{ __('Web Builder') }}
+                        @endif
+                    </span>
 
                     <img src="{{ asset('storage/logo/sys_logo.png') }}" alt="LOGO" class="d-flex d-md-none"
                         style="opacity: .8" width="50px">
-                    <span class="fs-5 mx-2 d-flex d-lg-none">CatSU CICT</span>
                 </a>
                 <a href="#" class="fs-5 mx-4 d-flex ms-auto d-lg-none">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenus"
