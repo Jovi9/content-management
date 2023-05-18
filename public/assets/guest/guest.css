@@ -52,8 +52,26 @@ body {
 
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
-    bottom: 3rem;
+    bottom: 10rem;
     z-index: 10;
+}
+
+.carousel-caption h1 {
+    font-weight: 900;
+    font-size: 3.5rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-stretch: expanded;
+}
+
+.carousel-caption p {
+    font-size: 1.4rem;
+}
+
+@media screen and (max-width: 600px) {
+    .carousel-caption {
+        bottom: 0rem;
+        z-index: 10;
+    }
 }
 
 /* Declare heights because of positioning of img element */
@@ -68,7 +86,7 @@ body {
 .carousel-img {
     height: 100%;
     object-fit: cover;
-    filter: brightness(0.2);
+    filter: brightness(0.5);
 }
 
 .featured {

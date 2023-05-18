@@ -21,7 +21,7 @@
                         <img src="{{ Storage::url($banner['image']) }}" class="d-block w-100 carousel-img" alt="Image">
 
                         <div class="container">
-                            <div class="carousel-caption text-start">
+                            <div class="carousel-caption">
                                 <h1>{{ $banner['title'] }}</h1>
                                 <p>{{ $banner['shortDesc'] }}</p>
                             </div>
@@ -39,8 +39,17 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
-    <div class="b-divider"></div>
-    <section class="py-5"></section>
+   {{-- <div class="b-divider"></div> --}}
+   <section class="py-4"></section>
+
+   <div class="container-fluid shadow">
+       <div class="row justify-content-center pt-2">
+           <h1 class="text-center fs-1">{{$menuName}}</h1>
+       </div>
+       <div class="b-divider"></div>
+   </div>
+
+   <section class="py-4"></section>
 
     @if (!$contents->isEmpty())
         @if ($contents)

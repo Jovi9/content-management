@@ -32,7 +32,7 @@
                         <img src="{{ Storage::url($banner['image']) }}" class="d-block w-100 carousel-img" alt="Image">
 
                         <div class="container">
-                            <div class="carousel-caption text-start">
+                            <div class="carousel-caption">
                                 <h1>{{ $banner['title'] }}</h1>
                                 <p>{{ $banner['shortDesc'] }}</p>
                             </div>

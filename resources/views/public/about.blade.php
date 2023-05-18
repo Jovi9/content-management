@@ -25,7 +25,7 @@
                         <img src="{{ Storage::url($banner['image']) }}" class="d-block w-100 carousel-img" alt="Image">
 
                         <div class="container">
-                            <div class="carousel-caption text-start">
+                            <div class="carousel-caption">
                                 <h1>{{ $banner['title'] }}</h1>
                                 <p>{{ $banner['shortDesc'] }}</p>
                             </div>
@@ -43,8 +43,17 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
-    <div class="b-divider"></div>
-    <section class="py-5"></section>
+    {{-- <div class="b-divider"></div> --}}
+    <section class="py-4"></section>
+
+    <div class="container-fluid shadow">
+        <div class="row justify-content-center pt-2">
+            <h1 class="text-center fs-1">About</h1>
+        </div>
+        <div class="b-divider"></div>
+    </div>
+
+    <section class="py-4"></section>
 
     @if ($contents)
         @foreach ($contents as $content)
@@ -124,8 +133,8 @@
                         <div class="row mb-4">
                             <div class="col-sm-10">
                                 <label for="txtMessage" class="form-label">Your Message *</label>
-                                <textarea id="txtMessage" cols="30" rows="8" class="form-control fs-5 @error('message') is-invalid @enderror"
-                                    name="message" required></textarea>
+                                <textarea id="txtMessage" cols="30" rows="8"
+                                    class="form-control fs-5 @error('message') is-invalid @enderror" name="message" required></textarea>
                                 @error('message')
                                     <div class="invalid-feedback">
                                         {{ $message }}
