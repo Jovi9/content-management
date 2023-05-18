@@ -85,6 +85,13 @@ body {
         bottom: 0rem;
         z-index: 10;
     }
+
+    .carousel-caption h1 {
+        font-weight: 800;
+        font-size: 1.75rem;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-stretch: expanded;
+    }
 }
 
 /* Declare heights because of positioning of img element */
