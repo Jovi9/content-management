@@ -43,8 +43,7 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
-    {{-- <div class="b-divider"></div> --}}
-    <section class="py-4"></section>
+    <section class="py-2"></section>
 
     <div class="container-fluid shadow">
         <div class="row justify-content-center pt-2">
@@ -57,14 +56,14 @@
 
     @if ($contents)
         @foreach ($contents as $content)
-            <div class="container py-3" id="{{ strtolower(str_replace(' ', '-', $content->title)) }}">
-                <div class="row justify-content-center">
+            <div class="container py-lg-3 py-4" id="{{ strtolower(str_replace(' ', '-', $content->title)) }}">
+                <div class="row justify-content-center mx-lg-5">
                     <div class="card">
                         <div class="card-body">
                             <div class="bg-white">
-                                <div class="container px-4 py-4">
-                                    <h2 class="pb-2 border-bottom border-4">{{ $content->title }}</h2>
-                                    <div class="row mt-4">
+                                <div class="container px-0 px-lg-5 py-4">
+                                    <h4 class="pb-2 border-bottom border-4"><strong>{{ $content->title }}</strong></h4>
+                                    <div class="row mt-5">
                                         {!! $content->content !!}
                                     </div>
                                 </div>
