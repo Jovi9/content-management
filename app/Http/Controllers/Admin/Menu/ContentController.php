@@ -216,7 +216,7 @@ class ContentController extends Controller
         $contents = [
             'main_menu_id' => $mainMenuID,
             'sub_menu_id' => $subMenuID,
-            'title' => ucwords($request->title),
+            'title' => $request->title,
             'content' => $request->content,
             'status' => $status,
             'user_id' => Auth::id(),
@@ -393,7 +393,7 @@ class ContentController extends Controller
         }
 
         $contents = [
-            'title' => ucwords($request->title),
+            'title' => $request->title,
             'content' => $request->content,
             'status' => $status,
             'mod_user_id' => Auth::id(),
