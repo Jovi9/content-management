@@ -191,4 +191,44 @@ class ManageContents extends Component
         $log['changes'] = "";
         UserActivityController::store($log);
     }
+
+    private function getContentByID($id)
+    {
+        return Content::where('id', $id)->first();
+    }
+
+    public function modalShowDetails($id)
+    {
+        try {
+            $id = Crypt::decrypt($id);
+        } catch (\Throwable $th) {
+            $this->dispatchBrowserEvent('swal-modal', [
+                'title' => 'error'
+            ]);
+            return;
+        }
+        $data = $this->getContentByID($id);
+        $content = array();
+        $mainMenu = $data->mainMenu()->first();
+        $subMenu = $data->subMenu()->first();
+        $createdBy = $data->createdBy()->first();
+        $updatedBy = $data->updatedBy()->first();
+        $content['mainMenu'] = $mainMenu->mainMenu;
+        $content['subMenu'] = $subMenu->subMenu;
+        $content['title'] = $data->title;
+        $content['createdBy'] = $createdBy->firstName . ' ' . $createdBy->middleName . ' ' . $createdBy->lastName . ' ' . $createdBy->prefix;
+        $content['updatedBy'] = $updatedBy->firstName . ' ' . $updatedBy->middleName . ' ' . $updatedBy->lastName . ' ' . $updatedBy->prefix;
+        $content['created_at'] = date('M-d-Y h:i A', strtotime($data->created_at));
+        $content['updated_at'] = date('M-d-Y h:i A', strtotime($data->updated_at));
+        $content['status'] = ucwords($data->status);
+        if ($data->isVisible === 0) {
+            $visible = "False";
+        } else {
+            $visible = "True";
+        }
+        $content['visible'] = $visible;
+        $this->dispatchBrowserEvent('populate-modal', [
+            'content' => $content,
+        ]);
+    }
 }

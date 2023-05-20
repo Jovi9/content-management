@@ -2,6 +2,7 @@
 
 namespace App\Models\Menu;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -41,5 +42,15 @@ class Content extends Model
     public function subMenu(): HasOne
     {
         return $this->hasOne(SubMenu::class, 'id', 'sub_menu_id');
+    }
+
+    public function createdBy(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function updatedBy(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'mod_user_id');
     }
 }

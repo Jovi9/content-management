@@ -44,6 +44,19 @@
             $(event.detail.modal_id).modal('hide');
         });
 
+        window.addEventListener('populate-modal', event => {
+            $('#mainMenu').text(event.detail.content.mainMenu);
+            $('#subMenu').text(event.detail.content.subMenu);
+            $('#title').text(event.detail.content.title);
+            $('#createdBy').text(event.detail.content.createdBy);
+            $('#updatedBy').text(event.detail.content.updatedBy);
+            $('#created_at').text(event.detail.content.created_at);
+            $('#updated_at').text(event.detail.content.updated_at);
+            $('#status').text(event.detail.content.status);
+            $('#visible').text(event.detail.content.visible);
+            $('#modalShowDetails').modal('show');
+        });
+
         window.addEventListener('swal-modal', event => {
             if (event.detail.title == "saved") {
                 Swal.fire({
