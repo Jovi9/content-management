@@ -171,15 +171,35 @@
                 <div class="row py-5 my-5 mx-lg-5">
                     <div class="row">
                         <div class="col-md-3">
-                            <h5 class="border-bottom border-2 footer-link-head"><strong>Catanduanes State
-                                    University</strong></h5>
-                            <ul class="nav flex-column">
-                                <li class="nav-item mb-2 footer-link"><b>College of Information and Communications and
-                                        Technology</b>
-                                </li>
-                                <li class="nav-item mb-2 footer-link">Calatagan, Virac, Catanduanes</li>
-                                <li class="nav-item mb-2 footer-link">contact-us@catsu-cict.com</li>
-                            </ul>
+                            @if (!empty($companyProfile))
+                                @if ($companyProfile->companyName === '')
+                                    <h5 class="border-bottom border-2 footer-link-head">
+                                        <strong>{{ __('Web Builder') }}</strong>
+                                    </h5>
+                                @else
+                                    <h5 class="border-bottom border-2 footer-link-head">
+                                        <strong>{{ $companyProfile->companyName }}</strong>
+                                    </h5>
+                                @endif
+                                <ul class="nav flex-column">
+                                    @if (!($companyProfile->companySub === ''))
+                                        <li class="nav-item mb-2 footer-link"><b>{{ $companyProfile->companySub }}</b>
+                                        </li>
+                                    @endif
+                                    <li class="nav-item mb-2 footer-link">{{ $companyProfile->companyAddress }}</li>
+                                    <li class="nav-item mb-2 footer-link">{{ $companyProfile->email }}</li>
+                                </ul>
+                            @else
+                                <h5 class="border-bottom border-2 footer-link-head">
+                                    <strong>{{ __('Web Builder') }}</strong>
+                                </h5>
+                                <ul class="nav flex-column">
+                                    <li class="nav-item mb-2 footer-link"><b></b>
+                                    </li>
+                                    <li class="nav-item mb-2 footer-link">{{ __('Philippines') }}</li>
+                                    <li class="nav-item mb-2 footer-link">{{ __('contact-us@web-bbuilder.com') }}</li>
+                                </ul>
+                            @endif
                         </div>
 
                         <div class="col-md-1"></div>
@@ -212,7 +232,8 @@
                                     @foreach ($mainMenus as $mainMenu)
                                         @if (!($mainMenu['subMenu'] === 'none'))
                                             <div class="col-md-3 mt-4 mt-md-0">
-                                                <h5 class="border-bottom border-2  footer-link-head">{{ $mainMenu['mainMenu'] }}</h5>
+                                                <h5 class="border-bottom border-2  footer-link-head">
+                                                    {{ $mainMenu['mainMenu'] }}</h5>
                                                 <ul class="nav flex-column">
                                                     @foreach ($mainMenu['subMenu'] as $subMenu)
                                                         <li class="nav-item mb-2"><a
@@ -236,12 +257,30 @@
         <div class="darkblue">
             <div class="container d-flex flex-wrap">
                 <ul class="nav me-auto mx-lg-5">
-                    <li class="nav-item"><a href="https://catsu.edu.ph/" target="_blank"
-                            class="nav-link text-white px-2 active footer-link" aria-current="page">
-                            &copy; 2023 <u>Catanduanes State University</u> - College of Information and Communications
-                            Technology.
-                            All Rights Reserved. Calatagan Virac, Catanduanes
-                        </a></li>
+                    @if (!empty($companyProfile))
+                        <li class="nav-item"><a href="{{ $companyProfile->mainURI }}" target="_blank"
+                                class="nav-link text-white px-2 active footer-link" aria-current="page">
+                                &copy; 2023
+                                <u>
+                                    @if ($companyProfile->companyName === '')
+                                        {{ __('Web Builder') }}
+                                    @else
+                                        {{ $companyProfile->companyName }}
+                                    @endif
+                                </u>
+                                @if (!($companyProfile->companySub === ''))
+                                    {{ __(' - ') . $companyProfile->companySub }}
+                                @endif
+                                All Rights Reserved. {{ $companyProfile->companyAddress }}
+                            </a>
+                        </li>
+                    @else
+                        <li class="nav-item"><a href="javascript:void(0)"
+                                class="nav-link text-white px-2 active footer-link" aria-current="page">
+                                &copy; 2023 <u>Web Builder</u>
+                                All Rights Reserved. Philippines.
+                            </a></li>
+                    @endif
                 </ul>
             </div>
         </div>

@@ -263,7 +263,7 @@
         </div>
         <!-- /.content-wrapper -->
 
-        <footer class="main-footer">
+        {{-- <footer class="main-footer">
             <div class="float-right d-none d-sm-block">
                 Calatagan, Virac, Catanduanes
             </div>
@@ -271,7 +271,7 @@
                 Copyright &copy; 2023 Catanduanes State University - College of Information and Communications
                 Technology</strong>
             All rights reserved.
-        </footer>
+        </footer> --}}
 
     </div>
     <!-- ./wrapper -->
