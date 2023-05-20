@@ -81,7 +81,7 @@ class NavigationMenus extends LiveForm
         try {
             DB::transaction(function () {
                 $menuInfo = [
-                    'mainMenu' => ucwords($this->mainMenu),
+                    'mainMenu' => $this->mainMenu,
                     'mainURI' => strtolower(str_replace(' ', '-', $this->mainMenu)),
                 ];
 
@@ -146,7 +146,7 @@ class NavigationMenus extends LiveForm
         ]);
 
         $menuInfo = [
-            'mainMenu' => ucwords($this->mainMenu),
+            'mainMenu' => $this->mainMenu,
             'mainURI' => strtolower(str_replace(' ', '-', $this->mainMenu)),
         ];
 
@@ -292,7 +292,7 @@ class NavigationMenus extends LiveForm
             DB::transaction(function () use ($mainMenuID, $mainMenu) {
                 $infoSubMenu = [
                     'main_menu_id' => $mainMenuID,
-                    'subMenu' => ucwords($this->subMenu),
+                    'subMenu' => $this->subMenu,
                     'subURI' => strtolower(str_replace(' ', '-', $this->subMenu)),
                 ];
 

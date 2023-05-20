@@ -103,7 +103,7 @@ class ShowSubMenus extends Component
 
             DB::transaction(function () use ($mainMenu) {
                 $mainMenu->subMenus()->create([
-                    'subMenu' => ucwords($this->subMenu),
+                    'subMenu' => $this->subMenu,
                     'subURI' => strtolower(str_replace(' ', '-', $this->subMenu)),
                 ]);
 
@@ -147,7 +147,7 @@ class ShowSubMenus extends Component
         ]);
 
         $subMenuData = [
-            'subMenu' => ucwords($this->subMenu),
+            'subMenu' => $this->subMenu,
             'subURI' => strtolower(str_replace(' ', '-', $this->subMenu)),
         ];
 
