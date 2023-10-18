@@ -70,7 +70,7 @@
                                             <p class="card-text cut-text">
                                                 {{ substr(strip_tags($news->content), 0, 200) }}
                                             </p>
-                                            <a href="#" class="btn btn-primary">Read More</a>
+                                            <a href="{{route('public-news')}}/#{{ strtolower(str_replace(' ', '-', $news->title)) }}" class="btn btn-primary">Read More</a>
                                         </div>
                                     </div>
                                 </div>
